@@ -9,9 +9,11 @@ This directory now stores SSADM-style documentation generated for the CobolDemo 
 - `context-create.md` — meta instructions for creating context files.
 - `diagrams.md` — house style for diagrams referenced in generated documents.
 - `architecture/overview.md` — cross-cutting view of system context, layered structure, data flows, module collaboration, and entity relationships.
+- `migration/` — hands-on playbooks that describe how to peel specific COBOL capabilities into external services (currently the `XACBLTST` concat utility migration to ASP.NET Core).
 
 ## Maintenance Notes
 - Update the relevant Markdown files and regenerate diagrams whenever program logic or data structures change.
 - Keep business rule catalogs synchronized with COBOL source changes so validation logic remains traceable.
 - Mermaid diagrams now apply the shared accent palette (see repository instructions) to highlight key components—reuse these
   fills when extending or adding visuals.
+- When adding a migration guide, capture the integration contract (payloads, endpoints) and reference any companion sample code so future teams can replicate the pattern quickly.
