@@ -11,4 +11,6 @@ Add a subdirectory per migration slice so future teams can iterate independently
 
 ## Reference Snapshots
 - `dotnet/XacbltstConcatService/Program.cs.md` — Annotated minimal API host that returns the `FIL.LIB` concatenation via ASP.NET.
+- `dotnet/XacbltstConcatService/XacbltstConcatService.csproj.md` — Explanation of the project scaffolding and .NET 8 defaults used by the host.
+- `dotnet/XacbltstConcatService/appsettings.json.md` — Configuration reference covering API-key and logging defaults.
 - `cobol/xacbltst/XACBLTST-CLIENT.CBL.md` — Inline-commented IBM i client wrapper that posts requests to the modern service and falls back safely.

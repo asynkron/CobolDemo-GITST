@@ -490,9 +490,9 @@ An auto-generated map that links every non-Markdown source artifact to the neare
         - 📄 [XACBLTST-CLIENT.CBL](docs/migration/cobol/xacbltst/README.md)
     - 📁 **dotnet/**
       - 📁 **XacbltstConcatService/**
-        - 📄 [Program.cs](docs/migration/dotnet/XacbltstConcatService/README.md)
-        - 📄 [XacbltstConcatService.csproj](docs/migration/dotnet/XacbltstConcatService/README.md)
-        - 📄 [appsettings.json](docs/migration/dotnet/XacbltstConcatService/README.md)
+        - 📄 [Program.cs](docs/migration/dotnet/XacbltstConcatService/Program.cs.md)
+        - 📄 [XacbltstConcatService.csproj](docs/migration/dotnet/XacbltstConcatService/XacbltstConcatService.csproj.md)
+        - 📄 [appsettings.json](docs/migration/dotnet/XacbltstConcatService/appsettings.json.md)
 
 </details>
 
