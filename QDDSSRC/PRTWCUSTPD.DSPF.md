@@ -1,0 +1,28 @@
+# PRTWCUSTPD.DSPF Member Guide
+
+## Overview
+DDS display file `PRTWCUSTPD` lays out interactive screen formats for programs that drive the `PRTWCUSTPD` display file.
+
+## Dependency Map
+- **Incoming:** Programs that open the `PRTWCUSTPD` DSPF member.
+- **Outgoing:**
+  - DDS keywords link to database fields, display formats, or message files as declared below.
+
+## Source
+````dds
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      CA03(03)
+     A          R PRTCUST
+     A                                  1 24'Print Customer Report'
+     A                                  1 70DATE
+     A                                      EDTCDE(Y)
+     A                                  2 70TIME
+     A                                  8 16'Customer ID :'
+     A            UDCUID        11   B  8 31
+     A  45                                  DSPATR(RI)
+     A                                 23  2'F3 = Exit'
+     A N45 46                          24  2'Report has been Printed'
+     A                                      DSPATR(HI)
+     A  45                             24  2'Invalid Customer ID'
+     A                                      DSPATR(HI)
+````

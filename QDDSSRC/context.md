@@ -1,5 +1,7 @@
 # QDDSSRC Context (DDS Definitions)
 
+> 📘 **Per-member docs:** Each source member now includes a `<member>.<ext>.md` companion with dependency notes and full listings. Use these guides alongside this context during modernization.
+
 `QDDSSRC` hosts the DDS members that define the database schema (PF/LF), printer files (PRTF), and display files (DSPF) that drive the COBOL/RPG applications. These artifacts are heavily referenced by programs in [`QCBLSRC`](../QCBLSRC/context.md), [`QRPGSRC`](../QRPGSRC/context.md), and [`QRPGLESRC`](../QRPGLESRC/context.md).
 
 ## Structure Overview

@@ -1,5 +1,7 @@
 # CPYBKSRC Context (COBOL Copybooks)
 
+> 📘 **Per-member docs:** Each source member now includes a `<member>.<ext>.md` companion with dependency notes and full listings. Use these guides alongside this context during modernization.
+
 This directory contains COBOL copybooks that provide shared record layouts for customer and distribution data. They are consumed by the COBOL programs in [`QCBLSRC`](../QCBLSRC/context.md) and must remain synchronized with the DDS record definitions in [`QDDSSRC`](../QDDSSRC/context.md).
 
 ## Member Summaries

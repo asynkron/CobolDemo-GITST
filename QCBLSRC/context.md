@@ -1,5 +1,7 @@
 # QCBLSRC Context (COBOL)
 
+> 📘 **Per-member docs:** Each source member now includes a `<member>.<ext>.md` companion with dependency notes and full listings. Use these guides alongside this context during modernization.
+
 This folder mirrors an IBM i `QCBLSRC` source file and contains COBOL programs focused on customer, contract, and transaction management.
 
 ## Member Summaries

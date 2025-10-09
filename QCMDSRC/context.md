@@ -1,5 +1,7 @@
 # QCMDSRC Context (Command Definitions)
 
+> 📘 **Per-member docs:** Each source member now includes a `<member>.<ext>.md` companion with dependency notes and full listings. Use these guides alongside this context during modernization.
+
 `QCMDSRC` contains IBM i command definitions that wrap underlying CL/RPG programs. They provide user-friendly prompts and enforce parameter validation for batch processes.
 
 ## Members

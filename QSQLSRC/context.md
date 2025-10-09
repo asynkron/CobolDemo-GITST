@@ -1,5 +1,7 @@
 # QSQLSRC Context (SQL DDL)
 
+> 📘 **Per-member docs:** Each source member now includes a `<member>.<ext>.md` companion with dependency notes and full listings. Use these guides alongside this context during modernization.
+
 This directory holds SQL Data Definition Language (DDL) scripts that complement the DDS schema in [`QDDSSRC`](../QDDSSRC/context.md). They are valuable when migrating to a modern SQL-centric environment.
 
 ## Members

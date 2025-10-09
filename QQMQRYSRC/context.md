@@ -1,5 +1,7 @@
 # QQMQRYSRC Context (Query/400 Definitions)
 
+> 📘 **Per-member docs:** Each source member now includes a `<member>.<ext>.md` companion with dependency notes and full listings. Use these guides alongside this context during modernization.
+
 This directory stores Query/400 source for quick reporting against DDS files defined in [`QDDSSRC`](../QDDSSRC/context.md).
 
 ## Members

@@ -1,0 +1,52 @@
+# DISTSSLD.DSPF Member Guide
+
+## Overview
+DDS display file `DISTSSLD` lays out interactive screen formats for programs that drive the `DISTSSLD` display file.
+
+## Dependency Map
+- **Incoming:** Programs that open the `DISTSSLD` DSPF member.
+- **Outgoing:**
+  - DDS keywords link to database fields, display formats, or message files as declared below.
+
+## Source
+````dds
+     A*%%TS  SD  20070213  160821  ROYMAN      REL-V5R3M0  5722-WDS
+     A*---------------------------------------------------------------
+     A*COPYRIGHT DATABOROUGH LTD 2005
+     A*---------------------------------------------------------------
+     A*%%EC
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      CA03(03 'Exit')
+     A                                      CA12(12 'Cancel')
+     A*---------------------------------------------------------------
+     A*Subfile Format
+     A*---------------------------------------------------------------
+     A          R ZZSFL                     SFL
+     A*%%TS  SD  20070201  203758  ROYMAN      REL-V5R3M0  5722-WDS
+     A            DSSEL          1A  I  2  2VALUES(' ' '1' 'X')
+     A            DSDCDE         2A  O  2  4TEXT('CODE')
+     A            DNAME         34A  O  2  7TEXT('DESCRIPTION')
+     A*---------------------------------------------------------------
+     A*Subfile Control Format
+     A*---------------------------------------------------------------
+     A          R ZZCTL                     SFLCTL(ZZSFL)
+     A*%%TS  SD  20070213  160821  ROYMAN      REL-V5R3M0  5722-WDS
+     A                                      KEEP
+     A                                      BLINK
+     A                                      OVERLAY
+     A  31                                  SFLDSP
+     A                                      SFLDSPCTL
+     A  30                                  SFLDLT
+     A  31                                  SFLEND
+     A                                      SFLSIZ(0011)
+     A                                      SFLPAG(0010)
+     A                                      WINDOW(*DFT 12 41)
+     A                                      WDWBORDER((*COLOR GRN))
+     A                                  1  2'Please select:'
+     A                                      DSPATR(HI)
+     A*---------------------------------------------------------------
+     A*Retain Screen
+     A*---------------------------------------------------------------
+     A          R RETAIN                    ASSUME
+     A                                  1 68' '
+````

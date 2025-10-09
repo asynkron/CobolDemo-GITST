@@ -1,0 +1,27 @@
+# TRNHSTCLP.CLLE Member Guide
+
+## Overview
+ILE Control Language (CLLE) program `TRNHSTCLP` orchestrates IBM i job control for customer and contract workflows.
+
+## Dependency Map
+- **Incoming:** Commands or menus that invoke `TRNHSTCLP`.
+- **Outgoing:**
+  - Calls programs: WWTRNHST
+
+## Source
+````cl
+             PGM        PARM(&PARM1)
+/*----------------------------------------------------------------- */
+             DCL        VAR(&PARM1) TYPE(*CHAR) LEN(11)
+/*           DCL        VAR(&ACCM1) TYPE(*CHAR) LEN(11)              */
+
+             IF         COND(&PARM1 = ' ') THEN(DO)
+             CHGVAR     VAR(&PARM1) VALUE('ACC1')
+             ENDDO
+
+             CALL       PGM(WWTRNHST) PARM(&PARM1)
+/*           MONMSG     MSGID(CPF0000)                               */
+/*----------------------------------------------------------------- */
+             ENDPGM
+/*----------------------------------------------------------------- */
+````

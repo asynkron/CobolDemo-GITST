@@ -1,0 +1,24 @@
+# XEMPR.PF Member Guide
+
+## Overview
+DDS physical file `XEMPR` defines the physical table structure referenced by application programs.
+
+## Dependency Map
+- **Incoming:** Programs that open the `XEMPR` PF member.
+- **Outgoing:**
+  - DDS keywords link to database fields, display formats, or message files as declared below.
+
+## Source
+````dds
+     A          R XEMPDR
+     A            EMPI           6S 0       TEXT('Employee ID')
+     A                                      COLHDG('Employee' 'ID')
+     A            EMPD          20A         TEXT('Employee Name')
+     A                                      COLHDG('Employee' 'Name')
+     A            BANK          10A         TEXT('Bank Name')
+     A                                      COLHDG('Bank' 'Name')
+     A            ACCT          10S 0       TEXT('Account Number')
+     A                                      COLHDG('Account' 'Type')
+     A            TYPE          10A         TEXT('Ac Type')
+     A                                      COLHDG('Ac Type')
+````

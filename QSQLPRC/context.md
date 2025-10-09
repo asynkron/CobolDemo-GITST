@@ -1,5 +1,7 @@
 # QSQLPRC Context (SQL Procedures)
 
+> 📘 **Per-member docs:** Each source member now includes a `<member>.<ext>.md` companion with dependency notes and full listings. Use these guides alongside this context during modernization.
+
 `QSQLPRC` contains stored procedure source members demonstrating SQL-based business logic on IBM i. They complement the SQLRPGLE programs in [`QRPGLESRC`](../QRPGLESRC/context.md) and can serve as modernization anchors.
 
 ## Members

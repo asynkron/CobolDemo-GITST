@@ -1,5 +1,7 @@
 # QRPGSRC Context (Fixed-Format RPG)
 
+> 📘 **Per-member docs:** Each source member now includes a `<member>.<ext>.md` companion with dependency notes and full listings. Use these guides alongside this context during modernization.
+
 This directory collects fixed-format RPG (RPG/400) members used for legacy batch processes, printing, and utility routines. They predate RPGLE modules in [`QRPGLESRC`](../QRPGLESRC/context.md) but still underpin several CL commands and COBOL integrations.
 
 ## Program Clusters
