@@ -1,0 +1,9 @@
+     A          R PROORDR
+     A            XPORDN         6S 0       TEXT('Contract')
+     A            XPBCCD        11A         TEXT('Customer')
+     A            XPG4TX        40A         TEXT('Name')
+     A            XPDLDT          L         TEXT('Contract Date')
+     A            XPSTAT         2A         TEXT('Status')
+     A            XPREP          3A         TEXT('Rep')
+     A            XPTAMT        13S 2       TEXT('Contract Value')
+     A                                      EDTCDE(M)

@@ -1,0 +1,88 @@
+     FCUSTSO  IP  E           K        DISK
+     F            RCUSTS                            KRENAMERCUSTO
+     FCUSFL3  IF  E           K        DISK
+     FSECF    UF  E           K        DISK
+     FCUSFL6  IF  E           K        DISK                      A
+     F            RCUSF                             KRENAMERCUSF6
+     FCUSTS   O   E                    DISK
+     IRCUSTO
+     I              XARLS                           IXARLS
+     I              CUSNO                           ICUSNO
+     IRSECF
+     I              CUSNO                           SCUSNO
+     IRCUSF
+     I              CNAME                           INAME
+     I              USERNM                          IUSER
+     I              DCODE                           ICODE
+     I              TELNO                           ITELNO
+     I              FAXNO                           IFAXNO
+     I              ADD1                            IADD1
+     I              ADD2                            IADD2
+     I              ADD3                            IADD3
+     I              ADD4                            IADD4
+     I              CMMNT1                          ICMM1
+     I              CMMNT2                          ICMM2
+     I              CMMNT3                          ICMM3
+     IRCUSF6
+     I              CNAME                           INAME2
+     I              USERNM                          IUSER
+     I              TELNO                           ITELNO
+     I              FAXNO                           IFAXNO
+     I              ADD1                            IADD1
+     I              ADD2                            IADD2
+     I              ADD3                            IADD3
+     I              ADD4                            IADD4
+     I              CMMNT1                          ICMM1
+     I              CMMNT2                          ICMM2
+     I              CMMNT3                          ICMM3
+     C                     MOVELCNAME     CUSNAM 10
+     C                     MOVELCNAME     ICNAME
+     C                     MOVELUSERNM    INVCNM
+     C**                   MOVELUSERNM    YNVCNM
+     C                     MOVE IXARLS    XARLS
+     C           ICUSNO    CHAINCUSFL3               81
+     C                     MOVELINAME     CMPNAM 10
+     C           *IN81     IFEQ *OFF
+     C           CUSNAM    ANDEQCMPNAM
+     C**                   WRITERTRNST
+     C                     WRITERCUSTS
+     C                     ELSE
+     C           KL1       SETLLCUSFL6               82
+     C  N82                READ CUSFL6                   82
+     C                     MOVELINAME2    CMPNAM 10
+     C           *IN82     IFEQ *OFF
+     C           CUSNAM    ANDEQCMPNAM
+     C**                   WRITERTRNST
+     C                     WRITERCUSTS
+     C                     ELSE
+      * Write a new site record aswell:
+     C           *HIVAL    SETGTCUSFL3
+     C                     READPCUSFL3                   84
+     C                     ADD  1         CUSNO
+     C**                   ADD  5         CUSNO
+     C                     MOVELCNAME     INAME2
+     C                     MOVELUSERNM    IUSER
+     C                     MOVELTELNO     ITELNO
+     C                     MOVELFAXNO     IFAXNO
+     C                     MOVELADD1      IADD1
+     C                     MOVELADD2      IADD2
+     C                     MOVELADD3      IADD3
+     C                     MOVELADD4      IADD4
+     C                     MOVELCMMNT1    ICMM1
+     C                     MOVELCMMNT2    ICMM2
+     C                     MOVELCMMNT3    ICMM3
+     C                     WRITERCUSF6
+     C                     WRITERCUSTS
+     C                     ENDIF
+      * Transfer all codes from ICUSNO to CUSNO:
+     C           ICUSNO    CHAINSECF                 83
+     C           *IN83     DOWEQ*OFF
+     C                     Z-ADDCUSNO     SCUSNO
+     C**                   UPDATETRNST
+     C                     UPDATRSECF
+     C           ICUSNO    READESECF                     83
+     C                     ENDDO
+     C                     ENDIF
+     C           KL1       KLIST
+     C                     KFLD           DCODE
+     C                     KFLD           CNAME

@@ -1,0 +1,49 @@
+     FCBINPF  IF  E           K        DISK
+     FCBAC02  IF  E           K        DISK
+     IXXRVDA      DS
+     I                                        1   2 XXRVY1
+     I                                        5   6 XXRVDD
+     C           *ENTRY    PLIST
+     C           F1        PARM F2        F3      52
+     C           KEY001    KLIST
+     C                     KFLD           RPACBR  52
+     C                     EXCPTCBACRF
+     C           F1        ACQ  F2
+     C           F1        ADD  F2        F3      51
+     C           F1        IFEQ F2
+     C           F1        ANDEQF2
+     C           F1        ORNE F2
+     C                     BITOFF2        F3
+     C                     BITONF2        F3
+     C                     ENDIF
+     C                     MOVE F1        F2
+     C           F1        CASEQF2        F3
+     C                     END
+     C           F1        CAT  F2        F3
+     C           F1        CABEQF2        F3
+     C           KEY003    CHAINCBACRF               99
+     C           F1        CHECKF2        F3
+     C           F1        CHEKRF2        F3
+     C           F1        CLEARF2
+     C           F1        DOUEQF2
+     C                     LEAVE
+     C                     ITER
+     C                     ENDDO
+     C                     SELEC
+     C           F1        WHEQ F2
+     C           F1        WHLT F2
+     C                     OTHER
+     C                     ENDSL
+     C                     RESETF2
+     C                     CLEARF2
+     C           F1        SCAN F2        F3
+     C           F1        SUBSTF2        F3
+     C           A:B       XLATEF2        F3
+     C                     Z-ADDWWACBR    RPACBR
+     C                     MOVE WWACTP    RPACTP
+     C                     MOVE WWACNO    RPACNO
+     C           KEY001    SETGTCBINPF
+     C                     Z-ADDWWITRT    W2ITRT  52
+     C           *IN90     DOUEQ'1'
+     C           KEY002    READECBINPF                   90
+     C                     END

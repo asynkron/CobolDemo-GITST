@@ -1,0 +1,7 @@
+     A                                      UNIQUE
+     A          R TRNTYPR
+     A
+     A            XWRICD         3A         TEXT('Transaction type')
+     A            XWTDSC        20A         TEXT('Description')
+     A
+     A          K XWRICD

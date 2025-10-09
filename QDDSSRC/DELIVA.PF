@@ -1,0 +1,10 @@
+     A                                      UNIQUE
+     A          R DELIVAR
+     A            XWBDCD         3A         TEXT('Debtor Delivery Area        ')
+     A                                      COLHDG('Del' -
+     A                                      'Area')
+     A            XWGXTX        40A         TEXT('Debtor Del/Area Descriptn   ')
+     A                                      COLHDG('Description')
+     A            PERSON         3A         TEXT('Representative              ')
+     A                                      COLHDG('Rep')
+     A          K XWBDCD

@@ -1,0 +1,5 @@
+     FCUSTS   UF  E           K        DISK
+     C                     MOVELUDATE      @C4     4
+     C                     MOVE @C4       UDATE
+     C**                   WRITERCUSTS
+     C                     UPDATRCUSTS

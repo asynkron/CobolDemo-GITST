@@ -1,0 +1,10 @@
+     H
+     FTRNHST  IP  E           K        DISK
+     FCONDETL2IF  E           K        DISK                      A
+     C           SLSMAS    KLIST
+     C                     KFLD           XWAACS
+     C                     KFLD           XWABCD
+     C                     KFLD           XWORDN
+     C           SLSMAS    SETLLCONDETL2                 90
+     C           XWVALU    DIV  XWA5QT    XWPRIC
+     C  N90                WRITECONDETR

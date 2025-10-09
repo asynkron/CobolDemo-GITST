@@ -1,0 +1,4 @@
+     A          R RPRODS
+     A            DSDCDE         2A         TEXT('Code')
+     A            DNAME         34A         TEXT('Description')
+     A          K DSDCDE

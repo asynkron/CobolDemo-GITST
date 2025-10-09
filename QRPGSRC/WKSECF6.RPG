@@ -1,0 +1,421 @@
+     FSECF    IF  E           K        DISK
+     F**/ Customer Database
+     FCUSFL3  IF  E           K        DISK
+     F            RCUSF                             KRENAME@REDREC
+     FCUSFL5  IF  E           K        DISK
+     F            RCUSF                             KRENAME@REDRE2
+     F**/ Write fax
+     FQSECTXT O   E                    DISK         KINFDS FINDS      UC
+     F            QSECTXT                           KRENAME@LETSRC
+     E                    SEP     1   1 72
+     E                    DAY    16  31  4
+     E                    MTH     6  12  9
+     E                    FSR     1   5 80
+     E                    SMC    12  12  3
+     E                    $CNM       34  1
+     E                    TXT        80  1
+     I*****************************************************************
+     I* Structures
+     I*****************************************************************
+     IRSECF
+     I              DCODE                           SACODE
+      *#
+     I           SDS
+     I                                      254 263 @@USR
+     I                                      276 2770M
+     I                                      278 2790D
+     I                                      280 281 Y
+     IEXP         DS
+     I                                        1   60EXDTE
+     I                                        1   2 #EXYY
+     I                                        3   40#EXMM
+     I                                        5   6 #EXDD
+      *
+     IFINDS       DS
+     I                                      129 136 @@MBR
+     ISRCDTA      DS
+     I                                        1  80 TXT
+     I@@DEXD      DS
+     I                                        1   20@Y
+     I                                        5   60@D
+     I              'OVRDBF FILE(QSECTXT)-C         @OV
+     I              ' MBR('
+     I              'ADDPFM FILE(QSECTXT)-C         @AD
+     I              ' SRCTYPE(TXT) MBR('
+     I              'CLRPFM FILE(QSECTXT)-C         @CR
+     I              ' MBR('
+     I              'X-Analysis & X-SEU'  C         @XA
+     I              'Gateway/3X'          C         @SY
+     I              'X-Analysis : X-CTL'  C         @CM
+     I              'Databorough Products'C         @DB
+     I              'X-A code for CPU:'   C         @XAC
+     I              'G/3X code for CPU:'  C         @SYC
+     I              'X-CTL code for CPU:' C         @CMC
+     I              'Security Code'       C         @SECC
+     I              'Re:'                 C         @T1
+     I              '; Model:'            C         @T2
+     I              'Expiry Date:'        C         @T2A
+     I              'is'                  C         @T3
+     I              'Command X@PSW -      C         @T41
+     I              'can be used to -
+     I              'enter this code.'
+     I              'For XAN4   -         C         @T42
+     I              'ensure the command -
+     I              'is run with -
+     I              'XAN4  highest in '
+     I              'the library list.'   C         @T43
+     I              'For InstantAPP -     C         @T44
+     I              'ensure the command -
+     I              'is run with -
+     I              'XAPP highest in '
+     I              'Use CHGDTAARA to -   C         @T5
+     I              'enter code in data -
+     I              'area X@SECM in -
+     I              'library X@MAN.'
+     C*
+     C*  Parameter list
+     C*
+     C           *ENTRY    PLIST                                          004200
+     C                     PARM CUSNO     PCUSNO  50       Cus.No.        004300
+     C                     PARM           PSRLNB  8        Serial No.     004300
+     C                     PARM           PCDTY   1        Type           004400
+     C           SCDEXD    PARM           PCDEXD  60       Code           004400
+     C                     PARM           PTEXT  50        Usrprf Txt     004400
+     C                     PARM           PLETSQ  3        Letter Sq      004400
+     C                     PARM           PMBR   10        Member         004400
+     C* Initialise
+     C                     Z-ADDPCUSNO    PCUSNO
+      *
+      * ONLY REVERSE DATE IF FROM OLD SYSTEM
+      *
+     C           PCDTY     IFNE ' '
+     C                     MOVE SCDEXD    @@DEXD
+     C                     MOVEL@D        SCDEXD
+     C                     MOVE @Y        SCDEXD
+     C                     END
+      *
+     C* Look-up Full customer details
+     C           KL1       CHAINSECF                 54
+      *
+      * FORMAT  EXPIRY DATE
+      *
+     C                     Z-ADDSCDEXD    EXDTE
+      *
+     C                     MOVE *BLANKS   FEXDTE  9
+     C           #EXDD     CAT  '-':0     FEXDTE
+     C                     MOVE #EXMM     #M      30
+     C                     MOVE SMC,#M    #SMC    3
+     C                     CAT  #SMC:0    FEXDTE
+     C                     CAT  '-':0     FEXDTE
+     C                     CAT  #EXYY:0   FEXDTE
+      *
+      *
+     C                     SELEC
+     C           PCDTY     WHNE ' '
+      *
+     C           SXAMD1    WHEQ 'N'
+     C           SXAMD5    ANDEQ'Y'
+     C                     MOVE 'C'       PCDTY
+      *
+     C           SXAMD1    WHEQ 'N'
+     C           SXAMD7    ANDEQ'Y'
+     C                     MOVE 'S'       PCDTY
+      *
+     C                     OTHER
+     C                     MOVE 'X'       PCDTY
+     C                     ENDSL
+      *
+     C           PCUSNO    CHAINCUSFL3               54
+     C                     MOVEACNAME     $CNM                            009500
+     C* Look-up customers agent details
+     C           SACODE    IFNE *BLANK
+     C                     MOVE 'A'       STATUS
+     C***                  MOVE 'Y'       STATUS
+     C           KL2       CHAINCUSFL5               54
+     C                     ENDIF
+     C* Override QLETSRC to relevant member
+     C           PMBR      IFEQ '*AGENT'
+     C           SACODE    ANDNE*BLANK
+     C           *IN54     ANDNE*ON
+     C                     MOVE 'Y'       BCHFAX  1
+      *
+     C           SACODE    CAT  '_CODES':0PMBR
+     C                     ELSE
+     C                     MOVE 'N'       BCHFAX
+      *
+     C           PREFIX    IFEQ *BLANK
+     C                     MOVE CUSNO     PREFIX
+     C                     ENDIF
+     C                     ADD  1         LLETSQ
+     C                     MOVE LLETSQ    PLETSQ
+     C                     MOVE *BLANK    PMBR
+     C                     MOVEL'C'       PMBR
+     C           PMBR      CAT  PREFIX:0  PMBR
+     C           PMBR      CAT  'S':0     PMBR
+     C           PMBR      CAT  PLETSQ:0  PMBR
+      *
+     C                     END
+      *
+     C           @OV       CAT  PMBR:0    $OV    80
+     C           $OV       CAT  ')':0     $OV
+     C                     MOVE $OV       $CM
+     C                     CALL 'QCMDEXC' $PCMD        44
+     C                     OPEN QSECTXT                44
+     C           *IN44     IFEQ *OFF
+     C           BCHFAX    ANDEQ'N'
+     C                     CLOSEQSECTXT
+     C                     MOVE *BLANK    $CM
+     C           @CR       CAT  PMBR:0    $CM
+     C           $CM       CAT  ')':0     $CM
+     C                     CALL 'QCMDEXC' $PCMD
+     C                     END
+      *
+     C           *IN44     IFEQ *ON
+     C                     MOVE 'Y'       NEWBCH  1
+     C                     MOVE *BLANK    $CM
+     C           @AD       CAT  PMBR:0    $CM
+     C           $CM       CAT  ')':0     $CM
+     C                     CALL 'QCMDEXC' $PCMD
+     C                     ELSE
+     C                     MOVE 'N'       NEWBCH
+     C                     ENDIF
+      *
+     C                     MOVE $OV       $CM
+     C                     CALL 'QCMDEXC' $PCMD        44
+     C                     OPEN QSECTXT                44
+      *
+     C           BCHFAX    IFNE 'Y'
+     C           NEWBCH    ORNE 'N'
+     C* Ouput 1st Fax*Star line
+     C                     MOVEAFSR,1     TXT
+     C                     MOVE CUSNO     @CUSNO
+     C                     CALL 'WKCUS8EF'
+     C                     PARM           @CUSNO  5
+     C                     PARM           @FAXNO 17
+     C                     MOVEA@FAXNO    TXT,9
+     C                     MOVEA@@USR     TXT,37
+     C                     Z-ADD1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   SRCDTA
+     C                     MOVEAFSR,5     TXT
+     C                     Z-ADD1         SRCSEQ
+     C                     WRITE@LETSRC
+      *
+     C           NEWBCH    IFEQ 'Y'
+     C           BCHFAX    ANDEQ'Y'
+     C                     EXSR $FSR2
+     C                     ENDIF
+     C* Output blank line
+     C                     ADD  1         SRCSEQ
+     C                     MOVE *BLANK    SRCDTA
+     C                     WRITE@LETSRC
+     C* Ouput Distributor name and date
+     C                     MOVEADAY,D     @DAY    4
+     C                     MOVEAMTH,M     @MONTH  9
+     C           @DAY      CAT  @MONTH:1  @DATE  20
+     C           @DATE     CAT  '20':1    @DATE
+     C           @DATE     CAT  Y:0       @DATE
+     C                     MOVE *BLANK    SRCDTA
+     C                     MOVEACNAME     TXT,7
+     C                     MOVEA@DATE     TXT,53
+     C                     ADD  1         SRCSEQ
+     C****                 Z-ADD1         SRCSEQ
+     C                     WRITE@LETSRC
+     C* Output contact name for non-agents
+     C                     MOVE *BLANK    SRCDTA
+     C           SACODE    IFEQ *BLANK
+     C           *IN54     ANDEQ*OFF
+     C           USERNM    ANDNE*BLANK
+     C                     MOVEA'Attn.'   TXT,7
+     C                     MOVEAUSERNM    TXT,13
+     C                     ENDIF
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+      * Output blank line
+     C                     ADD  1         SRCSEQ
+     C                     MOVE *BLANK    SRCDTA
+     C                     WRITE@LETSRC
+     C                     ENDIF                           BCHFAX=N
+      *
+      * Output blank line
+     C                     MOVE *BLANK    SRCDTA
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C* Output 'Re:..'
+      * MAKE LINE BOLD
+     C                     ADD  1         SRCSEQ
+     C                     MOVEAFSR,3     SRCDTA
+     C                     WRITE@LETSRC
+     C           SACODE    IFEQ *BLANK
+     C           *IN54     OREQ *ON
+     C                     MOVE *BLANKS   $CNM                            009500
+     C                     SELEC
+     C           PCDTY     WHEQ 'X'
+     C                     MOVEA@XA       $CNM
+     C           PCDTY     WHEQ 'S'
+     C                     MOVEA@SY       $CNM
+     C           PCDTY     WHEQ 'C'
+     C                     MOVEA@CM       $CNM
+      *
+     C                     OTHER
+     C                     MOVEA@DB       $CNM
+     C                     ENDSL
+     C                     ENDIF
+     C                     Z-ADD34        @N      30
+     C           $CNM,@N   DOWEQ*BLANK
+     C           @N        ANDGT1
+     C                     SUB  1         @N
+     C                     ENDDO
+      *
+     C                     Z-ADD@N        @NO     30
+      *
+     C                     ADD  14        @N
+      *
+     C           76        SUB  @N        @N
+     C           @N        DIV  2         @N
+     C                     MOVE *BLANK    SRCDTA
+     C                     MOVEA$CNM      TXT,@N
+     C                     ADD  @NO       @N
+     C                     ADD  1         @N
+     C                     MOVEA@SECC     TXT,@N
+     C                     ADD  1         SRCSEQ
+     C****                 Z-ADD1         SRCSEQ
+     C                     WRITE@LETSRC
+      * MAKE NOT BOLD
+     C                     ADD  1         SRCSEQ
+     C                     MOVEAFSR,4     SRCDTA
+     C                     WRITE@LETSRC
+     C* Output blank line
+     C                     ADD  1         SRCSEQ
+     C                     MOVE *BLANK    SRCDTA
+     C                     WRITE@LETSRC
+     C* Output code details
+     C                     SELEC
+     C           PCDTY     WHEQ 'X'
+     C                     MOVEA@XAC      TXT,7
+     C           PCDTY     WHEQ 'S'
+     C                     MOVEA@SYC      TXT,7
+     C           PCDTY     WHEQ 'C'
+     C                     MOVEA@CMC      TXT,7
+     C                     ENDSL
+     C           SRCDTA    CAT  SSRLNB:1  SRCDTA
+     C           SRCDTA    CAT  @T2:0     SRCDTA
+     C           SRCDTA    CAT  SMOD:1    SRCDTA
+     C           SRCDTA    CAT  @T3:1     SRCDTA
+     C           SRCDTA    CAT  SCDE:1    SRCDTA                          004400
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+      *
+     C                     MOVE *BLANKS   SRCDTA
+     C                     MOVEA@T2A      TXT,7
+     C           SRCDTA    CAT  FEXDTE:1  SRCDTA
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C* If not G/3X code output description of code entry for non-agent
+     C           SACODE    IFEQ *BLANK
+     C           PCDTY     ANDNE'S'
+     C           *IN54     OREQ *ON
+     C           PCDTY     ANDNE'S'
+     C                     ADD  1         SRCSEQ
+     C                     MOVE *BLANK    SRCDTA
+     C                     SELEC
+     C           PCDTY     WHEQ 'X'
+     C                     MOVEA@T41      TXT,7
+     C                     WRITE@LETSRC
+     C                     ADD  1         SRCSEQ
+     C                     MOVE *BLANK    SRCDTA
+     C                     WRITE@LETSRC
+     C                     ADD  1         SRCSEQ
+     C                     MOVEA@T42      TXT,7
+     C                     WRITE@LETSRC
+     C                     ADD  1         SRCSEQ
+     C                     MOVE *BLANK    SRCDTA
+     C                     MOVEA@T43      TXT,7
+     C           PCDTY     WHEQ 'C'
+     C                     MOVEA@T5       TXT,7
+     C                     ENDSL
+     C                     WRITE@LETSRC
+     C                     ENDIF
+      *
+      *
+     C           BCHFAX    IFEQ 'Y'
+      *
+     C                     ADD  1         SRCSEQ
+     C                     MOVE *BLANK    SRCDTA
+     C                     WRITE@LETSRC
+     C                     WRITE@LETSRC
+     C                     MOVELSEP,1     SRCDTA
+     C                     WRITE@LETSRC
+     C                     ELSE
+      *
+     C* Output blank line
+     C                     ADD  1         SRCSEQ
+     C                     MOVE *BLANK    SRCDTA
+     C                     WRITE@LETSRC
+     C* Output user text
+     C                     ADD  1         SRCSEQ
+     C                     MOVEAPTEXT     TXT,7
+     C                     WRITE@LETSRC
+     C* Ouput 2nd Fax*Star line
+     C                     EXSR $FSR2
+      *
+     C                     ENDIF
+      *
+     C                     CLOSEQSECTXT
+     C                     SETON                     LR
+     C                     RETRN
+     C           KL1       KLIST
+     C                     KFLD           PCUSNO
+     C                     KFLD           PCODE
+     C                     KFLD           SCDEXD
+     C                     KFLD           PSRLNB
+     C           KL2       KLIST
+     C                     KFLD           SACODE
+     C                     KFLD           STATUS
+     C           $PCMD     PLIST
+     C                     PARM           $CM    80
+     C                     PARM 80        $CML   155
+      *
+      ****************************************************************
+      *
+     C           $FSR2     BEGSR
+      *
+     C* Ouput 2nd Fax*Star line
+     C                     MOVEAFSR,2     TXT
+     C                     MOVELCNAME     @NAME  16
+     C                     MOVEA@NAME     TXT,28
+     C                     Z-ADD43        @X      30
+     C                     MOVEA@@MBR     TXT,9
+     C           TXT,@X    DOWEQ*BLANK
+     C           @X        ANDGT28
+     C                     SUB  1         @X
+     C                     ENDDO
+     C           28        DO   @X        X       30
+     C           TXT,X     IFEQ *BLANK
+     C                     MOVE '-'       TXT,X
+     C                     ENDIF
+     C**                   LEAVE
+     C                     ENDDO
+     C           BCHFAX    IFEQ 'N'
+     C                     MOVEA'**END'   TXT,48
+     C                     ENDIF
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+      *
+     C                     ENDSR
+** SEP
+-----------------------------------------------------------------------
+** Days
+1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th11th12th13th14th15th16th
+17th18th19th20th21st22nd23rd24th25th26th27th28th29th30th31st
+** Months
+January  February March    April    May      June
+July     August   SeptemberOctober  November December
+** FSR
+**(fax) xxxxxxxxxxxxxxxxx **confirm xxxxxxxxxx **logo form1 **skip 13
+**(ref) xxxxxxxx  **(refx) xxxxxxxxxxxxxxxx
+**BOLD
+**NOBOLD
+**PRIORITY 5
+** SHORT MONTHS CODE (SMC)
+JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC

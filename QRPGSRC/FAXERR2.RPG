@@ -1,0 +1,26 @@
+     FSECF    IP  E                    DISK
+     FCUSFL3  UF  E           K        DISK
+     IFLUREF      DS
+     I                                        2   60@@CUS1
+     I                                        2   6 A@CUS1
+     I                                        4   80@@CUS2
+     I                                        4   8 A@CUS2
+      * S = sent - therefore unset previous failures:
+     C                     TESTN          A@CUS2     32
+     C  N32                TESTN          A@CUS1     31
+     C                     MOVELA@CUS1    FLSTAT 10
+     C**                   MOVELA@CUS4    FLSCAT 10
+     C                     MOVELA@CUS2    FLSCOD 10
+     C           FLSTAT    IFEQ 'S'
+     C           *IN31     IFEQ *ON
+     C           *IN32     OREQ *ON
+     C   32      @@CUS2    CHAINCUSFL3               44
+     C  N32 31   @@CUS1    CHAINCUSFL3               44
+     C           *IN44     IFEQ *OFF
+     C           APDATE    ANDEQ010101
+     C                     Z-ADD010102    APDATE
+     C**                   ADD  010102    APDATE
+     C                     UPDATRCUSF
+     C                     ENDIF
+     C                     ENDIF
+     C                     ENDIF

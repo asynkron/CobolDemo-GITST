@@ -1,0 +1,5 @@
+       01  DISTS-RECORD.
+           05  DIS-DISTS-KEY-FIELD.
+               10  DIS-CODE                   PIC X(02).
+           05  DIS-DESCRIPTION                PIC X(34).
+

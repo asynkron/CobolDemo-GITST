@@ -1,0 +1,4 @@
+     A          R RSLMEN
+     A            PERSON         3A         TEXT('Person')
+     A            PNAME         34A         TEXT('Full Name')
+     A          K PERSON

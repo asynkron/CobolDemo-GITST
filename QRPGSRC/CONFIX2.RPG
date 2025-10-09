@@ -1,0 +1,11 @@
+     H
+     FTRNHST  IP  E           K        DISK
+     FCONHDRL1IF  E           K        DISK                      A
+     C           SLSMAS    KLIST
+     C                     KFLD           XWBCCD
+     C                     KFLD           XWORDN
+     C           SLSMAS    SETLLCONHDRL1                 90
+     C                     MOVELXWT8TX    XWCREF
+     C                     MOVELXWDLDT    XWDLDT
+     C*
+     C  N90                WRITECONHDRR

@@ -1,0 +1,57 @@
+     H            Y
+     FCUSFL7  UP  E           K        DISK
+     E                    @FX        17  1
+     E                    @WA         2  1
+     I              'CLRPFM QTEMP/QLETSRC-C         $CMD
+     I              ' LETTER'
+     C           *ENTRY    PLIST
+     C                     PARM           LETTER  6
+     C                     PARM           NRDS    30
+     C* Find fax number
+     C                     MOVE CUSNO     CUSNOA
+     C***                  MOVE CTRNS     CUSNOT
+     C                     CALL 'WKCUS8EF'             44
+     C                     PARM           CUSNOA  5
+     C                     PARM           @FAXNO 17
+     C* Proceed only if fax number was found
+     C           @FAXNO    CABEQ*BLANKS   $END
+     C                     Z-ADD1         @F      20
+     C                     Z-ADD1         @W      20
+     C                     MOVEA@FAXNO    @FX
+     C           @F        DOWLE19
+     C           @W        ANDLE2
+     C           @FX,@F    IFGE '0'
+     C           @FX,@F    ANDLE'9'
+     C                     MOVE @FX,@F    @WA,@W
+     C                     ADD  1         @W
+     C**                   Z-ADD1         @W
+     C                     ENDIF
+     C                     ADD  1         @F
+     C*                    Z-ADD1         @F
+     C                     ENDDO
+     C* Proceed only if fax number is not international
+     C                     MOVEA@WA       @WA2    2
+     C           @WA2      CABEQ'00'      $END
+     C* Clear member
+     C                     CALL 'QCMDEXC'              44
+     C                     PARM $CMD      $OVR   27
+     C                     PARM 27        $OVL   155
+     C* Generate Letter
+     C                     CALL 'WKCUS8E'              44
+     C                     PARM           CUSNOA
+     C                     PARM           DUMMY   1
+     C                     PARM           DUMMY
+     C                     PARM           DUMMY
+     C                     PARM           @FAXNO
+     C                     PARM '1'       SKL     1
+     C                     PARM *BLANK    @@DAT   6
+     C                     PARM *BLANK    @@TIM   4
+     C* Print Letter
+     C                     CALL 'WKCUS8P'              44
+     C                     Z-ADDUDATE     LCTDAT
+     C                     UPDATRCUSF
+     C                     ADD  1         @CNT    50
+     C***                  Z-ADD1         @CNT    50
+     C           @CNT      COMP NRDS                 LR
+      *
+     C           $END      TAG

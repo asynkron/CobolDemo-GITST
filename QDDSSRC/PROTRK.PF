@@ -1,0 +1,15 @@
+     A                                      UNIQUE
+     A          R PROTRKR
+     A            XWJOBN         6S 0       TEXT('Project')
+     A            XWTRPT        11A         TEXT('Tracking Point')
+     A            XWPLDT          L         TEXT('Planned Date')
+     A            XWPLQT        13P 4       TEXT('Planned Qty')
+     A                                      EDTCDE(M)
+     A            XWACDT          L         TEXT('Actual Date')
+     A            XWACTM          T         TEXT('Actual Time')
+     A            XWACQT        13P 4       TEXT('Actual Qty')
+     A                                      EDTCDE(M)
+     A            XWSEQN         3S 0       TEXT('Sequence')
+     A
+     A          K XWJOBN
+     A          K XWSEQN

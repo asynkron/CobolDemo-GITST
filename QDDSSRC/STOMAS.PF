@@ -1,0 +1,7 @@
+     A                                      UNIQUE
+     A          R STOMASR
+     A
+     A            XWAACS        11A         TEXT('Store')
+     A            XWDESC        20A         TEXT('Description')
+     A
+     A          K XWAACS

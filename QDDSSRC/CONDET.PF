@@ -1,0 +1,21 @@
+     A                                      UNIQUE
+     A          R CONDETR
+     A            XWORDN         6S 0       TEXT('Contract')
+     A            XWABCD        20A         TEXT('Product')
+     A                                      COLHDG('Product')
+     A            XWAACS        11A         TEXT('Store')
+     A            XWT8TX        15A         TEXT('Ref No')
+     A            XWRICD         3A         TEXT('Trn Hst Trn Type')
+     A            XWA5QT         9S 2       TEXT('Contract Qty')
+     A                                      EDTCDE(M)
+     A            XWA2CD         3A         TEXT('Stk Unit of Measure')
+     A                                      COLHDG('U/M')
+     A            XWPRIC         6S 2       TEXT('Price')
+     A                                      EDTCDE(M)
+     A
+     A          K XWORDN
+     A          K XWABCD
+      * TEST COMMENT 1
+      * TEST COMMENT 2
+      * TEST COMMENT 3
+      * TEST COMMENT 4

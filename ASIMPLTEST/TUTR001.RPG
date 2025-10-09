@@ -1,0 +1,39 @@
+     H* THIS IS TEST COMMENT
+     FCUSTSRO1IF  E                    DISK
+     C           CUSTSR    READ                          90
+     C                     MOVE *BLANK    XWBCCD
+     C                     PRINT          XWBCCD
+     C                     RETRN
+PGM (&OPT &USR &WSI)
+DCL &OPT *CHAR 1
+DCL &USR *CHAR 10
+DCL &WSI *CHAR 10
+
+/* THIS IS THE NEW LINE COMMENT FOR THE TEST */
+/* TEST COMMENT 2 */
+/* TEST COMMENT 3 */
+/* TEST COMMENT 4 */
+IF (&OPT *EQ '1') THEN(DO)
+   OVRDBF CBACPF LVLCHK(*NO)
+   CALL  CB906R
+ENDDO
+
+IF (&OPT *EQ '2') THEN(DO)
+   CLRPFM CBTRPF
+   CALL  CB907R
+ENDDO
+
+ENDPGM
+      * TEST COMMENT 1
+      * TEST COMMENT 2
+      * TEST COMMENT 3
+      * TEST COMMENT 4
+     A          R STATUSR
+     A            STATUS         1A
+     A                                      TEXT('Status')
+     A                                      COLHDG('STATUS')
+      *           STSTXT        30A         ALWNULL
+     A            STSTXT        30A
+     A                                      TEXT('Status text')
+     A                                      COLHDG('STSTXT')
+     A          K STATUS

@@ -1,0 +1,776 @@
+     A                                      UNIQUE
+     A          R JCRDSC
+     A            GSTAT          1A
+     A                                      TEXT('STATUS CODE')
+     A                                      COLHDG('STATUS' 'CODE')
+     A            GCONO          2P 0
+     A                                      TEXT('COMPANY NUMBER')
+     A                                      COLHDG('CO' 'NO')
+     A            GDVNO          3P 0
+     A                                      TEXT('DIVISION NUMBER')
+     A                                      COLHDG('DIV' 'NO.')
+     A            GJBNO          6A
+     A                                      TEXT('JOB NUMBER')
+     A                                      COLHDG('JOB' 'NUMBER')
+     A            GSJNO          3A
+     A                                      TEXT('SUB JOB NUMBER')
+     A                                      COLHDG('SUB' 'JOB')
+     A            GD20A         20A
+     A                                      TEXT('DESCRIPTION')
+     A                                      COLHDG('DESCRIPTION')
+     A            GD20B         20A
+     A                                      TEXT('DESCRIPTION')
+     A                                      COLHDG('DESCRIPTION')
+     A            GGLSAL         5P 0
+     A                                      TEXT('LABOR SUB ACCOUNT')
+     A                                      COLHDG('LABOR' 'SUB' 'ACCOUNT')
+     A            GGLBK         15P 0
+     A                                      TEXT('BANK GENERAL LEDGER NUMBER')
+     A                                      COLHDG('BANK' 'GENERAL' 'LEDGER')
+     A            GGLST         15P 0
+     A                                      TEXT('STATE TAX G/L ACCOUNT')
+     A                                      COLHDG('STATE' 'TAX' 'ACCT')
+     A            GSSTX          3P 0
+     A                                      TEXT('STATE SALES TAX CODE')
+     A                                      COLHDG('STATE' 'SALES' 'TAX')
+     A                                      EDTCDE(Z)
+     A            GLSTX          3P 0
+     A                                      TEXT('LOCAL SALES TAX CODE')
+     A                                      COLHDG('LOCAL' 'SALES' 'TAX')
+     A                                      EDTCDE(Z)
+     A            GGAR1          4A
+     A                                      TEXT('GEOGRAPHIC AREA')
+     A                                      COLHDG('AREA')
+     A            GGAR2          4A
+     A                                      TEXT('GEOGRAPHIC AREA 2')
+     A                                      COLHDG('GEOGRAPHIC' 'AREA' '2')
+     A            GTMJB          1A
+     A                                      TEXT('TIME AND MATERIAL JOB-Y/N')
+     A                                      COLHDG('T/M' 'JOB')
+     A            GSTCD          3P 0
+     A                                      TEXT('STATE CODE')
+     A                                      COLHDG('STATE' 'CODE')
+     A            GLCCD          3P 0
+     A                                      TEXT('LOCAL CODE')
+     A                                      COLHDG('LOCAL' 'CODE')
+     A            GSTCDR         3P 0
+     A                                      TEXT('STATE CODE - A/R')
+     A                                      COLHDG('STATE' 'CODE' '- A/R')
+     A            GLCCDR         3P 0
+     A                                      TEXT('LOCAL CODE - A/R')
+     A                                      COLHDG('LOCAL' 'CODE' '- A/R')
+     A            GCEJB          1A
+     A                                      TEXT('CERTIFIED JOB        -Y/N')
+     A                                      COLHDG('CERT' 'JOB')
+     A            GWCRF          2P 0
+     A                                      TEXT('WORKERS COMP REFERENCE')
+     A                                      COLHDG('W/C' 'REF')
+     A            GWCCD          4P 0
+     A                                      TEXT('WORKERS COMP CODE')
+     A                                      COLHDG('W/C' 'CODE')
+     A            GJBTY          2A
+     A                                      TEXT('JOB TYPE')
+     A                                      COLHDG('JOB' 'TYPE')
+     A            GWGDC          8A
+     A                                      TEXT('WAGE DECISION CODE')
+     A                                      COLHDG('WAGE' 'DECISION' 'CODE')
+     A            GCNLC         15A
+     A                                      TEXT('CONTRACT LICENSE NUMBER')
+     A                                      COLHDG('CONTRACT' 'LICENSE' 'NUM')
+     A            GAMFE          9P 0
+     A                                      TEXT('FEE AMOUNT')
+     A                                      COLHDG('FEE' 'AMOUNT')
+     A                                      EDTCDE(J)
+     A            GJBST          1P 0
+     A                                      TEXT('JOB STATUS 0-OPEN/3-CLOSED')
+     A                                      COLHDG('JOB' 'STATUS')
+     A            GCNTY          1P 0
+     A                                      TEXT('CONTRACT TYPE')
+     A                                      COLHDG('CONTRACT' 'TYPE')
+     A            GPFSH          1A
+     A                                      TEXT('PROFIT SHARING')
+     A                                      COLHDG('PROFIT' 'SHARING')
+     A            GDTST          8P 0
+     A                                      TEXT('START DATE     -YYYY/MMDD')
+     A                                      COLHDG('START' 'DATE')
+     A            GDTSC          8P 0
+     A                                      TEXT('SCHEDULED  DATE-YYYY/MMDD')
+     A                                      COLHDG('SCHEDULED' 'DATE')
+     A            GDTCL          8P 0
+     A                                      TEXT('CLOSED DATE     YYYY/MMDD')
+     A                                      COLHDG('CLOSED' 'DATE')
+     A            GJBQT          9P 0
+     A                                      TEXT('JOB QUANTITY')
+     A                                      COLHDG('JOB' 'QUANTITY')
+     A                                      EDTCDE(J)
+     A            GUM5           5A
+     A                                      TEXT('JOB UNIT OF MEASURE')
+     A                                      COLHDG('JOB' 'U/M')
+     A            GICCA         13P 2
+     A                                      TEXT('CONTRACT AMOUNT')
+     A                                      COLHDG('CONTRACT' 'AMOUNT')
+     A                                      EDTCDE(J)
+     A            GCUST          5P 0
+     A                                      TEXT('CUSTOMER NUMBER')
+     A                                      COLHDG('CUST#')
+     A                                      EDTCDE(Z)
+     A            GDPNO          3P 0
+     A                                      TEXT('DEPARTMENT NUMBER')
+     A                                      COLHDG('DEPT' 'NO.')
+     A            GAMCG         11P 2
+     A                                      TEXT('CHANGE ORDER AMT')
+     A                                      COLHDG('C/O' 'AMOUNT')
+     A            GPNCG         11P 2
+     A                                      TEXT('PENDING C/O AMT TO DATE')
+     A                                      COLHDG('PENDING' 'C/O' 'AMT')
+     A                                      EDTCDE(J)
+     A            GCPCT          1A
+     A                                      TEXT('100% COMPL Y/N/B B-USE BDGT A-
+     A                                      S EST @ COMPL')
+     A                                      COLHDG('100%' 'COMPL' 'Y/N/B')
+     A            GINTY          1A
+     A                                      TEXT('INVOICE TYPE 1 - AIA 2 - TICK-
+     A                                      ET')
+     A                                      COLHDG('INV' 'TYP')
+     A            GJBCD          1A
+     A                                      TEXT('JOB CODE 1 - CONTRACT 2 - TIM-
+     A                                      E/MATERIAL')
+     A                                      COLHDG('JOB' 'CODE')
+     A            GCHEQ          1A
+     A                                      TEXT('CHARGE EQUIPMENT RENTAL Y-YES-
+     A                                       (HOURS & DOLLARS) N-')
+     A                                      COLHDG('CHRG' 'EQP' 'RENT')
+     A            GEQHS          1A
+     A                                      TEXT('USE EQUIP HISTORY FOR  ALTERN-
+     A                                      ATE RATE CODE  -Y/N')
+     A                                      COLHDG('EQHS')
+     A            GNM20         20A
+     A                                      TEXT('NAME')
+     A                                      COLHDG('NAME')
+     A            GCNAR          3P 0
+     A                                      TEXT('CONTACT AREA CODE')
+     A                                      COLHDG('CONT' 'AREA' 'CODE')
+     A            GCNPH          7P 0
+     A                                      TEXT('CONTACT PHONE')
+     A                                      COLHDG('CONTACT' 'PHONE')
+     A                                      EDTWRD('   -    ')
+     A            GFEPC          5P 2
+     A                                      TEXT('FEE PCT ** A/R JOB COST DIST -
+     A                                      **')
+     A                                      COLHDG('FEE' 'PCT')
+     A                                      EDTCDE(J)
+     A            GJCDI         15A
+     A                                      TEXT('J/C DISTRIBUTION')
+     A                                      COLHDG('J/C' 'DIST')
+     A            GJCCT          1A
+     A                                      TEXT('J/C DIST COST TYPE')
+     A                                      COLHDG('COST' 'TYPE')
+     A            GJCRT          1A
+     A                                      TEXT('J/C DIST RECORD TYPE')
+     A                                      COLHDG('R' 'T')
+     A            GCNNO          5P 0
+     A                                      TEXT('CONTRACT NUMBER')
+     A                                      COLHDG('CNNO')
+     A                                      EDTCDE(Z)
+     A            GPSBU          1A
+     A                                      TEXT('POST ONE BURDEN RECORD PER JO-
+     A                                      B/COST CODE-CSTPST')
+     A                                      COLHDG('POST' 'ONE' 'BURDEN')
+     A            GCRNO          2P 0
+     A                                      TEXT('CREW NUMBER')
+     A                                      COLHDG('CREW' 'NUMBER')
+     A            GSVBK          1A
+     A                                      TEXT('ALLOW BREAK IN SERVICE  FOR A-
+     A                                      LTERNATE RATE CODE -Y')
+     A                                      COLHDG('SVBK')
+     A            GJBIS          1A
+     A                                      TEXT('JOB SPECIFIC INSURANCE-Y/N')
+     A                                      COLHDG('JOB' 'INS')
+     A            GPPCC          6P 3
+     A                                      TEXT('PROFIT SHARING % OF COST')
+     A                                      COLHDG('PROFIT' 'SHARING' '%')
+     A                                      EDTCDE(J)
+     A            GPPCO          6P 3
+     A                                      TEXT('PROFIT SHARNG % OF OVERUN')
+     A                                      COLHDG('PROFIT' 'SHARNG' '%')
+     A                                      EDTCDE(J)
+     A            GGRMX          9P 0
+     A                                      TEXT('GROSS MAX AMOUNT')
+     A                                      COLHDG('GROSS' 'MAX' 'AMOUNT')
+     A                                      EDTCDE(J)
+     A            GEXOH          1A
+     A                                      TEXT('EXEMPT FROM OVERHEAD')
+     A                                      COLHDG('EXEMPT' 'FROM' 'OVERHEAD')
+     A            GPJMG          5P 0
+     A                                      TEXT('PROJECT MANAGER')
+     A                                      COLHDG('PROJECT' 'MANAGER')
+     A                                      EDTCDE(Z)
+     A            GESTM          5P 0
+     A                                      TEXT('ESTIMATOR')
+     A                                      COLHDG('ESTIMATOR')
+     A                                      EDTCDE(Z)
+     A            GPJSP          5P 0
+     A                                      TEXT('PROJECT SUPERINTENDENT')
+     A                                      COLHDG('PROJECT' 'SUPERINTENDEN')
+     A                                      EDTCDE(Z)
+     A            GENGN          5P 0
+     A                                      TEXT('ENGINEER')
+     A                                      COLHDG('ENGINEER')
+     A                                      EDTCDE(Z)
+     A            GARCH          5P 0
+     A                                      TEXT('ARCHITECT')
+     A                                      COLHDG('ARCHITECT')
+     A                                      EDTCDE(Z)
+     A            GSFEN          5P 0
+     A                                      TEXT('SAFETY ENGINEER')
+     A                                      COLHDG('SAFETY' 'ENGINEER')
+     A                                      EDTCDE(Z)
+     A            GEQRT          3P 0
+     A                                      TEXT('EQUIPMENT RATE PERCENTAGE')
+     A                                      COLHDG('EQUIP' 'RATE' 'PCT')
+     A                                      EDTCDE(Z)
+     A            GSCJB          1A
+     A                                      TEXT('STANDARD COST JOB    -Y/N')
+     A                                      COLHDG('STD' 'COST' 'JOB')
+     A            GATBU          1A
+     A                                      TEXT('APPLY ACTUAL BURDEN TO  STAND-
+     A                                      ARD COST JOB   -Y/N')
+     A                                      COLHDG('ACTUAL' 'BURDEN')
+     A            GBUCD          1A
+     A                                      TEXT('BURDEN PERCENTAGE CODE')
+     A                                      COLHDG('BDN' 'PCT')
+     A            GCGCD          1A
+     A                                      TEXT('CHANGE ORDER CODE    -Y/N')
+     A                                      COLHDG('CGCD')
+     A            GSQAM          5P 0
+     A                                      TEXT('AMENDMENT SEQUENCE  (JSP)')
+     A                                      COLHDG('AMEND' 'SEQ')
+     A            GBTNO          5P 0
+     A                                      TEXT('BUDGET TRANSFER NO')
+     A                                      COLHDG('BUDG' 'TRANS' 'NO')
+     A                                      EDTCDE(Z)
+     A            GDTRP          8P 0
+     A                                      TEXT('REPORT DATE    -YYYY/MMDD')
+     A                                      COLHDG('REPORT' 'DATE')
+     A            GRSRT          5P 3
+     A                                      TEXT('REGIONAL STAFF RATE')
+     A                                      COLHDG('REGIONAL' 'RATE')
+     A                                      EDTCDE(J)
+     A            GFDRT          5P 3
+     A                                      TEXT('FIELD LABOR RATE')
+     A                                      COLHDG('FIELD' 'RATE')
+     A                                      EDTCDE(J)
+     A            GDTAC          8P 0
+     A                                      TEXT('ANTICIPATED COST DATE     YYY-
+     A                                      Y/MMDD')
+     A                                      COLHDG('ANTIC' 'COST' 'DATE')
+     A            GJCEE          1A
+     A                                      TEXT('POST JOB COST BY EMPLOYEE Y --
+     A                                       YES N - NO')
+     A                                      COLHDG('POST' 'J/C' 'EMPL')
+     A            GTW01          3A
+     A                                      TEXT('TYPE OF WORK')
+     A                                      COLHDG('TYPE' 'OF' 'WORK')
+     A            GTW02          3A
+     A                                      TEXT('TYPE OF WORK')
+     A                                      COLHDG('TYPE' 'OF' 'WORK')
+     A            GTW03          3A
+     A                                      TEXT('TYPE OF WORK')
+     A                                      COLHDG('TYPE' 'OF' 'WORK')
+     A            GTW04          3A
+     A                                      TEXT('TYPE OF WORK')
+     A                                      COLHDG('TYPE' 'OF' 'WORK')
+     A            GTW05          3A
+     A                                      TEXT('TYPE OF WORK')
+     A                                      COLHDG('TYPE' 'OF' 'WORK')
+     A            GTW06          3A
+     A                                      TEXT('TYPE OF WORK')
+     A                                      COLHDG('TYPE' 'OF' 'WORK')
+     A            GTW07          3A
+     A                                      TEXT('TYPE OF WORK')
+     A                                      COLHDG('TYPE' 'OF' 'WORK')
+     A            GEXST          1A
+     A                                      TEXT('EXEMPT FROM STATE')
+     A                                      COLHDG('EXST')
+     A            GRTBN          1A
+     A                                      TEXT('RATE TO INCL BENEFITS-Y/N')
+     A                                      COLHDG('RTBN')
+     A            GAOUTQ        10A
+     A                                      TEXT('A/P OUTPUT QUEUE')
+     A                                      COLHDG('A/P' 'OUTPUT' 'QUEUE')
+     A            GPOUTQ        10A
+     A                                      TEXT('P/R OUTPUT QUEUE')
+     A                                      COLHDG('P/R' 'OUTPUT' 'QUEUE')
+     A            GTMPRS         1P 0
+     A                                      TEXT('T/M PR SUMM TYPE')
+     A                                      COLHDG('P/R' 'SUMM' 'TYPE')
+     A            GTMINS         1P 0
+     A                                      TEXT('T/M IN SUMM TYPE')
+     A                                      COLHDG('I/N' 'SUMM' 'TYPE')
+     A            GTMEQS         1P 0
+     A                                      TEXT('T/M EQ SUMM TYPE')
+     A                                      COLHDG('E/Q' 'SUMM' 'TYPE')
+     A            GTMAPS         1P 0
+     A                                      TEXT('T/M AP SUMM TYPE')
+     A                                      COLHDG('A/P' 'SUMM' 'TYPE')
+     A            GTMSCS         1P 0
+     A                                      TEXT('T/M SC SUMM TYPE')
+     A                                      COLHDG('S/C' 'SUMM' 'TYPE')
+     A            GTMGLS         1P 0
+     A                                      TEXT('T/M GL SUMM TYPE')
+     A                                      COLHDG('G/L' 'SUMM' 'TYPE')
+     A            GTMEXP         1A
+     A                                      TEXT('EXPENSE REPORTS REQUIRED')
+     A                                      COLHDG('EXPENSE' 'REPORTS')
+     A            GTMINV         1A
+     A                                      TEXT('INVOICES REQUIRED')
+     A                                      COLHDG('INVOICES')
+     A            GTMTMC         1A
+     A                                      TEXT('TIME CARDS REQUIRED')
+     A                                      COLHDG('TIME' 'CARDS')
+     A            GA25A         25A
+     A                                      TEXT('ADDRESS LINE 1')
+     A                                      COLHDG('ADDRESS 1')
+     A            GA25B         25A
+     A                                      TEXT('ADDRESS LINE 2')
+     A                                      COLHDG('ADDRESS 2')
+     A            GCITY         18A
+     A                                      TEXT('CITY')
+     A                                      COLHDG('CITY')
+     A            GST            2A
+     A                                      TEXT('STATE')
+     A                                      COLHDG('ST')
+     A            GZIP           9A
+     A                                      TEXT('ZIP CODE')
+     A                                      COLHDG('ZIP' 'CODE')
+     A            GLIENA         9P 2
+     A                                      TEXT('PRELIEN AMOUNT')
+     A                                      COLHDG('PRELIEN' 'AMOUNT')
+     A                                      EDTCDE(J)
+     A            GLIEND         8P 0
+     A                                      TEXT('PRE LIEN DATE -YYYY/MMDD')
+     A                                      COLHDG('PRELIEN' 'DATE')
+     A            GDTLU          8P 0
+     A                                      TEXT('LAST UPDATED DATE  -YYYY/MMDD-
+     A                                      ')
+     A                                      COLHDG('DATE LAST' 'UPDATED')
+     A            GSDCD          1A
+     A                                      TEXT('SDI CODE-T=TAX STATE         -
+     A                                            W=W/C STATE')
+     A                                      COLHDG('SDI' 'CODE')
+     A            GHLTS          2P 0
+     A                                      TEXT('HALT CODE FOR S/C')
+     A                                      COLHDG('HALT CODE' 'FOR S/C')
+     A            GSCJC          1A
+     A                                      TEXT('USE STD COST IN JC RPT-Y/N')
+     A                                      COLHDG('SCJC')
+     A            GSCPM          1A
+     A                                      TEXT('USE STD COST IN PM RPT-Y/N')
+     A                                      COLHDG('SCPM')
+     A            GBUPM          1A
+     A                                      TEXT('INCL LBR BURDEN IN PM-Y/N')
+     A                                      COLHDG('BUPM')
+     A            GMLPM          1A
+     A                                      TEXT('USE MULT IN PM RPT   -Y/N')
+     A                                      COLHDG('MLPM')
+     A            GOW20         20A
+     A                                      TEXT('OWNER NAME')
+     A                                      COLHDG('OW20')
+     A            GHLZN          5A
+     A                                      TEXT('HAUL ZONE')
+     A                                      COLHDG('HAUL' 'ZONE')
+     A            GPSEQ          1A
+     A                                      TEXT('POST EQUIP USAGE USING JOB DI-
+     A                                      ST IN EQUIP MASTER')
+     A                                      COLHDG('POST' 'EQP')
+     A            GCTJB          6A
+     A                                      TEXT('CONSOLIDATE JOB')
+     A                                      COLHDG('CONSOLIDATE' 'JOB')
+     A            GCTSJ          3A
+     A                                      TEXT('CONSOLIDATE SUBJOB')
+     A                                      COLHDG('CONSOLIDATE' 'SUBJOB')
+     A            GDYOV          2P 0
+     A                                      TEXT('DAILY OVERTIME HOURS')
+     A                                      COLHDG('DAILY' 'OVERTIME' 'HOURS')
+     A                                      EDTCDE(Z)
+     A            GWKOV          2P 0
+     A                                      TEXT('WEEKLY OVERTIME HOURS')
+     A                                      COLHDG('WEEKLY' 'OVERTIME')
+     A                                      EDTCDE(Z)
+     A            GWGJB          1A
+     A                                      TEXT('PREVAILING WAGE JOB  -Y/N')
+     A                                      COLHDG('WGJB')
+     A            GMNSI          6A
+     A                                      TEXT('EQUIPMENT MAINTENANCE SITE')
+     A                                      COLHDG('MAINT' 'SITE')
+     A            GSTTC          3P 0
+     A                                      TEXT('USAGE STATE TAX (A/P)')
+     A                                      COLHDG('STATE' 'TAX' 'CODE')
+     A                                      EDTCDE(Z)
+     A            GLCTC          3P 0
+     A                                      TEXT('USAGE LOCAL TAX (A/P)')
+     A                                      COLHDG('LOCAL' 'TAX' 'CODE')
+     A                                      EDTCDE(Z)
+     A            GFXAC          3P 0
+     A                                      TEXT('FAX AREA CODE')
+     A                                      COLHDG('FAX' 'AREA' 'CODE')
+     A            GFXPH          7P 0
+     A                                      TEXT('FAX PHONE NUMBER')
+     A                                      COLHDG('FAX' 'PHONE' 'NUMBER')
+     A            GPRJB          6A
+     A                                      TEXT('PAYROLL CLASS JOB')
+     A                                      COLHDG('P/R' 'JOB')
+     A            GPRSJ          3A
+     A                                      TEXT('PAYROLL CLASS SUB JOB')
+     A                                      COLHDG('P/R' 'SUB' 'JOB')
+     A            GBDCD          1A
+     A                                      TEXT('BUDGET CODE')
+     A                                      COLHDG('BUDGET' 'CODE')
+     A            GUNNO          5A
+     A                                      TEXT('UNION NUMBER')
+     A                                      COLHDG('UNION#')
+     A            GCHDP          1A
+     A                                      TEXT('CHARGE COST TO DEPT  -Y/N')
+     A                                      COLHDG('CHRG' 'DEPT')
+     A            GTMAP          1A
+     A                                      TEXT('CREATE T/M FOR A/P   -Y/N')
+     A                                      COLHDG('A/P' 'T/M')
+     A            GTMGL          1A
+     A                                      TEXT('CREATE T/M FOR G/L   -Y/N')
+     A                                      COLHDG('G/L' 'T/M')
+     A            GTMPR          1A
+     A                                      TEXT('CREATE T/M FOR P/R   -Y/N')
+     A                                      COLHDG('P/R' 'T/M')
+     A            GTMEQ          1A
+     A                                      TEXT('CREATE T/M FOR EQP   -Y/N')
+     A                                      COLHDG('EQP' 'T/M')
+     A            GTMOR          1A
+     A                                      TEXT('CREATE T/M FOR ORP   -Y/N')
+     A                                      COLHDG('ORP' 'T/M')
+     A            GTMSR          1A
+     A                                      TEXT('CREATE T/M FOR SRP   -Y/N')
+     A                                      COLHDG('SRP' 'T/M')
+     A            GFNBL          1A
+     A                                      TEXT('FINAL BILL           -Y/N')
+     A                                      COLHDG('FINAL' 'BILL')
+     A            GEXTX          1A
+     A                                      TEXT('TAX EXEMPT')
+     A                                      COLHDG('EXTX')
+     A            GMKTY          1A
+     A                                      TEXT('MARKET TYPE')
+     A                                      COLHDG('MARK' 'TYPE')
+     A            GSYTY          1A
+     A                                      TEXT('SYSTEM TYPE')
+     A                                      COLHDG('SYS' 'TYP')
+     A            GSRTY          2A
+     A                                      TEXT('STRUCTURE TYPE       -Y/N')
+     A                                      COLHDG('STRUCT' 'TYPE')
+     A            GSRHT          2P 0
+     A                                      TEXT('STRUCTURE HEIGHT     -Y/N')
+     A                                      COLHDG('STRUCT' 'HEIGHT')
+     A            GTIME          6P 0
+     A                                      TEXT('TIME')
+     A                                      COLHDG('TIME')
+     A            GUSER         10A
+     A                                      TEXT('WORKSTATION USER')
+     A                                      COLHDG('USER')
+     A            GDTUL          8P 0
+     A                                      TEXT('DATE UPDATED LAST  -YYYY/MMDD-
+     A                                      ')
+     A                                      COLHDG('DATE' 'LAST' 'UPDATED')
+     A            GPCEQ          3P 0
+     A                                      TEXT('EQUIP PCT CUTOFF')
+     A                                      COLHDG('%' 'EQP' 'COST')
+     A                                      EDTCDE(Z)
+     A            GEORT          1A
+     A                                      TEXT('EOC RATE CODE')
+     A                                      COLHDG('EORT')
+     A            GEOPC          3P 0
+     A                                      TEXT('EOC PERCENT')
+     A                                      COLHDG('EOC' 'PCT')
+     A            GINMT          1A
+     A                                      TEXT('INCLUDE MATERIAL IN % COMPLET-
+     A                                      E Y - YES')
+     A                                      COLHDG('INCLUDE' 'MATERIALS' '% COM-
+     A                                      PL')
+     A            GRLMT          1A
+     A                                      TEXT('ROLL MATERIAL TO AMOUNT BILLE-
+     A                                      D')
+     A                                      COLHDG('ROLL MAT.' 'AMOUNT' 'BILLED-
+     A                                      ')
+     A            GPSNR          1A
+     A                                      TEXT('POST NET OF RETENTION')
+     A                                      COLHDG('POST NET OF' 'RETENTION')
+     A            GRTMX          9P 0
+     A                                      TEXT('MAXIMUM RETENTION AMOUNT')
+     A                                      COLHDG('MAXIMUM' 'RETN' 'AMOUNT')
+     A                                      EDTCDE(J)
+     A            GPCCN          3P 0
+     A                                      TEXT('PCT OF CONTRACT COMPLETE  TO -
+     A                                      USE REDUCED RETN PCT')
+     A                                      COLHDG('CONT' 'PCT' 'CMP')
+     A                                      EDTCDE(Z)
+     A            GPCRD          5P 3
+     A                                      TEXT('REDUCED RETN PCT')
+     A                                      COLHDG('RED' 'PCT')
+     A                                      EDTCDE(3)
+     A            GINST          1A
+     A                                      TEXT('INACTIVE STATUS      -Y/N')
+     A                                      COLHDG('INACT' 'STAT')
+     A            GTMRT          1A
+     A                                      TEXT('RETENT. PAYABLE TO T/M  -Y/N')
+     A                                      COLHDG('RETENT.' 'PAYABLE' 'TO T/M')
+     A            GRTPC          5P 2
+     A                                      TEXT('RETENTION PERCENT')
+     A                                      COLHDG('RETN' 'PCT')
+     A                                      EDTCDE(4)
+     A            GSCRT          5P 2
+     A                                      TEXT('SUBCONTRACT RETENTION')
+     A                                      COLHDG('S/C' 'RETN')
+     A                                      EDTCDE(4)
+     A            GCCFC         19P 9
+     A                                      TEXT('CURRENCY CONV. FACTOR')
+     A                                      COLHDG('CURRENCY' 'CONV' 'FACT')
+     A                                      EDTCDE(J)
+     A            GRTAP          5A
+     A                                      TEXT('CURRENCY CONV. RATE TYPE-A/P')
+     A                                      COLHDG('CURR' 'TYPE' 'A/P')
+     A            GRTAR          5A
+     A                                      TEXT('CURRENCY CONV. RATE TYPE-A/R')
+     A                                      COLHDG('CURR' 'TYPE' 'A/R')
+     A            GRTEQ          5A
+     A                                      TEXT('CURRENCY CONV. RATE TYPE-EQP')
+     A                                      COLHDG('CURR' 'TYPE' 'EQP')
+     A            GLWTY          1A
+     A                                      TEXT('LIEN WAIVER TYPE  1-DOLLAR  2-
+     A                                      -PERCENT')
+     A                                      COLHDG('LIEN' 'WAIVER' 'BASIS')
+     A            GLWBS          1A
+     A                                      TEXT('LIEN WAIVER BASED ON  1-CONTR-
+     A                                      ACT BASE  2-CONTRACT')
+     A                                      COLHDG('LIEN' 'WAIVER' 'BASIS')
+     A            GLWTX         10A
+     A                                      TEXT('LIEN WAIVER TEXT CODE')
+     A                                      COLHDG('LIEN WAIVER' 'TEXT CODE')
+     A            GLKAP          1A
+     A                                      TEXT('LINK TO A/P SUBCONTRACT  REQU-
+     A                                      IRED  -Y/N')
+     A                                      COLHDG('LKAP')
+     A            GLKAR          1A
+     A                                      TEXT('LINK TO A/R CONTRACT  REQUIRE-
+     A                                      D  -Y/N')
+     A                                      COLHDG('LKAR')
+     A            GBLDY          3P 0
+     A                                      TEXT('BILLING CYCLE DAYS')
+     A                                      COLHDG('BILL' 'CYCLE' 'DAYS')
+     A                                      EDTCDE(Z)
+     A            GDTBL          8P 0
+     A                                      TEXT('BILLING DATE    YYYY/MMDD')
+     A                                      COLHDG('BILLING' 'DATE')
+     A            GFMAP          2P 0
+     A                                      TEXT('A/P SUBCONTRACT FORM TYPE')
+     A                                      COLHDG('FORM' 'TYPE')
+     A            GFMAR          2P 0
+     A                                      TEXT('A/R CONTRACT FORM TYPE')
+     A                                      COLHDG('FORM' 'TYPE')
+     A            GICCT          1A
+     A                                      TEXT('CREATE INCOME COST DIST USING-
+     A                                       COST TYPE ONLY -Y/N')
+     A                                      COLHDG('ICCT')
+     A            GCSCO          2P 0
+     A                                      TEXT('CASH COMPANY NUMBER')
+     A                                      COLHDG('CASH' 'COMPANY NO.')
+     A            GCSDV          3P 0
+     A                                      TEXT('CASH DIVISION NUMBER')
+     A                                      COLHDG('CASH' 'DIVISION NO.')
+     A            GCMTK          1A
+     A                                      TEXT('COMBINED TICKETS')
+     A                                      COLHDG('CMTK')
+     A            GFMTM         10A
+     A                                      TEXT('T&M INVOICE FORMAT')
+     A                                      COLHDG('FMTM')
+     A            TIMESTAMP       Z
+     A                                      TEXT('TIMESTAMP')
+     A                                      COLHDG('TIMESTAMP')
+     A            USERID        10A
+     A                                      TEXT('WORKSTATION USER')
+     A                                      COLHDG('USER')
+     A            GTTTK          1A
+     A                                      TEXT('TOTAL BY TICKET')
+     A                                      COLHDG('TOTAL BY' 'TICKET')
+     A            GTTDT          1A
+     A                                      TEXT('TOTAL BY DATE')
+     A                                      COLHDG('TOTAL' 'BY' 'DATE')
+     A            GTTSG          1A
+     A                                      TEXT('TOTAL BY SEGMENT 1')
+     A                                      COLHDG('TOTAL BY' 'SEGMENT 1')
+     A            GTTCC          1A
+     A                                      TEXT('TOTAL BY COST CODE')
+     A                                      COLHDG('TOTAL BY' 'COST CODE')
+     A            GTTCT          1A
+     A                                      TEXT('TOTAL BY COST TYPE')
+     A                                      COLHDG('TOTAL BY' 'COST' 'TYPE')
+     A            GTTIT          1A
+     A                                      TEXT('TOTAL BY ITEM #')
+     A                                      COLHDG('TOTAL BY' 'ITEM #')
+     A            GTTWO          1A
+     A                                      TEXT('TOTAL BY CUST WRK ORDER')
+     A                                      COLHDG('TOTAL BY' 'CUST' 'WRK ORD')
+     A            GSMSG          1A
+     A                                      TEXT('SUMMARIZE BY SEGMENT1')
+     A                                      COLHDG('SUMMARIZE' 'BY SEGMENT1')
+     A            GSMCC          1A
+     A                                      TEXT('SUMMARIZE BY COST CODE')
+     A                                      COLHDG('SUMMARIZE' 'BY COST CD')
+     A            GSMCT          1A
+     A                                      TEXT('SUMMARY COST TYPE')
+     A                                      COLHDG('SUMMARY' 'COST' 'TYPE')
+     A            GSMIT          1A
+     A                                      TEXT('SUMMARIZE BY ITEM NO.')
+     A                                      COLHDG('SUMMARIZE' 'BY ITEM #')
+     A            GSMWO          1A
+     A                                      TEXT('SUMMARIZE BY CUST WRK ORD')
+     A                                      COLHDG('SUMM' 'BY CUS' 'WRK ORDR')
+     A            GTTPR          1A
+     A                                      TEXT('TOTAL BY PAYROLL')
+     A                                      COLHDG('TOTAL BY' 'PAYROLL')
+     A            GSMPR          1A
+     A                                      TEXT('SUMMARIZE BY PAYROLL')
+     A                                      COLHDG('SUMMARIZE BY PAYROLL')
+     A            GTTPEC         1A
+     A                                      TEXT('TOTAL BY P/R EMPL CLS/TYP')
+     A                                      COLHDG('TOTAL BY' 'EMP' 'EMP CLS')
+     A            GSMPEC         1A
+     A                                      TEXT('SUMMARIZE BY PR EMP CLS/TYP')
+     A                                      COLHDG('SUMM BY' 'EMP CLS/TY')
+     A            GTTPCL         1A
+     A                                      TEXT('TOTAL BY PAYROLL CLASS')
+     A                                      COLHDG('TOTAL BY' 'P/R CLS')
+     A            GSMPCL         1A
+     A                                      TEXT('SUMMARIZE BY PAYROLL CLASS')
+     A                                      COLHDG('SUMMARIZE' 'BY PR CLS')
+     A            GTTPEE         1A
+     A                                      TEXT('TOTAL BY P/R EMPL NUMBER')
+     A                                      COLHDG('TOTAL BY' 'EMP' 'NUMBER')
+     A            GSMPEE         1A
+     A                                      TEXT('SUMMARIZE BY P/R EMP NO.')
+     A                                      COLHDG('SUMMARIZE' 'BY PR EMP#')
+     A            GTTPDY         1A
+     A                                      TEXT('TOTAL BY PAYROLL DAY#')
+     A                                      COLHDG('TOTAL BY' 'PR DAY#')
+     A            GSMPDY         1A
+     A                                      TEXT('SUMMARIZE BY PROLL DAY #')
+     A                                      COLHDG('SUMMARIZE' 'BY PR DAY#')
+     A            GTTEQ          1A
+     A                                      TEXT('TOTAL BY EQUIPMENT')
+     A                                      COLHDG('TOTAL BY' 'EQPIPMENT')
+     A            GSMEQ          1A
+     A                                      TEXT('SUMMARIZE BY EQUIPMENT')
+     A                                      COLHDG('SUMMARIZE' 'BY EQUIPM')
+     A            GTTECL         1A
+     A                                      TEXT('TOTAL BY EQUIP CLASS')
+     A                                      COLHDG('TOTAL BY' 'EQP CLS')
+     A            GSMECL         1A
+     A                                      TEXT('SUMMARIZE BY EQUIP CLASS')
+     A                                      COLHDG('SUMMARIZE' 'BY EQP CLS')
+     A            GTTEQN         1A
+     A                                      TEXT('TOTAL BY EQUIP NUMBER')
+     A                                      COLHDG('TOTAL BY' 'EQP #')
+     A            GSMEQN         1A
+     A                                      TEXT('SUMMARIZE BY EQUIP NO.')
+     A                                      COLHDG('SUMMARIZE' 'BY EQP NO.')
+     A            GTTEDY         1A
+     A                                      TEXT('TOTAL BY EQUIP DAY #')
+     A                                      COLHDG('TOTAL BY' 'EQP DAY#')
+     A            GSMEDY         1A
+     A                                      TEXT('SUMMARIZE BY EQP DAY NO.')
+     A                                      COLHDG('SUMMARIZE' 'BY' 'EQP DAY#')
+     A            GTTIV          1A
+     A                                      TEXT('TOTAL BY INVENTORY')
+     A                                      COLHDG('TOTAL BY' 'INVENTORY')
+     A            GSMIV          1A
+     A                                      TEXT('SUMMARIZE BY INVENTORY')
+     A                                      COLHDG('SUMMARIZE' 'BY INVTRY')
+     A            GTTICL         1A
+     A                                      TEXT('TOTAL BY INVTRY CLASS')
+     A                                      COLHDG('TOTAL BY' 'INV CLS')
+     A            GSMICL         1A
+     A                                      TEXT('SUMMARIZE BY INVENTORY CLASS')
+     A                                      COLHDG('SUMMARIZE' 'BY INV CLS')
+     A            GTTIPT         1A
+     A                                      TEXT('TOTAL BY PART NUMBER')
+     A                                      COLHDG('TOTAL BY' 'PART #')
+     A            GSMIPT         1A
+     A                                      TEXT('SUMMARIZE BY PART NO.')
+     A                                      COLHDG('SUMMARIZE' 'BY PART #')
+     A            GTTIIN         1A
+     A                                      TEXT('TOTAL BY INVOICE #')
+     A                                      COLHDG('TOTAL BY' 'INV #')
+     A            GSMIIN         1A
+     A                                      TEXT('SUMMARIZE BY INVOICE NO.')
+     A                                      COLHDG('SUMMARIZE' 'BY INV NO.')
+     A            GTTAP          1A
+     A                                      TEXT('TOTAL BY A/P')
+     A                                      COLHDG('TOTAL' 'BY' 'A/P')
+     A            GSMAP          1A
+     A                                      TEXT('SUMMARIZE BY A/P')
+     A                                      COLHDG('SUMMARIZE' 'BY A/P')
+     A            GTTAVN         1A
+     A                                      TEXT('TOTAL BY VENDOR #')
+     A                                      COLHDG('TOTAL' 'BY' 'VEND #')
+     A            GSMAVN         1A
+     A                                      TEXT('SUMMARIZE BY VENDOR NO.')
+     A                                      COLHDG('SUMMARIZE' 'BY VND NO.')
+     A            GTTACN         1A
+     A                                      TEXT('TOTAL BY CONTRACT NUMBER')
+     A                                      COLHDG('TOTAL' 'BY' 'CONT NUMBER')
+     A            GSMACN         1A
+     A                                      TEXT('SUMMARIZE BY CONTRACT NO.')
+     A                                      COLHDG('SUMMARIZE' 'BY' 'CONTR NO')
+     A            GTTAIN         1A
+     A                                      TEXT('TOTAL BY INVOICE #')
+     A                                      COLHDG('TOTAL' 'BY' 'INV #')
+     A            GSMAIN         1A
+     A                                      TEXT('SUMMARIZE BY INVOICE NO.')
+     A                                      COLHDG('SUMMARIZE' 'BY' 'INV NO.')
+     A            GTMAR          1A
+     A                                      TEXT('Create T&M from A/R Y/N')
+     A                                      COLHDG('Create T&M' 'From AR' 'Y/N')
+     A            GFLAL          1A
+     A                                      TEXT('FUEL ALLOCATION -(Y/N)')
+     A                                      COLHDG('FUEL' 'ALLOC')
+     A            GJCFL         15A
+     A                                      TEXT('J/C DISTRIBUTION-FUEL COST')
+     A                                      COLHDG('J/C' 'DIST' 'FUEL')
+     A            GFLCT          1A
+     A                                      TEXT('FUEL COST TYPE')
+     A                                      COLHDG('FUEL' 'COST' 'TYPE')
+     A            GURLA         64A
+     A                                      TEXT('URL ADDRESS')
+     A                                      COLHDG('URL' 'ADDRESS')
+     A            GPSSN          1A
+     A                                      TEXT('Print SSN on Cert PR Rpt')
+     A                                      COLHDG('Print SSN on' 'Cert PR Rpt')
+     A            GCSG1          1P 0
+     A                                      TEXT('COMBINATION SEG 1')
+     A                                      COLHDG('COMBINATION' 'SEG 1')
+     A            GCSG2          1P 0
+     A                                      TEXT('COMBINATION SEG 2')
+     A                                      COLHDG('COMBINATION' 'SEG 2')
+     A            GCSG3          1P 0
+     A                                      TEXT('COMBINATION SEG 3')
+     A                                      COLHDG('COMBINATION' 'SEG 3')
+     A            GCSG4          1P 0
+     A                                      TEXT('COMBINATION SEG 4')
+     A                                      COLHDG('COMBINATION' 'SEG 4')
+     A            GCSG5          1P 0
+     A                                      TEXT('COMBINATION SEG 5')
+     A                                      COLHDG('COMBINATION' 'SEG 5')
+     A            GCKTX          1A
+     A                                      TEXT('CHECK TAX AT CUSTOMER LEVEL')
+     A                                      COLHDG('CHECK TAX' 'AT CUSTOMER' 'L-
+     A                                      EVEL')
+     A          K GCONO
+     A          K GDVNO
+     A          K GJBNO
+     A          K GSJNO

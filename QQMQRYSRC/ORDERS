@@ -1,0 +1,15 @@
+H QM4 05 Q 01 E V W E R 01 03 16/07/11 10:55
+V 1001 050 Orders Report
+SELECT
+-- Columns
+      B.XWBCCD, B.XWCREF, C.XWABCD, D.XWHLTX, C.XWAACS, C.XWA5QT, C.XWPRIC,
+      C.XWA5QT * C.XWPRIC AS NETVAL, B.XWORDN
+-- Tables
+      FROM "CONHDR" B,
+           "CONDET" C,
+           "STKMAS" D
+-- Join Conditions
+      WHERE (B.XWORDN = C.XWORDN)
+           AND (C.XWABCD = D.XWABCD)
+-- Sort Columns
+      ORDER BY B.XWBCCD, B.XWORDN

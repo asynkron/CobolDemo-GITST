@@ -1,0 +1,10 @@
+     A          R RORGS
+     A            ONAME         34A         TEXT('Organisation Name')
+     A            CRTNAM        10A         TEXT('Created By:')
+     A            CRTDAT         6S 0       TEXT('Creation Date')
+     A                                      EDTCDE(Y)
+     A            UPDNAM        10A         TEXT('Updated By:')
+     A            UPDDAT         6S 0       TEXT('Update Date')
+     A                                      EDTCDE(Y)
+     A            ORG            5P 0       TEXT('Organisation No.')
+     A          K ORG

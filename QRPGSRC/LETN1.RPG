@@ -1,0 +1,11 @@
+     FCUSFL3  IF  E           K        DISK
+     C           *ENTRY    PLIST
+     C                     PARM           CUSNO
+     C                     PARM           PREFIX                          007300
+     C                     PARM           LLETSQ
+     C           CUSNO     CHAINCUSFL3               81
+     C           PREFIX    IFEQ *BLANK
+     C                     MOVE CUSNO     PREFIX
+     C**                   MOVE CUSNAM    PRENAM
+     C                     END
+     C                     RETRN

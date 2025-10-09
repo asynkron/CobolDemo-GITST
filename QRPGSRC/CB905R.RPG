@@ -1,0 +1,103 @@
+     FCBAC02  IF  E           K        DISK
+     FCBORPF  UF  E           K        DISK
+     C           *ENTRY    PLIST
+     C                     PARM           WWBRNA  30
+     C                     PARM           WWACFN  3
+     C                     PARM           WWACTP  10
+     C                     PARM           WWACNO  50
+     C                     PARM           WWACSS  1
+     C                     PARM           WWACBL 102
+     C                     PARM           WWDAPG  60
+     C                     PARM           WWDXPG  60
+     C                     PARM           WWPTIT 104
+     C           KEY001    KLIST
+     C                     KFLD           WWBRNO
+     C                     KFLD           WWACTP
+     C                     KFLD           WWACNO
+     C           *LIKE     DEFN WWTAAM    W3TAAM
+     C                     MOVE 'N'       XXRVFG  3
+     C           WWACFN    IFEQ 'CUR'
+     C           WWACFN    OREQ 'SAV'
+     C                     MOVE 'N'       XXUAFG  2
+     C                     ELSE
+     C                     MOVE 'Y'       XXUAFG
+     C                     END
+     C           KEY001    CHAINCBAC02               99
+     C           WWACSS    IFEQ 'A'
+     C           WWACFN    OREQ 'CCA'
+     C                     Z-ADDACITRT    WWITRT
+     C           WWACFN    IFEQ 'CAP'
+     C           WWACFN    OREQ 'CCX'
+     C           WWACBL    IFGT *ZERO
+     C                     Z-ADDACRNRT    WWITRT
+     C                     END
+     C                     END
+     C           WWVLDA    IFEQ XXTODA
+     C                     CALL 'CB903R'
+     C*                    CALL 'CB906R'
+     C                     PARM           XXITAM
+     C                     PARM           XXTRAM
+     C                     Z-ADDWWVLDA    WKVLDA
+     C                     SUB  XXITAM    WWPTIT
+     C                     Z-ADD0         XXITAM
+     C                     Z-ADD0         XXTRAM
+     C*                    Z-ADD1         XXTRAM
+     C                     Z-ADDWWVLDA    WKVLDA
+     C                     ADD  XXITAM    WWPTIT
+     C                     ADD  XXTRAM    WWPTTR
+     C                     END
+     C                     END
+     C                     END
+     C           WWACFG    IFEQ 'T'
+     C           WWTATP    IFEQ 'CLS'
+     C*          WWTATP    IFEQ 'CLA'
+     C           WWTATP    OREQ 'SHT'
+     C           WWCHG     IFEQ 'D'
+     C                     MOVE 'A'       WWACSS
+     C           WWACFN    IFEQ 'MC '
+     C           WWACFN    OREQ 'CCA'
+     C           WWACFN    OREQ 'HHP'
+     C                     Z-ADD0         XXITAM
+     C                     Z-ADD0         XXTRAM
+     C                     Z-ADDWWDAPG    WKVLDA
+     C                     Z-ADDXXITAM    WWPTIT
+     C                     Z-ADDXXTRAM    WWPTTR
+     C                     END
+     C                     ELSE
+     C                     MOVE 'S'       WWACSS
+     C                     Z-ADD0         WWPTIT
+     C                     Z-ADD0         WWPTTR
+     C                     END
+     C                     END
+     C                     END
+     C           WWTATP    IFEQ 'COF'
+     C           WWCHG     IFEQ 'D'
+     C                     MOVE 'A'       WWACSS
+     C                     ELSE
+     C                     MOVE 'B'       WWACSS
+     C                     END
+     C                     END
+     C           WWACFN    IFEQ 'CAP'
+     C           WWTATP    IFEQ 'REP'
+     C           WWTATP    OREQ 'MLR'
+     C           WWTATP    OREQ 'PUR'
+     C           KEY001    SETLLCBORPF
+     C           *IN90     DOUEQ'1'
+     C           KEY001    READECBORPF                 9090
+     C           EVCSFG    IFNE 'Y'
+     C           *IN90     ANDEQ'0'
+     C           EVAAAM    IFEQ 0
+     C                     SETON                     90
+     C                     ELSE
+     C                     SUB  WWTAAM    EVAAAM
+     C           EVAAAM    IFLT 0
+     C                     Z-ADD0         EVAAAM
+     C                     END
+     C                     UPDATCBORRF
+     C                     END
+     C                     END
+     C                     END
+     C                     END
+     C                     END
+     C                     SETON                     LR
+     C                     RETRN

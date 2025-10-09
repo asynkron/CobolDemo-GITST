@@ -1,0 +1,7 @@
+     A                                      UNIQUE
+     A          R STATUSR
+     A
+     A            XWSTAT         2A         TEXT('Status code')
+     A            XWSDSC        20A         TEXT('Description')
+     A
+     A          K XWSTAT

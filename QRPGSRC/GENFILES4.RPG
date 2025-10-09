@@ -1,0 +1,42 @@
+      *  GENFILES4
+      *  Example program to demonstrate Physical and Logical
+      *  file generation from RPG input specifications.
+      *
+      *  X@LIST will generate an un-keyed Physical file
+      *
+      *  DEAL will generate a Logical file  DEAL
+      *      and Physical files             DEALDA
+      *                                     DEALDB
+      *                                     DEALH
+      *
+      *
+      *
+     FX@LIST  UF  F     180            DISK
+      *
+     FDEAL    IF  F     250  6AI     2 DISK
+      *
+     IX@LIST  NS
+     I                                        1   2 #SECT
+     I                                        3  12 #OBJ
+     I                                    P  22  299#LSEQ
+     I                                       30 103 #TEXT
+     IDEAL    NS  02   1 CD  13 CA
+     I                                        1   1 RECI
+     I                                        2   7 DLNOA
+     I                                        8  17 CUSA
+     I                                    P  18  220AMT
+     I                                       32  50 DLNM
+     I        NS  03   1 CD  13 CB
+     I                                        1   1 RECI
+     I                                        2   7 DLNOB
+     I                                       32  50 DLNM
+     I                                       60  70 COMET
+     I                                        8  17 CUS
+     I                                    P  18  220AMT
+     IDEAL    NS  01   1 CH
+     I                                        1 250 RECALL
+     I                                        1   1 RECI
+     I                                        2   7 DLNO
+     I                                        8  17 CUS
+     I                                    P  18  210NORECS
+     I                                    P  22  290HASH

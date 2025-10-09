@@ -1,0 +1,4 @@
+                R RDEM
+                  FLD1          10A         COLHDG('FISRT NAME')
+                  FLD2          10A         COLHDG('MIDDLE NAME')
+                  FLD3          10A         COLHDG('LAST NAME')

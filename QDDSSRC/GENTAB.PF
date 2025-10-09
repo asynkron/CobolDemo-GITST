@@ -1,0 +1,7 @@
+     A          R GENTABR
+     A            FLDNAM        10A         TEXT('Field Name')
+     A            CODVAL        10A         TEXT('Code Value')
+     A            CODTXT        34A         TEXT('Code Text')
+     A            CODVL2        10A         TEXT('Code Extras')
+     A          K FLDNAM
+     A          K CODVAL

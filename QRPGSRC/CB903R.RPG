@@ -1,0 +1,139 @@
+     FCBINPF  IF  E           K        DISK
+     FCBAC02  IF  E           K        DISK
+     IXXRVDA      DS
+     I                                        1   2 XXRVY1
+     I                                        5   6 XXRVDD
+     IXXRVD2      DS
+     I                                        5   6 XXRVDD
+     C           *ENTRY    PLIST
+     C                     PARM           WWACBR  30       BRANCH
+     C                     PARM           WWACTP  10       A/C TYPE
+     C                     PARM           WWACNO  50       A/C NO
+     C                     PARM           XXFMDA  60       FROM DATE
+     C                     PARM           XXTODA  60       TO DATE
+     C                     PARM           WWACBL 102       A/C BALANCE
+     C                     PARM           WWTROP  1        TAX REL OPTN
+     C                     PARM           XXITAM 102       INT. AMOUNT
+     C                     PARM           XXTRAM 104       TAX RLF AMT
+     C           KEY001    KLIST
+     C                     KFLD           RPACBR
+     C                     KFLD           RPACTP
+     C                     KFLD           RPACNO
+     C*  Initialise fields
+     C*
+     C**                   Z-ADDWWACBL    W3ACBL  73
+     C                     Z-ADDWWACBL    W2ACBL 103
+     C                     MOVE WWITRX    WWITRT  51
+     C                     Z-ADDRPACBR    WWACBR
+     C                     MOVE RPACNO    WWACNO
+     C           KEY003    CHAINCBAC02               99
+     C                     Z-ADDXXACBR    RPACBR
+     C                     MOVE WWACTP    RPACTP
+     C**                   MOVELWWACTP    RPACTP
+     C                     MOVE WWACNO    RPACNO
+     C           KEY001    SETGTCBINPF
+     C                     Z-ADDWWITRT    AAITRT  52
+B1   C           *IN90     DOUEQ'1'
+     C           KEY002    READECBINPF                   90
+B2   C           *IN90     IFEQ '0'
+     C           RPTASS    ANDNE'R'
+     C*
+B3   C           RPVLDA    IFGE XXTODA
+     C                     MOVE FDA       FDB
+     C                     MOVE '1'       *IN90
+X3   C                     ELSE
+B4   C           XXEVNT    IFEQ 'N'
+     C                     MOVE XXACNO    RPACNO
+E4   C                     END
+     C*
+     C*  Calculate interest between dates and accumulate
+     C*
+     C                     EXSR SR001
+     C                     MOVE RPVLDA    X2FMDA
+     C*
+E3   C                     END
+     C*
+E2   C                     END
+E1   C                     END
+B1   C           XXEVNT    IFEQ 'N'
+     C                     MOVE XXFMDA    X3FMDA
+     C                     Z-ADDXXTODA    RPVLDA
+     C                     EXSR SR001
+E1   C                     END
+B1   C           XXEVNT    IFEQ 'Y'
+     C                     MOVE XXTODA    RPVLDA
+     C                     EXSR SR001
+E1   C                     END
+     C*
+     C                     Z-ADDW2ACBL    WWACBL
+     C                     Z-ADDW2ITRT    WWITRT
+     C                     MOVE W2TROP    WWTROP
+     C*
+     C                     SETON                     LR
+     C                     RETRN
+     C*----------------------------------------------------------------
+     C           SR001     BEGSR                           XX
+     C*----------------------------------------------------------------
+     C*  SR001     CALCULATE INTEREST FOR PERIOD BETWEEN DATES
+     C*----------------------------------------------------------------
+     C*
+     C                     MOVE FLDA      FLDB
+     C                     MOVE APVLD1    X2TOD1
+     C*
+     C                     MOVE X2TODA    XXRVDA
+     C                     MOVELXXRVDD    X2TODA
+     C*
+     C                     MOVE X2FMDA    XXRVDA
+     C                     MOVELXXRVDD    X2FMDA
+     C                     Z-ADD0         WWCRIR  53
+     C                     Z-ADD0         WWDRIR  53
+     C                     Z-ADD0         WWTXRT  53
+     C*                    Z-ADD0         WWTXRT  73
+     C*
+     C           ACACFN    IFEQ 'SAV'
+     C           ACNTTX    ANDNE'Y'
+     C                     MOVE 'SVG'     WWACFN  3
+     C                     ELSE
+     C                     MOVE ACACFN    WWACFN
+     C                     END
+     C           ACACFN    IFEQ 'SAV'
+     C                     Z-ADDACITRT    WWCRIR
+     C                     ADD  WWIRAJ    WWCRIR
+     C                     ELSE
+     C                     Z-ADDACITRT    WWDRIR
+     C                     END
+     C           ACACFN    IFEQ 'CAP'
+     C           ACACFN    OREQ 'CCA'
+     C                     Z-ADDACRNRT    WWCRIR
+     C                     END
+     C           WWCRIR    DIV  100       W1CRIR  86
+     C           WWDRIR    DIV  100       W1DRIR  86
+     C           WWTXRT    DIV  100       W1TXRT  86
+     C                     MULT W1DRIR    W1TXRT
+B1   C           WWACBL    IFLT *ZERO
+     C           XXWK01    DIV  365       XXWK01    H
+     C                     MULT WWACBL    XXWK01
+     C                     MULT W1DRIR    XXWK01
+     C                     ADD  XXWK01    XXITAM    H
+B2   C           WWTROP    IFEQ 'Y'
+     C           XXDAYS    MULT W1TXRT    XXWK01
+     C           XXWK01    DIV  365       XXWK01    H
+     C           WWACBL    MULT -1        W1ACBL 102
+     C*          WWACBL    MULT -3        W1ACBL 102
+B3   C           W1ACBL    IFGT WWTRLM
+     C                     MULT WWTRLM    XXWK01
+X3   C                     ELSE
+     C                     MULT W1ACBL    XXWK01
+E3   C                     END
+     C                     ADD  XXWK01    XXTRAM    H
+E2   C                     END
+E1   C                     END
+B1   C           WWACBL    IFGT *ZERO
+     C           XXWK01    DIV  365       XXWK01    H
+     C                     MULT WWACBL    XXWK01
+     C                     MULT W1CRIR    XXWK01
+     C                     ADD  XXWK01    XXITAM    H
+E1   C                     END
+     C*
+     C                     ENDSR
+     C*----------------------------------------------------------------

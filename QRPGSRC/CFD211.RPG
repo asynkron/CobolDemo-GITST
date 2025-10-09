@@ -1,0 +1,8 @@
+     C                     READ CBACPF                   90
+     C  N90      MRN       COMP 1                        27
+     C  N90 27             MOVE 'ERR'     CLL001
+     C  N90 27             EXSR $ERMSG
+     C   90                EXSR $PV001
+     C   90      MRN       COMP 2                        27
+     C   90 27             MOVE 'ERR'     CLL001
+     C   90 27             EXSR $ERMSG

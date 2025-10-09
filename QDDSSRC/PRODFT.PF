@@ -1,0 +1,9 @@
+     A                                      UNIQUE
+     A          R PRODFTR
+     A            XWTRPT        11A         TEXT('Tracking Point')
+     A            XWSEQN         3S 0       TEXT('Sequence')
+     A            XWTRDS        30A         TEXT('Description')
+     A            XWLDTM         3S 0       TEXT('Lead Time Days')
+     A            XWMSPT         1A         TEXT('Master Point')
+     A                                      VALUES('Y' 'N')
+     A          K XWTRPT

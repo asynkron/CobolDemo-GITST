@@ -1,0 +1,118 @@
+     FOE006RT O   E             01     PRINTER
+     FCUSTSL3 IF  E           K        DISK
+     FCUSFL3  IF  E           K        DISK
+     F*CUSTS   IF  E           K        DISK
+     FPTYPES  IF  E           K        DISK
+     F*
+     E                    TXT     1   3 60
+     I           SDS
+     I                                     *ROUTINE $ROUT
+     I                                     *STATUS  $STAT
+     I                                     *PARMS   $PARM
+     I                                     *PROGRAM @@PGM
+     I                                      244 253 @@JOB
+     I*
+      * Special narrative datastructure
+     ISNARR       DS                             80
+     I                                        1  60 NARR1
+     I                                        1  10 NPREFX
+     I                                       11  70 NMSG2
+     C*****************************************************************
+     C* Receive Parameters
+     C           *ENTRY    PLIST
+     C                     PARM           @@RTN   1        Return Code
+     C*
+     C                     Z-ADD1         CUSNO
+     C           CUSNO     CHAINCUSFL3               2020
+     C*
+     C* ---------------------------------------------------------------
+     C* For each order (of correct status)
+     C           *IN20     DOWEQ'0'
+     C*
+     C* Get Customer Record
+     C           CUSNO     CHAINCUSTSL3              4040                 @@REDR
+     C           *IN40     IFEQ '1'                                       @@REDR
+     C                     MOVEL*BLANKS   CSNAME
+     C                     MOVEL*BLANKS   CSADD1
+     C                     MOVEL*BLANKS   CSADD2
+     C                     MOVEL*BLANKS   CSADD3
+     C                     MOVEL*BLANKS   CSPSCD
+     C                     END
+     C*
+     C* Print Order Header
+     C                     WRITE@@HD01                 99                 @@REDR
+     C*
+     C* Get Terms of Trade
+     C           PRPCDE    CHAINPTYPES               4343
+     C* Initialise Invoice Total
+     C                     Z-ADD*ZERO     TOTAL                           @@REDR
+     C*
+     C* Get Order Detail Records
+     C           CUSNO     CHAINCUSTSL3              4141                 @@REDR
+     C*
+     C           *IN41     DOWEQ'0'                                       @@REDR
+     C*   Get Product Description
+     C           PRPCDE    CHAINPTYPES               4242                 @@REDR
+     C*   Calculate discounted unit cost
+     C           XWGIVA    MULT 0.5       WKCOST 155                      @@REDR
+     C           XWGIVA    DIV  100       WKCOST    H                     @@REDR
+     C           XWGIVA    SUB  WKCOST    RTUNIT                          @@REDR
+     C*   Calculate Line Value
+     C           OLQTY     MULT RTUNIT    RTCOST                          @@REDR
+     C*   Accumulate Invoice Total
+     C                     ADD  RTCOST    TOTAL                           @@REDR
+     C*   Print Order Detail Line
+     C                     WRITE@@DT01                 99                 @@SF01
+     C           CUSNO     READECUSTSL3                4141               @@REDR
+     C                     END
+     C*
+     C* Determine Carrier
+     C           TOTAL     IFGT 9999
+     C                     Z-ADD1         XWGIVA
+     C                     ELSE
+     C           TOTAL     IFGT 100
+     C                     Z-ADD2         XWGIVA
+     C                     ELSE
+     C                     Z-ADD1         XWGIVA
+     C                     END
+     C                     END
+     C*
+      * Build Special Narrative
+     C                     MOVE *BLANKS   SNARR
+     C           TOTAL     IFGT 1000
+     C                     MOVELTXT,1     NARR1
+     C                     ELSE
+     C                     MOVELTXT,2     NARR1
+     C                     END
+     C                     MOVELSNARR     CMMNT1
+      *
+     C                     MOVE *BLANKS   SNARR
+     C                     MOVEL'*****'   NPREFX
+     C                     MOVELTXT,3     NMSG2
+      *
+     C                     MOVELSNARR     CMMNT3
+      *
+     C* Print Order Footer
+     C                     WRITE@@END                  99                 @@REDR
+     C*
+     C* Update Order Status
+     C                     MOVEL'I'       STATUS
+     C*
+     C* ---------------------------------------------------------------
+     C*
+     C                     ADD  1         OHORDN
+     C           CUSNO     CHAINCUSFL3               2020
+     C*
+     C* End: For each order (of correct status)
+     C                     END
+     C* ---------------------------------------------------------------
+     C*
+     C* Terminate Program
+     C                     MOVEL'0'       @@RTN
+     C                     SETON                     LR
+     C                     RETRN
+     C*****************************************************************
+** TXT array data
+Your future orders will now be further discounted by 2%
+Thank you for your order. We value your custom.
+Trade account discounts are review quarterly.

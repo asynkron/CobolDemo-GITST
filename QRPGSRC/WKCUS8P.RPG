@@ -1,0 +1,14 @@
+     FQLETSRC IF  F      92            DISK
+     FQSYSPRT O   F     132     OA     PRINTER
+     IQLETSRC AA
+     I                                       13  92 SRCDTA
+     C                     MOVE '1'       *INOA
+     C                     READ QLETSRC                  LR
+     C           *INLR     DOWEQ'0'
+     C                     EXCPTPRTDET
+     C                     READ QLETSRC                  LR
+     C                     END
+     C**
+     OQSYSPRT H 00 1   OA
+     O        EF 1             PRTDET
+     O                         SRCDTA    80

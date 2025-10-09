@@ -1,0 +1,10 @@
+     A                                      UNIQUE
+     A          R STKGRP1R
+     A            XWAGCD         2A         TEXT('Stk Group 1                 ')
+     A                                      COLHDG('Grp' -
+     A                                      ' 1')
+     A            XWIWTX        10A         TEXT('Stk Group Desc              ')
+     A                                      COLHDG('Desc')
+     A            XWIGTX        40A         TEXT('Stk Group Description       ')
+     A                                      COLHDG('Description')
+     A          K XWAGCD

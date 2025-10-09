@@ -1,0 +1,6 @@
+     A          R XFRFR
+     A            CONO           2P00       TEXT('COMPANY NUMBER')
+     A                                      COLHDG('CO' 'NO')
+     A            CSLC          10A         TEXT('CUSTOMER LOCATION')
+     A            DVNO           3P00       TEXT('DIVISION NUMBER')
+     A                                      COLHDG('DIV' 'NO.')

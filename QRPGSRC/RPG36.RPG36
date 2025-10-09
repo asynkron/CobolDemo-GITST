@@ -1,0 +1,40 @@
+      *
+     H                              I111    111111111111
+      *
+     FFILE    IF        125 10AI  EXTK DISK
+     F                                              KFMTS  WRKSTN
+      *
+     FFILE    CP  F     125            WORKSTN
+     F                                              KFMTS
+      *
+     FFILE    CP        125            WORKSTN
+     F                                              KFMTS  WRKSTN
+      *
+     FCONSOLE IP        125            CONSOLE
+      *
+     FKEYBORD IP        125            KEYBORD
+      *
+     FCRT     O         125            CRT
+      *
+     FBSCA    IP        125            BSCA
+      *
+     TFILE     T
+      *
+     ID
+     I                                        1   2 A
+      *
+     C                     Z-ADD1         B       53
+      *
+     C                     EXIT SUBR23
+     C                     RLABL          A
+     C                     RLABL          B
+     C                     RLABL          C       31
+     C                     RLABL          ACJBAD
+      *
+     C                     KEY01          A
+      *
+     C                     KEY            B
+      *
+     C                     SET02
+      *
+     C                     SET

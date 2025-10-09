@@ -1,0 +1,5 @@
+     A                                      UNIQUE
+     A          R CUSGRPR
+     A            XWBNCD         2A         TEXT('CusGrp')
+     A            XWKHTX        40A         TEXT('Description')
+     A          K XWBNCD

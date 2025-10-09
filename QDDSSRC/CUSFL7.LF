@@ -1,0 +1,11 @@
+     A          R RCUSF                     PFILE(CUSF)
+     A          K LCTDAT
+     A          K STATUS
+     A          K CNAME
+     A          O DSDCDE                    CMP(NE ' ')
+     A          O FAXNO                     CMP(EQ '      ')
+     A          O STATUS                    CMP(LT '0')
+     A            STATUS                    CMP(NE ' ')
+     A            STATUS                    CMP(NE 'Z')
+     A          O STATUS                    CMP(EQ '7')
+     A          O STATUS                    CMP(EQ '9')

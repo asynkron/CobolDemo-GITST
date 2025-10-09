@@ -1,0 +1,4 @@
+      * SIMON       24/02/06  A0000001    Default Audit, delete if not required
+     A          R RCNTAC                    PFILE(CNTACS)
+     A          K SINIT
+     A          K USERNM

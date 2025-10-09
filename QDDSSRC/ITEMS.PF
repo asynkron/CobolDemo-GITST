@@ -1,0 +1,8 @@
+     A                                      UNIQUE
+     A          R RITEMS
+     A            #ITEM         10A         TEXT('Item #')
+     A            #DESC         30A         TEXT('Description')
+     A            #PART         15A         TEXT('Part #')
+     A            #WEIGHT        3P 0       TEXT('Weight')
+     A            #UOM           3A         TEXT('Weight Unit of Measure')
+     A          K #ITEM

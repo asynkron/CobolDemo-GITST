@@ -1,0 +1,34 @@
+     A                                      UNIQUE
+     A          R STKBALR
+     A            XWAACS        11A         TEXT('Store                       ')
+     A            XWABCD        20A         TEXT('Stk Bal Product             ')
+     A                                      COLHDG('Product')
+     A            XWAGCD         2A         TEXT('Stk Group 1                 ')
+     A                                      COLHDG('Grp' -
+     A                                      ' 1')
+     A            XWAHCD         2A         TEXT('Stk Group 2                 ')
+     A                                      COLHDG('Grp' -
+     A                                      '2')
+     A            XWAICD         2A         TEXT('Stk Group 3                 ')
+     A                                      COLHDG('Grp' -
+     A                                      ' 3')
+     A            XWA2CD         3A         TEXT('Stk Unit of Measure         ')
+     A                                      COLHDG('U/M')
+     A            XWBHQT        13P 4       TEXT('Stk Bal OnHand              ')
+     A                                      COLHDG('      Onhand' -
+     A                                      '    Quantity')
+     A                                      EDTCDE(M)
+     A            XWBKQT        13P 4       TEXT('Stk Bal Purch Ord           ')
+     A                                      COLHDG('     Pur Ord' -
+     A                                      '     Balance')
+     A                                      EDTCDE(M)
+     A            XWBMQT        13P 4       TEXT('Stk Bal Sales Order         ')
+     A                                      COLHDG('Stk Bal' -
+     A                                      'Sales Order')
+     A                                      EDTCDE(M)
+     A            XWFVQT        13P 4       TEXT('Stk Bal Production          ')
+     A                                      COLHDG('Stk Bal' -
+     A                                      'Production')
+     A                                      EDTCDE(M)
+     A          K XWABCD
+     A          K XWAACS

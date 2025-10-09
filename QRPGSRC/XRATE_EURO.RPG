@@ -1,0 +1,6 @@
+     C           *ENTRY    PLIST
+     C                     PARM           @PARM   64
+     C*
+     C                     MOVE 1.5870    @PARM
+     C                     RETRN
+     C*

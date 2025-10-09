@@ -1,0 +1,240 @@
+     FOE001DF CF  E                    WORKSTN
+     F                                        @RRN1 KSFILE OESFL
+     FCUSTSL3 UF  E           K        DISK                      A
+     FPTYPES  IF  E           K        DISK
+     F*
+     E                    CMD     1   3 78               CMD Key Data
+     E*
+     I           SDS
+     I                                     *ROUTINE $ROUT
+     I                                     *STATUS  $STAT
+     I                                     *PARMS   $PARM
+     I                                     *PROGRAM @@PGM
+     I                                      244 253 @@JOB
+     I*
+     C*****************************************************************
+     C* Receive Parameters
+     C*
+     C           *ENTRY    PLIST
+     C                     PARM           @@RTN   1        Return Code
+     C*
+     C* Until F3
+     C           *IN03     DOUEQ'1'
+     C*
+     C*  Initialise screen
+     C                     MOVEACMD,1     CMDDTA
+     C                     MOVEL*BLANKS   CSNAME
+     C                     MOVEL*BLANKS   CSADD1
+     C                     MOVEL*BLANKS   CSADD2
+     C                     MOVEL*BLANKS   CSADD3
+     C                     MOVEL*BLANKS   CSPSCD
+     C**                   MOVEL*BLANKS   CSPSCD
+     C                     Z-ADD*ZERO     DSCSNO
+      * Retrieve last order number
+     C           *HIVAL    SETGTCUSTSL3
+     C                     READPCUSTSR                 4040
+     C           *IN40     IFEQ *ON
+     C                     Z-ADD1         DSORDN
+     C                     ELSE
+     C           CUSNO     ADD  1         DSORDN
+     C                     END
+      *
+     C                     MOVEL'0'       *IN34
+     C                     MOVEL'1'       *IN33
+     C                     CALL 'CUSLET'
+     C                     PARM           CUSNO
+     C*
+     C*  Get Order No. & Customer No.
+     C                     WRITEOECLR                  99
+     C                     WRITEOETRL                  99
+     C                     EXFMTOESFLC                 99
+     C*
+     C* So long as Exit not requested #1
+     C           *IN03     IFNE '1'
+     C*
+     C*  Retrieve Customer Details
+     C                     EXSR $RVCUS
+     C*
+     C*  Set up blank subfile for Order lines
+     C                     EXSR $ORLNS
+     C*
+     C*  Display Order Entry screen
+     C                     MOVEL'1'       *IN34
+     C                     MOVEL'0'       *IN33
+     C                     MOVEACMD,3     CMDDTA
+     C                     WRITEOETRL                  99
+     C                     EXFMTOESFLC                 99
+     C*
+     C* So long as Exit not requested #2
+     C           *IN03     IFNE '1'
+     C*
+     C*  Validate Order Data
+     C                     EXSR $VALID
+     C*
+     C*  Redisplay Order Entry screen
+     C                     MOVEACMD,2     CMDDTA
+     C                     WRITEOETRL                  99
+     C                     EXFMTOESFLC                 99
+     C*
+     C* So long as Exit not requested #3
+     C           *IN03     IFNE '1'
+     C*
+     C*  Create Order
+     C                     EXSR $CRORD
+     C*  Delete SFL
+     C                     MOVEL'1'       *IN30
+     C                     WRITEOESFLC                 99
+     C                     MOVEL'0'       *IN30
+     C*
+     C* End: So long as Exit not requested #3
+     C                     END
+     C*
+     C* End: So long as Exit not requested #2
+     C                     END
+     C*
+     C* End: So long as Exit not requested #1
+     C                     END
+     C*
+     C* End: Until F3
+     C                     END
+     C*
+     C* Terminate Program
+     C                     MOVEL'0'       @@RTN
+     C                     SETON                     LR
+     C                     RETRN
+     C*****************************************************************
+     C*
+     C*****************************************************************
+     C           $RVCUS    BEGSR
+     C*
+     C* Get Customer Record
+     C           CUSNO     CHAINCUSTSR               4040                 @@REDR
+     C           *IN40     IFEQ '1'                                       @@REDR
+     C                     MOVEL*BLANKS   CSNAME
+     C                     MOVEL*BLANKS   CSADD1
+     C                     MOVEL*BLANKS   CSADD2
+     C                     MOVEL*BLANKS   CSADD3
+     C                     MOVEL*BLANKS   CSPSCD
+     C                     END
+     C*
+     C                     ENDSR
+     C*****************************************************************
+     C*
+     C*****************************************************************
+     C           $ORLNS    BEGSR
+     C*
+     C* Set up blank order lines ****
+     C                     MOVEL'0'       *IN35
+     C                     Z-ADD*ZERO     @RRN1   50
+     C                     DO   10
+     C                     ADD  1         @RRN1
+     C                     Z-ADD@RRN1     OLLNNO
+     C                     Z-ADD*ZERO     OLPROD
+     C                     MOVEL*BLANKS   PRDESC
+     C                     Z-ADD*ZERO     OLQTY
+     C                     WRITEOESFL                  31                 @@SF01
+     C                     END
+     C*
+     C                     ENDSR
+     C*****************************************************************
+     C*
+     C*****************************************************************
+     C           $CRORD    BEGSR
+     C*
+     C* Create Order
+     C*
+     C* 1. Order Header
+     C           CUSNO     CHAINCUSTSR               4040                 @@REDR
+     C           *IN40     IFEQ '0'                                       @@REDR
+     C                     Z-ADDCUSNO     DSCSNO
+     C                     UPDATCUSTSR                 55
+     C                     ELSE                                           @@REDR
+     C                     Z-ADDCUSNO     DSORDN
+     C                     WRITECUSTSR                 55
+     C                     END                                            @@REDR
+     C*
+     C* 2. Order Details
+     C                     MOVE CUSNO     DSORDN
+     C                     Z-ADD1         @RRN1   50
+     C*
+     C* For each record in subfile
+     C           @RRN1     DOWLE10                                        @@REDR
+     C*
+     C           @RRN1     CHAINOESFL                4242                 @@REDR
+     C*
+     C*  If successfully retrieved
+     C           *IN42     IFEQ '0'                                       @@REDR
+     C*
+     C*
+     C*   If data entered
+     C           OLPROD    IFNE *ZEROS                                    @@REDR
+     C*
+     C           CUSNO     CHAINCUSTSR               4141                 @@REDR
+     C           *IN41     IFEQ '0'                                       @@REDR
+     C                     UPDATCUSTSR                 55
+     C                     ELSE                                           @@REDR
+     C                     WRITECUSTSR                 55
+     C                     END                                            @@REDR
+     C*
+     C*   End: If data entered
+     C                     END
+     C*
+     C*  End: If successfully retrieved
+     C                     END
+     C*
+     C                     ADD  1         @RRN1
+     C* End: For each record in subfile
+     C                     END
+     C*
+     C                     ENDSR
+     C*****************************************************************
+     C*
+     C*****************************************************************
+     C           $VALID    BEGSR
+     C*
+     C* Validate Order
+     C*
+     C                     MOVEL'1'       *IN35
+     C                     Z-ADD1         @RRN1
+     C*
+     C* For each record in subfile
+     C           @RRN1     DOWLE10                                        @@REDR
+     C*
+     C           @RRN1     CHAINOESFL                4141                 @@REDR
+     C*
+     C*  If successfully retrieved
+     C           *IN41     IFEQ '0'                                       @@REDR
+     C*
+     C*   If data entered
+     C           PRPCDE    IFNE *ZEROS                                    @@REDR
+     C*
+     C*    Validate Product & Get Product Description
+     C           PRPCDE    CHAINRPRODS               4242                 @@REDR
+     C*
+     C                     UPDATOESFL                  31                 @@SF01
+     C*
+     C*   End: If data entered
+     C                     END
+     C*
+     C*  End: If successfully retrieved
+     C                     END
+     C*
+     C                     ADD  1         @RRN1
+     C* End: For each record in subfile
+     C                     END
+     C*
+     C                     MOVEL'0'       *IN35
+     C*
+     C                     ENDSR
+     C*****************************************************************
+     C* Definitions
+     C*
+     C           LINKEY    KLIST                                          @@REDR
+     C                     KFLD           DSORDN                          @@REDR
+     C                     KFLD           OLLNNO                          @@REDR
+     C*
+     C*****************************************************************
+**
+F3=Exit
+F3=Exit  ENTER=continue
+F3=Exit  Enter Order Lines, then ENTER to continue

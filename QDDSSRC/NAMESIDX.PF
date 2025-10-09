@@ -1,0 +1,6 @@
+     A          R NAMESIDXF
+     A            IXNAME        34A         TEXT('Name')
+     A            IXTELNO       17A         TEXT('Telephone No.')
+     A            IXEMAIL       50A         TEXT('E-Mail Address')
+     A            IXWEBSITE     50A         TEXT('Web Site')
+     A          K IXNAME

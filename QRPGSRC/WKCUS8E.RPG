@@ -1,0 +1,735 @@
+      ****************************************************************
+      *
+      *    WKCUS8E
+      *    LETTER GENERATING PROGRAM.
+      *
+      ****************************************************************
+     FCUSFL3  IF  E           K        DISK
+     FQLETSRC IF  E                    DISK         KINFDS FINDS A
+     F            QLETSRC                           KRENAME@LETSRC
+     FQSKLSRC IF  E                    DISK         KINFDS FINDS2     UC
+     F            QSKLSRC                           KRENAME@SKLSRC
+     FQSIGSRC IF  E                    DISK                           UC
+     F            QSIGSRC                           KRENAME@SIGSRC
+     E                    TXT        80  1
+     E                    LOG     1   8 80               Logo
+     E                    DAY     1  31  4
+     E                    MTH     1  12  9
+     E                    RLS     1   3 60
+     E                    BCH     1   3 60
+     E                    SEC     1   3 65
+     E                    PRF     1  35 80
+     E                    FSR     1   6 80
+     I@SKLSRC
+     I              SRCSEQ                          @SKLSQ
+     I@SIGSRC
+     I              SRCSEQ                          @SIGSQ
+     I            DS
+     I                                        1  80 SRCDTA
+     I                                        1  80 TXT
+     I            DS
+     I                                        1 180 RLS
+     I                                       53  57 VER
+     I            DS
+     I                                        1 195 SEC
+     I                                       22  29 SRLNBR
+     I                                       34  53 XACDE
+     I            DS
+     I                                        1   50ORDNO
+     I                                        1   5 ORDNC
+     IPSTATS     SDS
+     I                                      254 263 @@USR
+     IFINDS       DS
+     I                                      129 138 @@MBR
+     IFINDS2      DS
+     I                                      129 131 @@SKL
+     I                                      132 134 @SKLN
+     ISKLDAT      DS
+     I                                        1   2 SKLDY
+     I                                        3   4 SKLDM
+     I                                        5   6 SKLDD
+     ISKLTIM      DS
+     I                                        1   2 SKLTH
+     I                                        3   4 SKLTM
+     IDATE        DS
+     I                                        1   20D
+     I                                        4   50M
+     I                                        7   80Y
+     I                                        7   8 YC
+     I              'FXS       '          C         @FXS
+     C           *ENTRY    PLIST
+     C                     PARM           CUSNC   5
+     C                     PARM           TYPE    1
+     C                     PARM           @VER    5
+     C                     PARM           USRTXT 50
+     C                     PARM           @FAXNO 17
+     C                     PARM           SKL     1
+     C                     PARM           SKLDAT  6
+     C                     PARM           SKLTIM  4
+     C*
+     C           *NAMVAR   DEFN           ORDNO
+     C                     MOVE @VER      VER
+     C                     MOVE CUSNC     CUSNO   50
+     C                     MOVE 1         FAXDIR  10
+     C                     MOVE *ALL'/'   DATE
+     C           SKL       IFEQ *OFF
+     C           SKLDAT    OREQ *BLANK
+     C                     Z-ADDUDAY      D
+     C                     Z-ADDUMONTH    M
+     C                     Z-ADDUYEAR     Y
+     C                     ELSE
+     C                     MOVE SKLDD     D
+     C                     MOVE SKLDM     M
+     C                     MOVE SKLDY     Y
+     C**                   MOVE SKLDC     C
+     C                     MOVE @FXS      @@USR
+     C                     ENDIF
+     C           CUSNO     CHAINCUSFL3               99
+     C           *IN99     IFEQ '0'
+      ******************************************************
+      *
+      *  TYPE PARAMETER DETERMINES THE TYPE OF LETTER
+      *  PROCESSED:
+      *        P: PROFORMA LETTER
+      *        S: SECURITY LETTER
+      *        BLANK: ALL THE OTHER LETTER TYPES.
+      *
+      ******************************************************
+      *
+     C           TYPE      CASEQ'P'       PROFOR
+     C           TYPE      CASEQ'S'       SECURT
+     C           TYPE      CASEQ'M'       MEMO
+     C                     CAS            LETTER
+     C                     END
+     C                     END
+      *
+AC   C           @FAXNO    IFNE *BLANK
+AC   C                     MOVE 2         FAXDIR
+AC   C                     EXSR FAXSTR
+AC   C                     END
+      *
+     C                     MOVE '1'       *INLR
+     CLRNLR                READ QLETSRC                  LR
+      *****************************************************
+      *
+      *           PROCESS PROFORMA LETTER  (Type P)
+      *
+      *****************************************************
+     C           PROFOR    BEGSR
+AC   C           @FAXNO    IFNE *BLANK
+AC   C                     Z-ADD1         FAXDIR
+AC   C                     EXSR FAXSTR
+AC   C                     ELSE
+AC   C                     ADD  1         SRCSEQ
+AC   C                     WRITE@LETSRC
+AC   C                     ENDIF
+     C                     DO   17
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     END
+     C                     DO   35        L       30
+     C                     ADD  1         SRCSEQ
+     C                     MOVEAPRF,L     SRCDTA
+      *
+     C           L         IFEQ 4
+     C                     MOVEAUSERNM    TXT,34
+     C                     END
+     C           L         IFEQ 5
+     C                     MOVEACNAME     TXT,34
+     C                     END
+     C           L         IFEQ 6
+     C                     MOVEAADD1      TXT,34
+     C                     END
+     C           L         IFEQ 7
+     C                     MOVEAADD2      TXT,34
+     C                     END
+     C           L         IFEQ 8
+     C                     MOVEAADD3      TXT,34
+     C                     END
+     C           L         IFEQ 9
+     C                     MOVEAADD4      TXT,34
+     C                     END
+     C           L         IFEQ 10
+     C                     MOVEACNTRY     TXT,34
+     C                     END
+     C           L         IFEQ 11
+     C                     MOVEAPSCD      TXT,34
+     C                     END
+     C           L         IFEQ 25
+     C                     MOVEAUSRTXT    TXT,34
+     C                     END
+     C           L         IFEQ 35
+     C                     MOVEADAY,D     #D      4
+     C                     MOVEA#D        TXT,34
+     C                     Z-ADD34        X       50
+     C           ' '       LOKUPTXT,X                    80
+     C                     ADD  1         X
+     C                     MOVEAMTH,M     #M      9
+     C                     MOVEA#M        TXT,X
+     C           ' '       LOKUPTXT,X                    80
+     C                     ADD  1         X
+     C                     MOVEA'20'      TXT,X
+     C                     ADD  2         X
+     C                     MOVEAYC        TXT,X
+     C                     END
+      *
+     C                     WRITE@LETSRC
+     C                     END
+     C                     ENDSR
+      *****************************************************
+      *           PROCESS SECURITY LETTER (Type S)
+      *****************************************************
+     C           SECURT    BEGSR
+AC   C           @FAXNO    IFNE *BLANK
+AC   C                     Z-ADD4         FAXDIR
+AC   C                     EXSR FAXSTR
+AC   C                     Z-ADD6         FAXDIR
+AC   C                     EXSR FAXSTR
+AC   C                     ELSE
+AC   C                     ADD  1         SRCSEQ
+AC   C                     WRITE@LETSRC
+AC   C                     ENDIF
+      * Blank lines at top of letter (originally 17):
+     C                     DO   13
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     END
+     C                     MOVEADAY,D     #D      4
+     C                     MOVEA#D        TXT,53
+     C                     Z-ADD53        X       50
+     C           ' '       LOKUPTXT,X                    80
+     C                     ADD  1         X
+     C                     MOVEAMTH,M     #M      9
+     C                     MOVEA#M        TXT,X
+     C           ' '       LOKUPTXT,X                    80
+     C                     ADD  1         X
+     C                     MOVEA'20'      TXT,X
+     C                     ADD  2         X
+     C                     MOVEAYC        TXT,X
+     C***                  ADD  1         SRCSEQ
+     C***                  Z-ADD1         SRCSEQ
+     C*****                WRITE@LETSRC
+     C*****                MOVE *BLANKS   TXT
+      *
+     C                     MOVEACNAME     TXT,7
+     C           SRCDTA    IFNE *BLANKS
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     END
+      *
+     C                     MOVEAUSERNM    TXT,7
+     C           SRCDTA    IFNE *BLANKS
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     END
+      *
+     C***                  DO   2
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C***                  END
+      *
+     C                     DO   3         X
+     C                     MOVEASEC,X     CNTCT2 65
+     C                     MOVEACNTCT2    TXT,7
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     END
+      *
+     C****                 DO   5
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C***                  END
+      *
+     C                     MOVEAUSRTXT    TXT,7
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+      *
+     C                     ENDSR
+      *****************************************************
+      *           MEMO
+      *****************************************************
+     C           MEMO      BEGSR
+AC   C           @FAXNO    IFNE *BLANK
+AC   C                     Z-ADD3         FAXDIR  10
+AC   C                     EXSR FAXSTR
+AC   C                     Z-ADD6         FAXDIR  10
+AC   C                     EXSR FAXSTR
+AC   C                     ENDIF
+     C                     DO   8         L       30
+     C                     ADD  1         SRCSEQ
+     C                     MOVEALOG,L     SRCDTA
+     C                     WRITE@LETSRC
+     C                     ENDDO
+     C                     MOVE *BLANKS   TXT
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+      *
+     C                     MOVEAUSERNM    TXT,7
+     C                     MOVEADAY,D     #D      4
+     C                     MOVEA#D        TXT,53
+     C                     Z-ADD53        X       50
+     C           ' '       LOKUPTXT,X                    80
+     C                     ADD  1         X
+     C***                  Z-ADD1         X
+     C                     MOVEAMTH,M     #M      9
+     C                     MOVEA#M        TXT,X
+     C           ' '       LOKUPTXT,X                    80
+     C                     ADD  1         X
+     C                     MOVEA'20'      TXT,X
+     C                     ADD  2         X
+     C                     MOVEAYC        TXT,X
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     MOVEACNAME     TXT,7
+     C           SRCDTA    IFNE *BLANKS
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     END
+     C                     DO   3
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     END
+     C                     MOVEA'Dear'    TXT,7
+     C                     MOVEAUSERNM    TXT,12
+     C                     Z-ADD32        SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+      *
+     C                     DO   2
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     END
+      *
+     C                     MOVEA'Yours si'TXT,7
+     C                     MOVEA'ncerely' TXT,15
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+      *
+     C                     DO   3
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     END
+      *
+     C                     MOVEAUSRTXT    TXT,7
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+      *
+     C                     MOVE *BLANKS   TXT
+     C                     ENDSR
+      *****************************************************
+      *           PROCESS ALL OTHER LETTER TYPES
+      *           (Type: SKLnnn,B,C,E,F,I,O,R)
+      *****************************************************
+     C           LETTER    BEGSR
+AC   C           @FAXNO    IFNE *BLANK
+AC   C                     Z-ADD1         FAXDIR
+AC   C                     EXSR FAXSTR
+DM   C                     ADD  1         SRCSEQ
+|    C                     WRITE@LETSRC
+|    C           SKLDAT    IFNE *BLANK
+|    C                     Z-ADD5         FAXDIR
+PR   C                     ELSE
+|    C                     Z-ADD6         FAXDIR
+DM   C                     ENDIF
+|    C                     EXSR FAXSTR
+AC   C                     ELSE
+DM   C                     DO   2
+AC   C                     ADD  1         SRCSEQ
+AC   C                     WRITE@LETSRC
+DM   C                     ENDDO
+AC   C                     ENDIF
+     C                     DO   15
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     END
+     C                     MOVEAUSERNM    TXT,7
+     C                     MOVEADAY,D     #D      4
+     C                     MOVEA#D        TXT,53
+     C                     Z-ADD53        X       50
+     C           ' '       LOKUPTXT,X                    80
+     C                     ADD  1         X
+     C                     MOVEAMTH,M     #M      9
+     C                     MOVEA#M        TXT,X
+     C           ' '       LOKUPTXT,X                    80
+     C                     ADD  1         X
+     C                     MOVEA'20'      TXT,X
+     C                     ADD  2         X
+     C                     MOVEAYC        TXT,X
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+      *
+     C                     MOVEACNAME     TXT,7
+     C           SRCDTA    IFNE *BLANKS
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     END
+      *
+     C                     MOVEAADD1      TXT,7
+     C           SRCDTA    IFNE *BLANKS
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     END
+      *
+     C                     MOVEAADD2      TXT,7
+     C           SRCDTA    IFNE *BLANKS
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     END
+      *
+     C                     MOVEAADD3      TXT,7
+     C           SRCDTA    IFNE *BLANKS
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     END
+      *
+     C                     MOVEAADD4      TXT,7
+     C           SRCDTA    IFNE *BLANKS
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     END
+      *
+     C                     MOVEACNTRY     TXT,7
+     C           SRCDTA    IFNE *BLANKS
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     END
+      *
+     C                     MOVEAPSCD      TXT,7
+     C           SRCDTA    IFNE *BLANKS
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     END
+      *
+     C                     DO   3
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     END
+      *
+     C           TYPE      IFEQ 'O'
+     C           *LOCK     IN   ORDNO
+     C                     ADD  1         ORDNO
+     C                     OUT  ORDNO
+     C                     MOVEA'PURCHASE'TXT,24
+     C                     MOVEA'ORDER'   TXT,34
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     ADD  1         SRCSEQ
+     C                     MOVEA'________'TXT,24
+     C                     MOVEA'_____'   TXT,34
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVEA'Code'    TXT,10
+     C                     MOVEA'Descript'TXT,24
+     C                     MOVEA'ion'     TXT,32
+     C                     MOVEA'Qty'     TXT,44
+     C                     MOVEA'Price'   TXT,56
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     ELSE
+     C                     MOVEA'Dear'    TXT,7
+     C                     MOVEAUSERNM    TXT,12
+     C                     Z-ADD32        SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     END
+      *
+     C           SKL       IFEQ '1'
+     C                     OPEN QSKLSRC
+     C                     READ QSKLSRC                  99
+     C           *IN99     DOWEQ'0'
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     READ QSKLSRC                  99
+     C                     ENDDO
+     C                     CLOSEQSKLSRC
+     C                     MOVE *BLANKS   TXT
+     C                     ELSE
+      *
+     C                     DO   2
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     END
+      *
+     C                     DO   3         X
+     C           TYPE      IFEQ 'R'
+     C                     MOVEARLS,X     CNTCT  60
+     C                     MOVEACNTCT     TXT,8
+     C                     END
+     C           TYPE      IFEQ 'B'
+     C                     MOVEABCH,X     CNTCT  60
+     C                     MOVEACNTCT     TXT,8
+     C                     END
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     END
+      *
+     C                     DO   10
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     END
+      *
+     C           TYPE      IFEQ 'O'
+     C                     MOVEA'Delivery'TXT,7
+     C                     MOVEA'Address 'TXT,16
+     C                     MOVEA':'       TXT,24
+     C                     MOVEA'As Above'TXT,30
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+      *
+     C                     MOVEA'Special 'TXT,7
+     C                     MOVEA'Instruct'TXT,15
+     C                     MOVEA'ions :'  TXT,23
+     C                     MOVEA'None    'TXT,30
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C**                   CLEAR          TXT
+      *
+     C                     MOVEA'Our Refe'TXT,7
+     C                     MOVEA'rence :' TXT,15
+     C                     MOVEA'P'       TXT,30
+     C                     MOVEAORDNC     TXT,31
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+      *
+     C                     MOVEA'Your Ref'TXT,7
+     C                     MOVEA'erence :'TXT,15
+     C                     MOVEA'None'    TXT,30
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C****                 UPDAT@LETSRC
+     C                     MOVE *BLANKS   TXT
+      *
+     C                     DO   3
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     END
+     C                     END
+     C                     ENDIF
+      *
+     C           SKL       IFEQ '0'
+     C           SKL       OREQ '1'
+     C           @@SKL     ANDEQ'SKL'
+     C                     MOVEA'Yours si'TXT,7
+     C                     MOVEA'ncerely' TXT,15
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+      *
+     C           @FAXNO    IFNE *BLANK
+     C                     OPEN QSIGSRC                99
+     C                     ENDIF
+     C           @FAXNO    IFNE *BLANK
+     C           *IN99     ANDEQ'0'
+     C                     READ QSIGSRC                  99
+     C           *IN99     DOWEQ'0'
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     READ QSIGSRC                  99
+     C                     ENDDO
+     C                     CLOSEQSIGSRC
+     C                     ELSE
+      *
+     C                     MOVE *BLANKS   TXT
+      *
+     C                     DO   3
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     END
+      *
+     C                     MOVEAUSRTXT    TXT,7
+     C                     ADD  1         SRCSEQ
+     C****                 Z-ADD1         SRCSEQ
+     C                     WRITE@LETSRC
+      *
+     C                     ENDIF
+      *
+     C                     ENDIF
+      *
+     C                     MOVE *BLANKS   TXT
+     C                     ENDSR
+      *
+      *****************************************************
+      *
+      *          OUTPUT FAX*STAR DIRECTIVES
+      *
+      *****************************************************
+     C           FAXSTR    BEGSR
+AC   C                     MOVE FAXDIR    LX      30
+AC   C                     MOVEAFSR,LX    SRCDTA
+     C                     SELEC
+      * LX =2
+AC   C           LX        WHEQ 2
+     C           SKL       IFEQ '0'
+     C                     MOVEA@@MBR     TXT,9
+     C                     MOVEA*BLANKS   TXT,55
+     C                     ELSE
+     C                     MOVEA@SKLN     TXT,9
+     C****                 MOVE @SKLN     TXT,9
+     C                     MOVEACUSNC     TXT,12
+     C                     ENDIF
+     C                     MOVELCNAME     @NAME  16
+     C                     MOVEA@NAME     TXT,28
+     C                     Z-ADD43        @X      50
+     C*
+     C           TXT,@X    DOWEQ*BLANK
+     C           @X        ANDGT28
+     C                     SUB  1         @X
+     C                     ENDDO
+     C*
+     C           28        DO   @X        X
+     C           TXT,X     IFEQ *BLANK
+     C                     MOVE '-'       TXT,X
+     C                     ENDIF
+     C                     ENDDO
+      *  LX=5
+     C           LX        WHEQ 5
+     C                     MOVEASKLDM     TXT,42
+     C                     MOVEASKLDD     TXT,45
+     C                     MOVEASKLDY     TXT,48
+     C                     MOVEASKLTH     TXT,58
+     C                     MOVEASKLTM     TXT,61
+      *
+      *  LX=6
+     C           LX        WHEQ 6
+      *
+     C                     OTHER
+     C                     MOVEA@FAXNO    TXT,9
+     C                     MOVEA@@USR     TXT,37
+     C                     ENDSL
+      *
+     C                     ADD  1         SRCSEQ
+     C                     WRITE@LETSRC
+     C                     MOVE *BLANKS   TXT
+     C                     ENDSR
+      *
+**
+      ==============                     D A T A B O R O U G H   L T D.
+        ==========                                         BEACON HOUSE
+          ======                                             SOUTH ROAD
+            ==                                                WEYBRIDGE
+            ==                                                   SURREY
+          ======                                               KT13 9DZ
+        ==========                                 TEL: +44 1932 848564
+      ==============       FACSIMILE MESSAGE       FAX: +44 1932 854468
+**
+1st
+2nd
+3rd
+4th
+5th
+6th
+7th
+8th
+9th
+10th
+11th
+12th
+13th
+14th
+15th
+16th
+17th
+18th
+19th
+20th
+21st
+22nd
+23rd
+24th
+25th
+26th
+27th
+28th
+29th
+30th
+31st
+**
+January
+February
+March
+April
+May
+June
+July
+August
+September
+October
+November
+December
+**
+Please find enclosed a cartridge containing version nn.nn of
+X-Analysis and a 3.5" diskette containing the User Guide in
+Wordperfect format.
+**
+Please find enclosed the current X-Analysis brochure and
+price list. If we can be of further assistance or you would
+like a demonstration , please do not hesitate to call.
+**
+Code for serial no.: xxxxxxxx is XXXXXXXXXXXXXXXXXXXX
+Use CHGDTAARA to enter code in data area X@SEC  in library X@OBJ.
+
+**
+                            PRO-FORMA DECLARATION
+
+
+      CONSIGNEE NAME :           XXX XXXXXXXX
+
+
+
+
+
+
+
+
+      DESCRIPTION OF GOODS :     1 Computer Data Cartridge
+
+      VALUE AND CURRENCY :       #20.00 (Pounds Sterling)
+
+      WEIGHT :                   0.3 Kg
+
+      DIMENSIONS :               16 x 10.5 x 2 cm
+
+      REASON FOR EXPORT :        Business Purposes
+
+      COUNTRY OF ORIGIN :        United Kingdom
+
+      NAME OF SENDER :
+
+
+
+      I Hereby declare the above information is true and correct to
+      the best of my knowledge.
+
+
+      SIGNATURE OF SENDER :
+
+      DATE :
+**
+**(fax) xxxxxxxxxxxxxxxxx **confirm xxxxxxxxxx **form form1 **cpi 10
+**(ref) xxxxxxxx  **(refx) xxxxxxxxxxxxxxxx    **end  **copies 0
+**(fax) xxxxxxxxxxxxxxxxx **confirm xxxxxxxxxx              **cpi 10
+**(fax) xxxxxxxxxxxxxxxxx **confirm xxxxxxxxxx **logo form1 **cpi 10
+**Priority 0 **retries 2 **nokeep **date xx/xx/xx **time xx:xx
+**Priority 5

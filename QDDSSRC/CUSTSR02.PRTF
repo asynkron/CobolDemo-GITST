@@ -1,0 +1,91 @@
+     A                                      REF(*LIBL/CUSTS)
+     A
+     A          R HDG2
+     A                                      SKIPB(001)
+     A                                      SPACEA(001)
+     A                                     1
+     A                                      '-----------------------------------
+     A                                      ------------------------------------
+     A                                      -----------------------------'
+     A            @PGMNAME2     10A        1
+     A                                      SPACEB(001)
+     A                                   +19
+     A                                      'TRANSACTION HISTORY'
+     A
+     A                                    63
+     A                                      'RUN DATE:'
+     A                                    72
+     A                                      DATE
+     A                                      EDTCDE(Y)
+     A                                    86
+     A                                      'PAGE NO :'
+     A            @PGNBR2        4S 0     95
+     A                                      EDTCDE(Z)
+     A            @UNAME2       10A        1
+     A                                      SPACEB(001)
+     A                                    63
+     A                                      'RUN TIME:'
+     A                                    72
+     A                                      TIME
+     A                                     1
+     A                                      '-----------------------------------
+     A                                      ------------------------------------
+     A                                      -----------------------------'
+     A                                      SPACEB(001)
+     A                                     1
+     A                                      'Customer'
+     A                                      SPACEB(001)
+     A                                    +4
+     A                                      'TrnHstSeq'
+     A                                    +2
+     A                                      'Grp Per Doc Reference'
+     A                                    +3
+     A                                      'TrnHDate'
+     A                                    +3
+     A                                      'Store'
+     A                                    +7
+     A                                      'Quantity'
+     A                                    +4
+     A                                      'Vaue'
+     A                                     1
+     A                                      '----------- ----------- -- --- ----
+     A                                      ------------ ---------- ------------
+     A                                       ----------'
+     A                                      SPACEB(001)
+     A                                    +2
+     A                                      '----------------'
+     A          R DTL2
+     A                                      SPACEA(001)
+     A            XWBCCD    R        O     1
+     A                                      SPACEB(001)
+     A                                      REFFLD(CUSTSR/XWBCCD UPENDRA2/CUSTS)
+     A            XWC8DT    R        O    +1
+     A                                      REFFLD(TRNHSTR/XWC8DT *LIBL/TRNHST)
+     A            XWBNCD    R        O    +1
+     A                                      REFFLD(TRNHSTR/XWBNCD *LIBL/TRNHST)
+     A            PERSON    R        O    +1
+     A                                      REFFLD(TRNHSTR/PERSON *LIBL/TRNHST)
+     A            XWT8TX    R        O    +1
+     A                                      REFFLD(TRNHSTR/XWT8TX *LIBL/TRNHST)
+     A            XWDLDT    R        O    +1
+     A                                      REFFLD(TRNHSTR/XWDLDT *LIBL/TRNHST)
+     A            XWAACS    R        O    +1
+     A                                      REFFLD(TRNHSTR/XWAACS *LIBL/TRNHST)
+     A            XWA5QT    R        O    +1
+     A                                      REFFLD(TRNHSTR/XWA5QT *LIBL/TRNHST)
+     A            XWVALU    R        O    +1
+     A                                      REFFLD(TRNHSTR/XWVALU *LIBL/TRNHST)
+     A
+     A          R NOREC2
+     A                                      SPACEB(001)
+     A
+     A          R EOFP2
+     A                                      SPACEB(001)
+     A                                     1
+     A                                      '------------------------'
+     A                                    25
+     A                                      '      END OF REPORT     '
+     A                                    +0
+     A                                      '-----------------------------------
+     A                                      ----------------'
+     A**************************************************************************

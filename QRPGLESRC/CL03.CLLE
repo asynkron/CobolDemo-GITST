@@ -1,0 +1,7 @@
+             PGM
+             DCL        VAR(&NUM) TYPE(*DEC) LEN(6) VALUE(000001)
+             DCL        VAR(&ACCT) TYPE(*CHAR) LEN(11) VALUE(' ')
+             DCL        VAR(&CUSTOMER) TYPE(*CHAR) LEN(40) VALUE(' ')
+
+             CALL       PGM(WWCONDET) PARM(&NUM &ACCT &CUSTOMER)
+endpgm

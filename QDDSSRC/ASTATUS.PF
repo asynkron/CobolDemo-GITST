@@ -1,0 +1,13 @@
+      * TEST COMMENT 1
+      * TEST COMMENT 2
+      * TEST COMMENT 3
+      * TEST COMMENT 4
+     A          R STATUSR
+     A            STATUS         1A
+     A                                      TEXT('Status')
+     A                                      COLHDG('STATUS')
+      *           STSTXT        30A         ALWNULL
+     A            STSTXT        30A
+     A                                      TEXT('Status text')
+     A                                      COLHDG('STSTXT')
+     A          K STATUS

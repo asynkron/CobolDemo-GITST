@@ -1,0 +1,7 @@
+     A          R STATUSR                   PFILE(ASTATUS)
+     A            STATUS         1A
+     A                                      TEXT('Status')
+     A                                      COLHDG('STATUS')
+     A            STSTXT        30A
+     A                                      TEXT('Status text')
+     A                                      COLHDG('STSTXT')

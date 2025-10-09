@@ -1,0 +1,26 @@
+/* ----------------------------------------------------------------- */
+             PGM        PARM(&PGMQ &PGREL &MSGID &MSGFILE &MSGDTA +
+                          &MSGTYPE)
+
+/* ----------------------------------------------------------------- */
+             DCL        VAR(&PGMQ)       TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PGREL)      TYPE(*CHAR) LEN(5)
+             DCL        VAR(&MSGID)      TYPE(*CHAR) LEN(7)
+             DCL        VAR(&MSGFILE)    TYPE(*CHAR) LEN(10)
+/*           DCL        VAR(&MSGtext)    TYPE(*CHAR) LEN(10)         */
+             DCL        VAR(&MSGLIB) TYPE(*CHAR) LEN(10) +
+                          VALUE('XRAPPS')
+             DCL        VAR(&MSGDTA)     TYPE(*CHAR) LEN(132)
+             DCL        VAR(&MSGTYPE)    TYPE(*CHAR) LEN(7)
+/*           DCL        VAR(&MSGTEXT)    TYPE(*CHAR) LEN(7)          */
+
+/* ----------------------------------------------------------------- */
+/* Send status message */
+
+             SNDPGMMSG  MSGID(&MSGID) MSGF(&MSGLIB/&MSGFILE) +
+                          MSGDTA(&MSGDTA) TOPGMQ(*PRV)
+             MONMSG CPF0000
+
+/* ----------------------------------------------------------------- */
+             ENDPGM
+/* ----------------------------------------------------------------- */

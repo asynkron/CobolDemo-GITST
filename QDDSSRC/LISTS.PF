@@ -1,0 +1,4 @@
+     A          R RLISTS
+     A            LSLCDE         2A         TEXT('Code')
+     A            LNAME         34A         TEXT('Description')
+     A          K LSLCDE

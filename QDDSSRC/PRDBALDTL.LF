@@ -1,0 +1,12 @@
+                R PRDREC                    JFILE(STOMAS STKBAL STKMAS)
+                J                           JOIN(STOMAS STKBAL)
+                                            JFLD(XWAACS XWAACS)
+                J                           JOIN(STKBAL STKMAS)
+                                            JFLD(XWABCD XWABCD)
+                  XWABCD                    JREF(STKBAL)
+                  XWAACS                    JREF(STKBAL)
+                  XWHLTX                    JREF(STKMAS)
+                  XWBHQT                    JREF(STKBAL)
+                  XWBKQT                    JREF(STKBAL)
+
+

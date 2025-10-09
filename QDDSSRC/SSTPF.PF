@@ -1,0 +1,3 @@
+                R SSTPFRCD
+                  ORDDAT         8A         TEXT('Order date')
+                                            COLHDG('Order' 'Date')

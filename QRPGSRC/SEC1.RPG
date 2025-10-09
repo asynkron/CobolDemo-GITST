@@ -1,0 +1,7 @@
+     FCUSTS   IP  E                    DISK
+     FSECF    IF  E           K        DISK                      A
+     IRSECF
+     I              SCMT1                           ICMT
+     C           CUSNO     CHAINSECF                 81
+     C                     MOVELICMT      SCMT1  30
+     C                     WRITERSECF                  20

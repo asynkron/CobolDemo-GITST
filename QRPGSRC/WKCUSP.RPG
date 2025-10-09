@@ -1,0 +1,38 @@
+     H            D
+     FCUSFL1  IP  E           K        DISK
+     FWKCUSPRTO   F     198     OF     PRINTER
+     C           STATUS    IFEQ '9'
+     C           OLDMCH    ANDEQ*BLANK
+     C                     SETON                     10
+     C                     ELSE
+     C                     SETOF                     10
+     C                     END
+     C           ADD2      IFEQ *BLANK
+     C                     MOVELADD1      ADD2
+     C                     END
+     C           ADD3      IFEQ *BLANK
+     C                     MOVELADD2      ADD3
+     C                     END
+     C           ADD4      IFEQ *BLANK
+     C                     MOVELADD3      ADD4
+     C                     END
+     C**         ADD5      IFEQ *BLANK
+     C**                   MOVELADD5      ADD1
+     C**                   END
+     C           CNTRY     IFEQ *BLANK
+     C                     MOVELADD4      CNTRY
+     C                     MOVELADD3      ADD4
+     C                     END
+     OWKCUSPRTH  101   1P
+     O       OR        OF
+     O                                 +  1 'DATE:'
+     O                         UDATE Y +  1
+     O                                  100 'PAGE:'
+     O                         PAGE    +  1 '  :  :  '
+     O        D 1     N10
+     O                         OLDMCH  +  1
+     O                         CNAME   +  1
+     O                         USERNM  +  1
+     O                         TELNO   +  1
+     O                         CNTRY   +  1
+     O                         STATUS  +  1

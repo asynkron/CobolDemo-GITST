@@ -1,0 +1,5 @@
+     FCUSTS   UP  E           K        DISK
+     C                     MOVELMNDATE    @C4     4
+     C                     MOVE @C4       MMONTH
+     C**                   WRITERCUSTS
+     C                     UPDATRCUSTS

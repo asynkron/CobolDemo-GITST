@@ -1,0 +1,43 @@
+       01  CUSTS-RECORD.
+           05  CUS-KEY-FIELD.
+               10  CUS-CUSTOMER-CODE          PIC X(11).
+           05  CUS-CUSTOMER-NAME              PIC X(40).
+           05  CUS-ACCOUNT-STMT               PIC X(11).
+           05  CUS-RELATED-ACCT               PIC X(11).
+           05  CUS-TAX-REGISTER               PIC X(15).
+           05  CUS-BANK                       PIC 9(09).
+           05  CUS-BANK-ACCT                  PIC 9(15).
+           05  CUS-FOREX                      PIC X(03).
+           05  CUS-CUSTOMER-GRP               PIC X(02).
+           05  CUS-CONTACT-PERSON             PIC X(03).
+           05  CUS-DISTRIBUTOR                PIC X(02).
+           05  CUS-TERMS                      PIC X(03).
+           05  CUS-CREDIT-LMT                 PIC 9(15)V99.
+           05  CUS-STL-DESC                   PIC X(03).
+           05  CUS-INTEREST                   PIC X(03).
+           05  CUS-CR-GUARANT                 PIC X(10).
+           05  CUS-B-O                        PIC X(01).
+           05  CUS-LANG                       PIC X(01).
+           05  CUS-DATE-LOD                   PIC X(10).
+           05  CUS-CHG-DATE                   PIC X(10).
+           05  CUS-LAST-SALE                  PIC X(10).
+           05  CUS-AMT-LASTSALE               PIC 9(15)V99.
+           05  CUS-DATE-LASTPAY               PIC X(10).
+           05  CUS-AMT-LASTPAID               PIC 9(15)V99.
+           05  CUS-DATE-LASTSTMT              PIC X(10).
+           05  CUS-CURRENT-PAY                PIC 9(15)V99.
+           05  CUS-CURRENT-CLAIM              PIC 9(15)V99.
+           05  CUS-CURRENT-SALES              PIC 9(15)V99.
+           05  CUS-CURRENT-COST               PIC 9(15)V99.
+           05  CUS-YTD-SALES                  PIC 9(15)V99.
+           05  CUS-LASTYR-SALES               PIC 9(15)V99.
+           05  CUS-BALANCE                    PIC 9(15)V99.
+           05  CUS-CURR-AMT                   PIC 9(15)V99.
+           05  CUS-030-DAYS                   PIC 9(15)V99.
+           05  CUS-060-DAYS                   PIC 9(15)V99.
+           05  CUS-090-DAYS                   PIC 9(15)V99.
+           05  CUS-120-DAYS                   PIC 9(15)V99.
+           05  CUS-150-DAYS                   PIC 9(15)V99.
+           05  CUS-180-DAYS                   PIC 9(15)V99.
+           05  CUS-PROSPECT                   PIC 9(05).
+

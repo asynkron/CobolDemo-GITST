@@ -1,0 +1,161 @@
+     FOE004DF CF  E                    WORKSTN
+     F                                        @RRN1 KSFILE OESFL
+     FCUSTSL3 UF  E           K        DISK                      A
+     F*
+     E                    CMD     1   3 78               CMD Key Data
+     E*
+     I           SDS
+     I                                     *ROUTINE $ROUT
+     I                                     *STATUS  $STAT
+     I                                     *PARMS   $PARM
+     I                                     *PROGRAM @@PGM
+     I                                      244 253 @@JOB
+     I*
+     C*****************************************************************
+     C* Receive Parameters
+     C           *ENTRY    PLIST
+     C                     PARM           @@RTN   1        Return Code
+     C*
+     C* Until F3
+     C           *IN03     DOUEQ'1'
+     C*
+     C*  Initialise screen
+     C                     MOVEACMD,1     CMDDTA
+     C                     Z-ADD*ZERO     DSCSNO
+     C                     MOVEL'0'       *IN34
+     C                     MOVEL'1'       *IN33
+     C*  Get Customer No.
+     C                     WRITEOECLR                  99
+     C                     WRITEOETRL                  99
+     C                     EXFMTOESFLC                 99
+     C*
+     C* So long as Exit not requested
+     C           *IN03     IFNE '1'
+     C*
+     C*  Retrieve Customer Data
+     C                     EXSR $RVDTA
+     C*
+     C*  Display Customer Data
+     C           @RRN1     IFGT *ZERO
+     C                     MOVEL'0'       *IN33
+     C                     ELSE
+     C                     MOVEL'1'       *IN33
+     C                     END
+     C                     MOVEL'1'       *IN34
+     C                     MOVEACMD,3     CMDDTA
+     C                     WRITEOETRL                  99
+     C                     EXFMTOESFLC                 99
+     C*
+     C*  Action Request to Display Customer Details
+     C                     EXSR $ACTRQ
+     C**                   EXSR $ACTRQS
+     C*
+     C*  Delete SFL
+     C                     MOVEL'1'       *IN30
+     C                     WRITEOESFLC                 99
+     C                     MOVEL'0'       *IN30
+     C*
+     C* End: So long as Exit not requested
+     C                     END
+     C*
+     C* End: Until F3
+     C                     END
+     C*
+     C* Terminate Program
+     C                     MOVEL'0'       @@RTN
+     C                     SETON                     LR
+     C                     RETRN
+     C*****************************************************************
+     C*
+     C*****************************************************************
+     C           $RVDTA    BEGSR
+     C*
+     C* Get Customer Data
+     C*
+     C                     Z-ADD*ZERO     @RRN1   50
+     C*
+     C                     MOVELDSCSNO    CUSNO
+     C           CUSNO     CHAINCUSTSL3              4444                 @@REDR
+     C           *IN44     DOWEQ'0'                                       @@REDR
+     C                     ADD  1         @RRN1
+     C                     MOVEL*BLANKS   SELECT
+     C                     WRITEOESFL                  31                 @@SF01
+     C                     READ CUSTSL3                4444               @@REDR
+     C                     END
+     C*
+     C                     ENDSR
+     C*****************************************************************
+     C*
+     C*****************************************************************
+     C           $ACTRQ    BEGSR
+     C*
+     C* Process Request
+     C*
+     C                     MOVEACMD,2     CMDDTA
+     C*
+     C                     Z-ADD1         @RRN1
+     C           @RRN1     CHAINOESFL                4545                 @@REDR
+     C           *IN45     DOWEQ'0'                                       @@REDR
+     C*
+     C* Add
+     C           SELECT    IFEQ '1'                                       @@REDR
+     C                     MOVEL'0'       *IN35
+     C                     MOVEL'0'       *IN36
+      * Retrieve Last Customer No.
+     C           *HIVAL    SETGTCUSTSL3
+     C                     READPCUSTSL3                4040
+     C           *IN40     IFEQ *ON
+     C                     Z-ADD1         CSNO
+     C                     ELSE
+     C                     ADD  1         CSNO
+     C                     END
+      *
+     C                     MOVEL*BLANKS   CSNAME
+     C                     MOVEL*BLANKS   CSADD1
+     C                     MOVEL*BLANKS   CSADD2
+     C                     MOVEL*BLANKS   CSADD3
+     C                     MOVEL*BLANKS   CSPSCD
+     C                     MOVEL*BLANKS   CSTELN
+     C                     MOVEL*BLANKS   CSFAXN
+     C                     MOVEL*BLANKS   CSTERM
+     C                     EXFMTOEDTL                  55                 @@SF01
+     C           *IN03     IFNE '1'                                       @@REDR
+     C           CUSNO     IFNE *ZERO                                     @@REDR
+     C           CSNAME    ANDNE*BLANK
+     C           CUSNO     CHAINCUSTSL3              4455                 @@REDR
+     C           *IN44     IFEQ '1'                                       @@REDR
+     C                     WRITECUSTSR                 55                 @@REDR
+     C                     END
+     C                     END
+     C                     END
+     C                     END
+     C*
+     C* Change
+     C           SELECT    IFEQ '2'                                       @@REDR
+     C                     MOVEL'0'       *IN35
+     C                     MOVEL'1'       *IN36
+     C           CUSNO     CHAINCUSTSL3              4444                 @@REDR
+     C                     EXFMTOEDTL                  55                 @@SF01
+     C           *IN03     IFNE '1'
+     C                     UPDATCUSTSR                 55                 @@REDR
+     C                     END
+     C                     END
+     C*
+     C* Display
+     C           SELECT    IFEQ '5'                                       @@REDR
+     C                     MOVEL'1'       *IN35
+     C                     MOVEL'1'       *IN36
+     C           CUSNO     CHAINCUSTSL3              4444                 @@REDR
+     C                     EXFMTOEDTL                  55                 @@SF01
+     C                     END
+     C*
+     C                     ADD  1         @RRN1
+     C           @RRN1     CHAINOESFL                4545                 @@REDR
+     C                     END
+     C*
+     C                     ENDSR
+     C*****************************************************************
+**
+F3=Exit
+F3=Exit  ENTER=continue
+F3=Exit  ENTER=continue or 1=Add  2=Change  5=Display

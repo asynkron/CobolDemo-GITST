@@ -1,0 +1,174 @@
+‚    H* Copyright Databorough ltd 2013
+‚    H*‚
+‚    H* Prpgram:  To Retrieve the Customer Details information
+‚    H* Author:   Dhruv Tamrakar
+‚    H* Date:     03/05/2013
+    ‚H*‚-------------------------------------------------------------------------------------------
+     FWWCUSDSPCF  E                    WORKSTN
+     FCUSTS   IF  E           K        DISK
+     FTRNHSTL3IF  E           K        DISK
+     FSLMEN   IF  E           K        DISK
+     FCUSTSFILIF  E           K        DISK
+     FCUSFL3  IF  E           K        DISK
+     F*
+     C*********************************************************************************************
+     IRCUSF
+     I              CNAME                           UNAME
+     I              'ABCDEFGHIJKLMNOPQRS- C         @UP
+     I              'TUVWXYZ'
+     I              'abcdefghijklmnopqrs- C         @LO
+     I              'tuvwxyz'
+     I              'Customer Stock Detai-C         UWDTL
+     I              'ls'
+     C*********************************************************************************************
+     C*‚M a i n l i n e   C o d e
+     C*********************************************************************************************
+     C                     EXSR GETDTL
+     C*Display the Customer stock detail
+     C           *IN03     DOWEQ*OFF
+     C*
+     C                     MOVELUWSTK1    W@STK1
+     C                     MOVELUWSTK2    W@STK2
+     C                     MOVELUWSTK3    W@STK3
+     C                     MOVELUWCNAM    W@NAM
+     C                     EXFMTDETAIL
+     C*
+     C           *IN12     IFEQ *ON
+     C                     LEAVE
+     C                     ENDIF
+     C                     ENDDO
+     C                     MOVE *ON       *INLR
+     C*********************************************************************************************
+     C* ‚********  GETDTL subroutine for retrieve the customer detail  ****************************
+     C*********************************************************************************************
+     C           GETDTL    BEGSR
+     C                     MOVE 0         *IN45
+     C           W@CUS     CHAINCUSTS                45
+     C           *IN45     IFEQ *OFF
+     C*
+     C                     MOVELCUSNO     UWCNO   50
+     C           @LO:@UP   XLATEXWG4TX    UWCNAM
+      *
+     C* ‚Retrieve the Company detail
+     C                     EXSR COMDTL
+     C                     MOVE XWGIVA    UWCLMT 152
+      *
+     C* ‚Retrieve the Product Details
+     C                     EXSR PRDDTL
+     C                     EXSR CUSINF
+     C                     ENDIF
+     C*
+     C                     ENDSR
+     C*********************************************************************************************
+     C* ‚********  PRDDTL Subroutine to retrieve the product inforamtion  *********************
+     C*********************************************************************************************
+     C           PRDDTL    BEGSR
+     C                     MOVE 0         *IN46
+     C           W@CUS     SETLLTRNHSTL3
+     C           *IN46     DOUEQ*ON
+     C           W@CUS     READETRNHSTL3                 46
+     C           *IN46     IFEQ *OFF
+      *
+     C*‚Calculate product value/product quantity
+     C                     MOVELXWAACS    W@STOR
+     C                     MOVE PERSON    UWUSR   3
+     C                     MOVELXWABCD    UWPROD 20
+     C                     MOVE XWAGCD    UWSTR1  20
+     C                     MOVE XWAHCD    UWSTR2  20
+     C                     MOVE XWAICD    UWSTR3  20
+     C                     ADD  XWVALU    UWVALU 102
+     C                     ADD  XWA5QT    UWQTY  142
+     C*    ‚Calculate the storage quantity
+     C                     ADD  UWSTR1    UWSTK1
+     C                     ADD  UWSTR2    UWSTK2
+     C                     ADD  UWSTR3    UWSTK3
+     C*   ‚ Calculate the amount interest
+     C           XWVALU    IFLT 100
+     C           XWVALU    MULT 5         UWAMT  142
+     C           UWAMT     DIV  100       UWSAV  102
+     C                     END
+     C           XWVALU    IFGT 100
+     C           XWVALU    MULT 10        UWAMT  142
+     C           UWAMT     DIV  100       UWSAV  102
+     C                     END
+     C                     END
+     C                     Z-ADD0         UWSTR1
+     C                     Z-ADD0         UWSTR2
+     C                     Z-ADD0         UWSTR3
+     C                     ENDDO
+      *‚Retrieve Person Details
+     C                     EXSR RTVUSR
+     C                     ENDSR
+     C*********************************************************************************************
+     C* ‚***************** RTVUSR Subroutine to retrieve the person detail ********************
+     C*********************************************************************************************
+     C           RTVUSR    BEGSR
+     C*
+     C                     MOVE 0         *IN91
+     C           PERSON    CHAINSLMEN                91
+     C           *IN91     IFEQ *OFF
+     C                     MOVELPNAME     USER   34
+     C                     END
+     C*
+     C                     ENDSR
+     C*********************************************************************************************
+     C* ‚***************** CUSINF Subroutine for retrieve the user information *****************
+     C*********************************************************************************************
+     C           CUSINF    BEGSR
+     C*
+     C                     MOVE 0         *IN92
+     C           W@CUS     CHAINCUSTSFIR             92
+     C           *IN92     IFEQ *OFF
+     C*
+     C           @LO:@UP   XLATECOMP      UWCOM  40
+     C                     MOVE UDATE     UWDAT   8
+     C*
+     C           'MEDIA'   SCAN UWCOM     UWPOS   20
+     C                     ADD  5         UWPOS
+     C           UWPOS     SUBSTUWCOM     UWNAM  40
+     C                     END
+     C*
+     C                     ENDSR
+     C*********************************************************************************************
+     C* ‚************** COMDTL Subroutine to retrieve the Company detail  *********************
+     C*********************************************************************************************
+     C           COMDTL    BEGSR
+     C                     MOVE 0         *IN93
+     C           UWCNO     CHAINCUSFL3               93
+     C           *IN93     IFEQ *OFF
+     C                     MOVE DSDCDE    UWDSC   2
+     C                     MOVE STATUS    UWSTS   1
+     C                     MOVE TELNO     W@TEL
+     C                     MOVE USERNM    UWUSR1 34
+     C                     MOVE LCTDAT    UWLCDT  60
+     C                     MOVE APDATE    UWAPDT  60
+     C                     MOVE SALUT     UWSAL  34
+     C                     MOVE JTITLE    UWTITL 34
+     C                     MOVE FAXNO     W@FAX
+     C                     MOVE EMAIL     UWMAIL 40
+     C                     MOVE WEBSIT    UWWEB  40
+     C                     MOVELADD1      W@ADD1
+     C                     MOVELADD2      W@ADD2
+     C                     MOVELADD3      W@ADD3
+     C                     MOVELCNTRY     W@CTRY
+     C                     END
+     C                     ENDSR
+     C*********************************************************************************************
+    ‚C* *SUBROUTINE: INITIALISATION ROUTINES
+     C*********************************************************************************************
+     C           *INZSR    BEGSR
+     C           *ENTRY    PLIST
+     C                     PARM           W@CUS
+     C                     PARM           UWCNAM 40
+     C                     PARM           UWSTK1  50
+     C                     PARM           UWSTK2  50
+     C                     PARM           UWSTK3  50
+      *
+     C                     MOVEL'CUSTDTL' W@PGM
+     C                     MOVE *BLANKS   UWCNAM
+     C                     Z-ADD*ZEROS    UWSTK1
+     C                     Z-ADD*ZEROS    UWSTK2
+     C                     Z-ADD*ZEROS    UWSTK3
+      *
+     C                     ENDSR
+     C*********************************************************************************************
