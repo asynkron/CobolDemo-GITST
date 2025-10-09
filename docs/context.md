@@ -12,6 +12,8 @@ This directory now stores SSADM-style documentation generated for the CobolDemo 
 - `diagrams.md` — house style for diagrams referenced in generated documents.
 - `architecture/overview.md` — cross-cutting view of system context, layered structure, data flows, module collaboration, and entity relationships.
 - `migration/` — hands-on playbooks that describe how to peel specific COBOL capabilities into external services (currently the `XACBLTST` concat utility migration to ASP.NET Core).
+- `graph_clustering_analysis.md` — Louvain-based dependency clustering of source members with an accompanying Mermaid summary.
+- `graph_clustering_analysis.py` — helper script that rebuilds the clustering dataset by scanning CALL and COPY statements across the IBM i libraries.
 
 ## Maintenance Notes
 - Update the relevant Markdown files and regenerate diagrams whenever program logic or data structures change.
