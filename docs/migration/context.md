@@ -8,3 +8,7 @@ This directory holds hands-on modernization guides that map IBM i/COBOL function
 - Risks, prerequisites, and testing steps discovered during the spike.
 
 Add a subdirectory per migration slice so future teams can iterate independently without clobbering previous work.
+
+## Reference Snapshots
+- `dotnet/XacbltstConcatService/Program.cs.md` — Annotated minimal API host that returns the `FIL.LIB` concatenation via ASP.NET.
+- `cobol/xacbltst/XACBLTST-CLIENT.CBL.md` — Inline-commented IBM i client wrapper that posts requests to the modern service and falls back safely.
