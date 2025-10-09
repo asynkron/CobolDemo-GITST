@@ -20,11 +20,11 @@ THEN raise message `OEM0010`, set an error indicator, and stop processing
 
 **Example:**
 ```cobol
-IF XWORDN OF ZZFT01-O = ZEROS
-    MOVE INDIC-ON TO IN40 OF ZZFT01-O-INDIC
-    MOVE "OEM0010" TO MSGID
-    CALL "RTNMSGTEXT"
-END-IF
+       IF XWORDN OF ZZFT01-O = ZEROS
+           MOVE INDIC-ON TO IN40 OF ZZFT01-O-INDIC
+           MOVE "OEM0010" TO MSGID
+           CALL "RTNMSGTEXT"
+       END-IF
 ```
 ---
 
@@ -41,14 +41,14 @@ THEN block the add and display message `Y2U0003`
 
 **Example:**
 ```cobol
-IF ADD-MODE
-    START CONHDR-FILE KEY EQUAL ...
-    IF RECORD-FOUND = "N"
-        MOVE "Y2U0003" TO MSGID
-        CALL "RTNMSGTEXT"
-        GO VALIDT-EXIT
-    END-IF
-END-IF
+       IF ADD-MODE
+           START CONHDR-FILE KEY EQUAL ...
+           IF RECORD-FOUND = "N"
+               MOVE "Y2U0003" TO MSGID
+               CALL "RTNMSGTEXT"
+               GO VALIDT-EXIT
+           END-IF
+       END-IF
 ```
 ---
 
@@ -65,11 +65,11 @@ THEN set error indicator IN41, show message `OEM0002`, and blank the customer de
 
 **Example:**
 ```cobol
-READ CUSTS-FILE INVALID KEY
-    MOVE INDIC-ON TO IN41 OF ZZFT01-O-INDIC
-    MOVE "OEM0002" TO MSGID
-    CALL "RTNMSGTEXT"
-    MOVE ALL "-" TO XWG4TX OF ZZFT01-O
+       READ CUSTS-FILE INVALID KEY
+           MOVE INDIC-ON TO IN41 OF ZZFT01-O-INDIC
+           MOVE "OEM0002" TO MSGID
+           CALL "RTNMSGTEXT"
+           MOVE ALL "-" TO XWG4TX OF ZZFT01-O
 ```
 ---
 
@@ -86,11 +86,11 @@ THEN set IN42, display message `OEM0019`, and blank the status description
 
 **Example:**
 ```cobol
-READ ORDSTS-FILE INVALID KEY
-    MOVE INDIC-ON TO IN42 OF ZZFT01-O-INDIC
-    MOVE "OEM0019" TO MSGID
-    CALL "RTNMSGTEXT"
-    MOVE ALL "-" TO XWSDSC OF ZZFT01-O
+       READ ORDSTS-FILE INVALID KEY
+           MOVE INDIC-ON TO IN42 OF ZZFT01-O-INDIC
+           MOVE "OEM0019" TO MSGID
+           CALL "RTNMSGTEXT"
+           MOVE ALL "-" TO XWSDSC OF ZZFT01-O
 ```
 ---
 
@@ -107,10 +107,10 @@ THEN set IN43, display message `OEM0023`, and blank the salesperson name
 
 **Example:**
 ```cobol
-READ SLMEN-FILE INVALID KEY
-    MOVE INDIC-ON TO IN43 OF ZZFT01-O-INDIC
-    MOVE "OEM0023" TO MSGID
-    CALL "RTNMSGTEXT"
-    MOVE ALL "-" TO PNAME OF ZZFT01-O
+       READ SLMEN-FILE INVALID KEY
+           MOVE INDIC-ON TO IN43 OF ZZFT01-O-INDIC
+           MOVE "OEM0023" TO MSGID
+           CALL "RTNMSGTEXT"
+           MOVE ALL "-" TO PNAME OF ZZFT01-O
 ```
 ---

@@ -22,11 +22,11 @@ THEN flag an error, show message `OEM0002`, and exit validation
 
 **Example:**
 ```cobol
-IF XWBCCD OF ZZSF01-I = SPACES
-    MOVE "Y" TO WS-ERROR
-    MOVE "OEM0002" TO MSGID
-    CALL "RTNMSGTEXT"
-END-IF
+       IF XWBCCD OF ZZSF01-I = SPACES
+           MOVE "Y" TO WS-ERROR
+           MOVE "OEM0002" TO MSGID
+           CALL "RTNMSGTEXT"
+       END-IF
 ```
 ---
 
@@ -43,13 +43,13 @@ THEN block the add and display message `Y2U0003`
 
 **Example:**
 ```cobol
-IF ACTDSP OF ZZFT01-O = "ADDITION"
-    START CUSTS-FILE KEY EQUAL ...
-    IF RECORD-FOUND = "N"
-        MOVE "Y2U0003" TO MSGID
-        CALL "RTNMSGTEXT"
-    END-IF
-END-IF
+       IF ACTDSP OF ZZFT01-O = "ADDITION"
+           START CUSTS-FILE KEY EQUAL ...
+           IF RECORD-FOUND = "N"
+               MOVE "Y2U0003" TO MSGID
+               CALL "RTNMSGTEXT"
+           END-IF
+       END-IF
 ```
 ---
 
@@ -66,11 +66,11 @@ THEN set indicator IN32, raise message `OEM0012`, and reject the transaction
 
 **Example:**
 ```cobol
-IF ZWG4TX OF ZZFT01-I = SPACES
-    MOVE INDIC-ON TO IN32 OF ZZFT01-O-INDIC
-    MOVE "OEM0012" TO MSGID
-    CALL "RTNMSGTEXT"
-END-IF
+       IF ZWG4TX OF ZZFT01-I = SPACES
+           MOVE INDIC-ON TO IN32 OF ZZFT01-O-INDIC
+           MOVE "OEM0012" TO MSGID
+           CALL "RTNMSGTEXT"
+       END-IF
 ```
 ---
 
@@ -87,10 +87,10 @@ THEN set indicator IN33, display message `OES0374`, and clear the group descript
 
 **Example:**
 ```cobol
-READ CUSGRP-FILE INVALID KEY
-    MOVE INDIC-ON TO IN33 OF ZZFT01-O-INDIC
-    MOVE "OES0374" TO MSGID
-    CALL "RTNMSGTEXT"
+       READ CUSGRP-FILE INVALID KEY
+           MOVE INDIC-ON TO IN33 OF ZZFT01-O-INDIC
+           MOVE "OES0374" TO MSGID
+           CALL "RTNMSGTEXT"
 ```
 ---
 
@@ -107,10 +107,10 @@ THEN set indicator IN34, display message `OEM0023`, and blank the salesperson na
 
 **Example:**
 ```cobol
-READ SLMEN-FILE INVALID KEY
-    MOVE INDIC-ON TO IN34 OF ZZFT01-O-INDIC
-    MOVE "OEM0023" TO MSGID
-    CALL "RTNMSGTEXT"
+       READ SLMEN-FILE INVALID KEY
+           MOVE INDIC-ON TO IN34 OF ZZFT01-O-INDIC
+           MOVE "OEM0023" TO MSGID
+           CALL "RTNMSGTEXT"
 ```
 ---
 
@@ -127,10 +127,10 @@ THEN set indicator IN35, show message `OEM0018`, and clear the distributor name
 
 **Example:**
 ```cobol
-READ DISTS-FILE INVALID KEY
-    MOVE INDIC-ON TO IN35 OF ZZFT01-O-INDIC
-    MOVE "OEM0018" TO MSGID
-    CALL "RTNMSGTEXT"
+       READ DISTS-FILE INVALID KEY
+           MOVE INDIC-ON TO IN35 OF ZZFT01-O-INDIC
+           MOVE "OEM0018" TO MSGID
+           CALL "RTNMSGTEXT"
 ```
 ---
 
@@ -147,13 +147,13 @@ THEN set indicator IN37, display `CNP0008` or `CNP0002`, and reject the update
 
 **Example:**
 ```cobol
-IF ZCUSNO OF ZZFT02-I = ZEROS
-    MOVE "CNP0008" TO MSGID
-    CALL "RTNMSGTEXT"
-ELSE
-    READ CUSFL3-FILE INVALID KEY
-        MOVE "CNP0002" TO MSGID
-        CALL "RTNMSGTEXT"
-END-IF
+       IF ZCUSNO OF ZZFT02-I = ZEROS
+           MOVE "CNP0008" TO MSGID
+           CALL "RTNMSGTEXT"
+       ELSE
+           READ CUSFL3-FILE INVALID KEY
+               MOVE "CNP0002" TO MSGID
+               CALL "RTNMSGTEXT"
+       END-IF
 ```
 ---

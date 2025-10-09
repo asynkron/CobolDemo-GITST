@@ -20,10 +20,10 @@ THEN reject the transaction and display message `OEM0010`
 
 **Example:**
 ```cobol
-IF XWORDN OF ZZFT01-O = ZEROS
-    MOVE "OEM0010" TO MSGID
-    CALL "RTNMSGTEXT" USING MSGID WS-ERRMSG
-END-IF
+       IF XWORDN OF ZZFT01-O = ZEROS
+           MOVE "OEM0010" TO MSGID
+           CALL "RTNMSGTEXT" USING MSGID WS-ERRMSG
+       END-IF
 ```
 ---
 
@@ -40,13 +40,13 @@ THEN reject the transaction and display message `Y2U0003`
 
 **Example:**
 ```cobol
-IF ADD-MODE
-    START CONHDR-FILE KEY EQUAL ...
-    IF RECORD-FOUND = "N"
-        MOVE "Y2U0003" TO MSGID
-        CALL "RTNMSGTEXT"
-    END-IF
-END-IF
+       IF ADD-MODE
+           START CONHDR-FILE KEY EQUAL ...
+           IF RECORD-FOUND = "N"
+               MOVE "Y2U0003" TO MSGID
+               CALL "RTNMSGTEXT"
+           END-IF
+       END-IF
 ```
 ---
 
@@ -63,10 +63,10 @@ THEN reject the update, display message `OEM0002`, and clear the customer descri
 
 **Example:**
 ```cobol
-READ CUSTS-FILE INVALID KEY
-    MOVE "OEM0002" TO MSGID
-    CALL "RTNMSGTEXT"
-    MOVE ALL "-" TO XWG4TX OF ZZFT01-O
+       READ CUSTS-FILE INVALID KEY
+           MOVE "OEM0002" TO MSGID
+           CALL "RTNMSGTEXT"
+           MOVE ALL "-" TO XWG4TX OF ZZFT01-O
 ```
 ---
 
@@ -83,10 +83,10 @@ THEN display message `OEM0019` and exit validation without saving
 
 **Example:**
 ```cobol
-READ ORDSTS-FILE INVALID KEY
-    MOVE "OEM0019" TO MSGID
-    CALL "RTNMSGTEXT"
-    GO VALIDT-EXIT
+       READ ORDSTS-FILE INVALID KEY
+           MOVE "OEM0019" TO MSGID
+           CALL "RTNMSGTEXT"
+           GO VALIDT-EXIT
 ```
 ---
 
@@ -103,9 +103,9 @@ THEN display message `OEM0023` and reject the change
 
 **Example:**
 ```cobol
-READ SLMEN-FILE INVALID KEY
-    MOVE "OEM0023" TO MSGID
-    CALL "RTNMSGTEXT"
-    GO VALIDT-EXIT
+       READ SLMEN-FILE INVALID KEY
+           MOVE "OEM0023" TO MSGID
+           CALL "RTNMSGTEXT"
+           GO VALIDT-EXIT
 ```
 ---
