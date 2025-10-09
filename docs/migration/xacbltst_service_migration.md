@@ -20,9 +20,10 @@ Key benefits of starting here:
 
 ```mermaid
 flowchart LR
-    COBOL[COBOL caller<br/> (e.g., ZBCONDET)] -->|HTTP POST JSON/CSV| API[ASP.NET Core Minimal API]
-    API -->|Business logic| Service[Concat Service]
+    COBOL["COBOL caller\n(e.g., ZBCONDET)"] -->|HTTP POST JSON/CSV| API["ASP.NET Core Minimal API"]
+    API -->|Business logic| Service["Concat Service"]
     Service -->|Response payload| COBOL
+
 ```
 
 - **Transport:** HTTPS using IBM i's Db2 for i built-in HTTP functions (`SYSTOOLS.HTTPPOSTCLOB`).
