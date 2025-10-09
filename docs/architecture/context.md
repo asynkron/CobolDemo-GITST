@@ -8,3 +8,4 @@ This directory centralizes cross-cutting architectural documentation for the Cob
 ## Maintenance Notes
 - Update the overview when adding new integrations, modules, or modernization initiatives so diagrams stay accurate.
 - Align diagram syntax (Mermaid) with the conventions captured in `../diagrams.md` to ensure consistency across documentation.
+- Preserve the new accent fills applied to architecture diagrams so future highlights remain consistent with the shared palette.

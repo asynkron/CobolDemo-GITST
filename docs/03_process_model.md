@@ -14,6 +14,14 @@ flowchart TD
   M2 -->|Validates| REF1[SLMEN / ORDSTS]
   M3 -->|Validates| REF2[STKMAS / STKBAL / TRNTYP]
   M1 -->|Reports| PRN1[Printer Files]
+  %% Color key maintenance flows and their primary data stores.
+  style M1 fill:#7B3B7B
+  style M2 fill:#3A6EA5
+  style M3 fill:#CC7722
+  style M4 fill:#2B6777
+  style CUSTS fill:#5A4E7C
+  style CONHDR fill:#2E8B57
+  style CONDET fill:#B23A48
 ```
 
 ## Customer Maintenance (`ZBCUSTS`)

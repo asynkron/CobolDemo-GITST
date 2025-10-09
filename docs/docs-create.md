@@ -33,6 +33,10 @@ Data flow diagram:
 ```mermaid
 flowchart TD
   InputFile --> ProcessA --> OutputReport
+  %% Highlight the transformative step within the example flow.
+  style ProcessA fill:#7B3B7B
+  style InputFile fill:#2B6777
+  style OutputReport fill:#CC7722
 ```
 
 Module hierarchy:
@@ -41,6 +45,11 @@ graph TD
   MAIN --> A001
   MAIN --> A002
   A002 --> A210
+  %% Indicate control concentration and branching with subtle fills.
+  style MAIN fill:#5A4E7C
+  style A001 fill:#3A6EA5
+  style A002 fill:#2B6777
+  style A210 fill:#CC7722
 ```
 
 ## 3. Contents per file
@@ -63,6 +72,10 @@ Example ER diagram:
 erDiagram
   CUSTOMER ||--o{ ORDER : places
   ORDER ||--|{ LINEITEM : contains
+  %% Accentuate the core entities in the sample ERD.
+  style CUSTOMER fill:#7B3B7B
+  style ORDER fill:#3A6EA5
+  style LINEITEM fill:#CC7722
 ```
 
 ### 03_process_model.md
@@ -89,6 +102,12 @@ graph TD
   MAIN --> P200["P200 Validate"]
   P200 --> P210["P210 Check Limits"]
   MAIN --> P300["P300 Write Reports"]
+  %% Emphasize driver versus specialist routines for clarity.
+  style MAIN fill:#5A4E7C
+  style P100 fill:#2B6777
+  style P200 fill:#3A6EA5
+  style P210 fill:#CC7722
+  style P300 fill:#B23A48
 ```
 
 ### 05_interfaces.md
@@ -112,6 +131,11 @@ flowchart LR
   JCL1["JCL1 Extract"] --> JCL2["JCL2 Transform"]
   JCL2 --> JCL3["JCL3 Load"]
   JCL3 --> JCL4["JCL4 Reports"]
+  %% Convey the progressive pipeline stages with coordinated fills.
+  style JCL1 fill:#2E8B57
+  style JCL2 fill:#3B6B6B
+  style JCL3 fill:#3A6EA5
+  style JCL4 fill:#CC7722
 ```
 
 ## 4. Formatting guidelines

@@ -13,3 +13,5 @@ This directory now stores SSADM-style documentation generated for the CobolDemo 
 ## Maintenance Notes
 - Update the relevant Markdown files and regenerate diagrams whenever program logic or data structures change.
 - Keep business rule catalogs synchronized with COBOL source changes so validation logic remains traceable.
+- Mermaid diagrams now apply the shared accent palette (see repository instructions) to highlight key components—reuse these
+  fills when extending or adding visuals.
