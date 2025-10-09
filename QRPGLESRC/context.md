@@ -1,5 +1,7 @@
 # QRPGLESRC Context (ILE RPG & SQLRPGLE)
 
+> 📘 **Per-member docs:** Each source member now includes a `<member>.<ext>.md` companion with dependency notes and full listings. Use these guides alongside this context during modernization.
+
 This source directory houses modernized RPG code (free-format RPGLE and SQLRPGLE) responsible for most interactive workflows, reports, and database maintenance tasks. Members often map directly to DDS display files in [`QDDSSRC`](../QDDSSRC/context.md) and are launched via CL/command wrappers in [`QCLSRC`](../QCLSRC/context.md) and [`QCMDSRC`](../QCMDSRC/context.md).
 
 ## Functional Areas

@@ -1,0 +1,30 @@
+# CONHDR.PF Member Guide
+
+## Overview
+DDS physical file `CONHDR` defines the physical table structure referenced by application programs.
+
+## Dependency Map
+- **Incoming:** Programs that open the `CONHDR` PF member.
+- **Outgoing:**
+  - DDS keywords link to database fields, display formats, or message files as declared below.
+
+## Source
+````dds
+     A                                      UNIQUE
+     A          R CONHDRR
+     A            XWORDN         6S 0       TEXT('Contract')
+     A            XWBCCD        11A         TEXT('Debtor')
+     A            XWCREF        20A         TEXT('Cust Ref')
+     A            XWDLDT          L         TEXT('Contract Date')
+     A            XWSTAT         2A         TEXT('Status')
+     A            PERSON         3A         TEXT('Rep')
+     A            XWTAMT        13S 2       TEXT('Contract Value')
+     A                                      EDTCDE(M)
+     A            XWADD1        40A         TEXT('Address')
+     A            XWADD2        40A         TEXT('Address 2')
+     A            XWADD3        40A         TEXT('Address 3')
+     A            XWADD4        40A         TEXT('Address 4')
+     A            XWPCDE        10A         TEXT('Post Code')
+     A            XWCNTR         3A         TEXT('Country')
+     A          K XWORDN
+````

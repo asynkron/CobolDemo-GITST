@@ -1,5 +1,7 @@
 # QCLSRC Context (Control Language)
 
+> 📘 **Per-member docs:** Each source member now includes a `<member>.<ext>.md` companion with dependency notes and full listings. Use these guides alongside this context during modernization.
+
 `QCLSRC` contains traditional CL programs that orchestrate batch operations, manage overrides, and launch RPG/COBOL components. These routines glue together the DDS-defined UI with the business programs in [`QRPGSRC`](../QRPGSRC/context.md), [`QRPGLESRC`](../QRPGLESRC/context.md), and [`QCBLSRC`](../QCBLSRC/context.md).
 
 ## Program Categories

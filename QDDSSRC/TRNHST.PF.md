@@ -1,0 +1,39 @@
+# TRNHST.PF Member Guide
+
+## Overview
+DDS physical file `TRNHST` defines the physical table structure referenced by application programs.
+
+## Dependency Map
+- **Incoming:** Programs that open the `TRNHST` PF member.
+- **Outgoing:**
+  - DDS keywords link to database fields, display formats, or message files as declared below.
+
+## Source
+````dds
+     A                                      UNIQUE
+     A          R TRNHSTR
+     A            XWE4NB         6S 0       TEXT('Period')
+     A                                      EDTCDE(3)
+     A            XWDLDT          L         TEXT('Trn Hst Date')
+     A            XWC8DT        11S 0       TEXT('Trn Hst Seq')
+     A                                      EDTCDE(3)
+     A            XWBCCD        11A         TEXT('Debtor')
+     A            XWBNCD         2A         TEXT('DGrp')
+     A            XWBDCD         3A         TEXT('Del Area'            )
+     A            PERSON         3A         TEXT('Rep')
+     A            XWAACS        11A         TEXT('Store')
+     A            XWABCD        20A         TEXT('Product')
+     A            XWAGCD         2A         TEXT('Stk Grp 1')
+     A            XWAHCD         2A         TEXT('Stk Grp 2')
+     A            XWAICD         2A         TEXT('Stk Grp 3')
+     A            XWT8TX        15A         TEXT('Doc Ref')
+     A            XWORDN         6S 0       TEXT('Contract')
+     A            XWRICD         3A         TEXT('Trn')
+     A            XWA5QT         9S 2       TEXT('Quantity')
+     A                                      EDTCDE(M)
+     A            XWVALU        13S 2       TEXT('Value')
+     A                                      EDTCDE(M)
+     A          K XWE4NB
+     A          K XWDLDT
+     A          K XWC8DT
+````

@@ -1,0 +1,38 @@
+# CONDETNW.PF Member Guide
+
+## Overview
+DDS physical file `CONDETNW` defines the physical table structure referenced by application programs.
+
+## Dependency Map
+- **Incoming:** Programs that open the `CONDETNW` PF member.
+- **Outgoing:**
+  - DDS keywords link to database fields, display formats, or message files as declared below.
+
+## Source
+````dds
+     A                                      UNIQUE
+     A          R CONDETR
+     A            XWORDN         6S 0       TEXT('Contract')
+     A                                      ALIAS(CON_CONTRACT_NUMBER)
+     A            XWABCD        20A         TEXT('Product')
+     A                                      COLHDG('Product')
+     A                                      ALIAS(CON_PRODUCT_DETAILS)
+     A            XWAACS        11A         TEXT('Store')
+     A                                      ALIAS(CON_STORE)
+     A            XWT8TX        15A         TEXT('Ref No')
+     A                                      ALIAS(CON_REFERENCE_NUMBER)
+     A            XWRICD         3A         TEXT('Trn Hst Trn Type')
+     A                                      ALIAS(CON_TRANSACTION_TYPE)
+     A            XWA5QT         9S 2       TEXT('Contract Qty')
+     A                                      EDTCDE(M)
+     A                                      ALIAS(CON_CONTRACT_QUANTITY)
+     A            XWA2CD         3A         TEXT('Stk Unit of Measure')
+     A                                      COLHDG('U/M')
+     A                                      ALIAS(CON_UNIT_OF_MEASURES)
+     A            XWPRIC         6S 2       TEXT('Price')
+     A                                      EDTCDE(M)
+     A                                      ALIAS(CON_CONTRACT_PRICE)
+     A
+     A          K XWORDN
+     A          K XWABCD
+````
