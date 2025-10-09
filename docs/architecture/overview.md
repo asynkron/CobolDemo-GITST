@@ -158,12 +158,6 @@ erDiagram
     PRODUCT ||--o{ ORDERLINE : fulfills
     PRODUCT ||--o{ PRICE : references
     ORDER ||--o{ PAYMENT : settles
-    %% Color the anchor entities for rapid scanning.
-    style CUSTOMER fill:#7B3B7B
-    style ORDER fill:#3A6EA5
-    style ORDERLINE fill:#CC7722
-    style PRODUCT fill:#2B6777
-    style PAYMENT fill:#B23A48
 ```
 
 **Strengths**
