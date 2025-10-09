@@ -147,3 +147,149 @@ If the repository size allows, also generate:
 - A data lineage view from input files to output reports.
 - A glossary of business terms with references to modules that implement them.
 
+put all of this under ./docs/technical
+
+---
+
+Once all of this is done.
+Generate a rich architectural overview of the entire system. include the good, the bad, add data flow diagrams, module diagrams, entity relationship diagrams.
+
+Make it as complete as possible.
+put the architectural overview in ./docs/architecture
+
+---
+
+Once this is done.
+It´s time to extract all business rules from the entire system.
+
+put this under ./docs/business_rules
+
+use this to extract business rules:
+```
+You are an expert in COBOL systems analysis and the Structured Systems Analysis and Design Method (SSADM).
+Your task is to extract, infer, and document BUSINESS RULES from the provided COBOL source code repository.
+
+### 1. Purpose
+Identify and describe all explicit and implicit business rules implemented in the COBOL programs,
+using the **classic SSADM structured English format** suitable for inclusion in Markdown documentation.
+
+### 2. Output format
+Generate Markdown files under:
+```
+./docs/business_rules/
+```
+
+Each file should correspond to a functional area or COBOL module, for example:
+```
+./docs/business_rules/AR01_rules.md
+./docs/business_rules/INVENTORY_rules.md
+```
+
+At the top of each file, include a title and table of contents.
+
+---
+
+### 3. Rule documentation format (Structured English style)
+
+For each business rule, use this exact format:
+
+```
+### Rule ID: BR-### (increment sequentially within the file)
+**Name:** <short descriptive name>  
+**Type:** <Validation | Calculation | Derivation | Decision | Constraint | Exception>  
+**Applies To:** <program name, process name, or data entity>  
+**Description:**  
+IF <condition or trigger>  
+THEN <action or result>  
+[ELSE <alternative outcome>]  
+
+**Rationale:** <brief business justification>  
+**Source:** <copybook, section, or paragraph name if identifiable>  
+**Affected Processes:** <list of COBOL programs or modules using this rule>  
+
+**Example:**  
+```cobol
+IF ACCOUNT-BALANCE < 0
+    PERFORM APPLY-OVERDRAFT-FEE
+END-IF
+```
+---
+```
+
+### 4. Extraction guidance
+Analyze COBOL source code and infer business rules from:
+- Conditional logic (`IF`, `EVALUATE`, `PERFORM`, `GO TO`)
+- Calculations and data derivations (`COMPUTE`, `MOVE`)
+- Validation or constraint logic
+- Status or control flags (`88-levels`, condition names)
+- Data dependencies across modules
+- Error handling routines and messages
+- Comments and copybook references that indicate policy or rule intent
+
+Translate these findings into **structured natural language rules** (not raw code).
+
+---
+
+### 5. Style and clarity
+- Use **plain structured English**, not pseudocode.
+- Avoid implementation details; focus on business meaning.
+- Group rules logically (by program or functional area).
+- Keep each rule self-contained and easy to read.
+- Use Markdown headings and bullet lists where appropriate.
+
+---
+
+### 6. Example output
+
+Example output for `AR001 - Invoice Processing`:
+
+```markdown
+# Business Rules — AR001 Invoice Processing
+
+### Rule ID: BR-001
+**Name:** Credit Limit Check  
+**Type:** Validation  
+**Applies To:** CUSTOMER, ORDER  
+**Description:**  
+IF Customer.CreditLimit < Order.TotalAmount  
+THEN Reject the order and display "Credit limit exceeded"  
+
+**Rationale:** Prevent orders that exceed approved credit limits.  
+**Source:** Program AR001, paragraph VALIDATE-ORDER.  
+**Affected Processes:** AR001, AR002.  
+
+**Example:**  
+```cobol
+IF ORDER-AMOUNT > CUSTOMER-LIMIT
+    MOVE 'LIMIT EXCEEDED' TO ERROR-MESSAGE
+END-IF
+```
+
+---
+
+### Rule ID: BR-002
+**Name:** Invoice Date Derivation  
+**Type:** Derivation  
+**Applies To:** INVOICE  
+**Description:**  
+IF InvoiceDate is not provided  
+THEN set InvoiceDate = SystemDate  
+
+**Rationale:** Ensure invoices always have a posting date.  
+**Source:** AR001, INIT-INVOICE-DATA  
+**Affected Processes:** AR001  
+```
+
+---
+
+### 7. Deliverable
+Produce one `.md` file per major COBOL module, containing all identified rules formatted exactly as above.
+Each file must start with a header:
+```
+# Business Rules — <system or module name>
+Generated using SSADM Structured Natural Language format.
+```
+Include internal Markdown links (`[BR-001](#rule-id-br-001)`) for navigation within the file.
+```
+
+
