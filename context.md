@@ -14,6 +14,7 @@ This repository contains an IBM i (AS/400) demonstration application that spans 
 * [`QSQLPRC`](QSQLPRC/context.md) / [`QSQLSRC`](QSQLSRC/context.md) – SQL procedures and DDL artifacts for incremental modernization.
 * [`ASIMPLTEST`](ASIMPLTEST/context.md) – Ad hoc testing sources combining RPG, CL, and DDS snippets.
 * Tooling and configuration lives under [`.idea`](.idea/context.md) and [`.ibmi`](.ibmi/context.md).
+* SSADM documentation resides in [`docs`](docs/context.md), including generated overviews, process models, and business rule catalogs.
 
 ## Key Concepts
 * **Data-Centric Design:** DDS physical/logical files (`QDDSSRC`) underpin both COBOL and RPG programs. Many source members expect specific record formats (e.g., `CONDET`, `CUSTS`, `STKMAS`).
