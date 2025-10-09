@@ -18,6 +18,13 @@ flowchart LR
     CRM -- invoices/postings --> Finance
     CRM -- pick tickets/ship notices --> Logistics
     CRM -- nightly extracts --> Analytics
+    %% Draw attention to the IBM i hub and human touchpoints.
+    style CRM fill:#7B3B7B
+    style SalesClerk fill:#3A6EA5
+    style Customer fill:#2E8B57
+    style Finance fill:#2B6777
+    style Logistics fill:#3B6B6B
+    style Analytics fill:#CC7722
 ```
 
 ### Strengths
@@ -42,6 +49,11 @@ flowchart TB
     App --> Data
     Batch --> App
     Batch --> Data
+    %% Showcase each architectural layer distinctly.
+    style UI fill:#3A6EA5
+    style App fill:#7B3B7B
+    style Data fill:#2B6777
+    style Batch fill:#CC7722
 ```
 
 **Positive Observations**
@@ -71,6 +83,11 @@ flowchart LR
     CRMSystem -- confirmation --> Customer
     CRMSystem -- invoice batch --> FinanceSys
     CRMSystem -- shipment notice --> LogisticsSys
+    %% Emphasize the CRM core and external boundaries.
+    style CRMSystem fill:#7B3B7B
+    style Customer fill:#2E8B57
+    style FinanceSys fill:#2B6777
+    style LogisticsSys fill:#3B6B6B
 ```
 
 ### Level 1 DFD – Order Lifecycle
@@ -92,6 +109,12 @@ flowchart TB
     Fulfillment --> Logistics
     CustomerFile --> Entry
     CustomerFile --> Validation
+    %% Highlight handoffs across the order lifecycle.
+    style Entry fill:#7B3B7B
+    style Validation fill:#3A6EA5
+    style CustomerFile fill:#2B6777
+    style Fulfillment fill:#CC7722
+    style Billing fill:#B23A48
 ```
 
 ## Module Interaction Overview
@@ -104,13 +127,18 @@ sequenceDiagram
     participant Batch as CL Batch Jobs
     participant Finance as Finance
 
+    %% Use light overlays to spotlight interactive vs. batch-driven exchanges.
+    rect rgba(123,59,123,0.1)
     Clerk->>Entry: Create/Amend order header
     Entry->>Cust: Retrieve customer status
     Entry->>Lines: Initialize line validation
     Lines->>Cust: Check credit and terms
     Lines->>Entry: Update header totals
+    end
+    rect rgba(178,58,72,0.1)
     Batch-->>Lines: Nightly repricing
     Batch-->>Finance: Post invoice file
+    end
 ```
 
 ### Highlights
@@ -130,6 +158,12 @@ erDiagram
     PRODUCT ||--o{ ORDERLINE : fulfills
     PRODUCT ||--o{ PRICE : references
     ORDER ||--o{ PAYMENT : settles
+    %% Color the anchor entities for rapid scanning.
+    style CUSTOMER fill:#7B3B7B
+    style ORDER fill:#3A6EA5
+    style ORDERLINE fill:#CC7722
+    style PRODUCT fill:#2B6777
+    style PAYMENT fill:#B23A48
 ```
 
 **Strengths**

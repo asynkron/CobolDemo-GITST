@@ -13,6 +13,11 @@ erDiagram
   CONDET }o--|| STKBAL : "inventory balance"
   CONDET }o--|| TRNTYP : "transaction type"
   CUSTS }o--|| DISTS : "distributor mapping"
+  %% Emphasize the primary contract entities with soft-fill accents.
+  style CUSTS fill:#7B3B7B
+  style CONHDR fill:#2B6777
+  style CONDET fill:#CC7722
+  style TRNHST fill:#3A6EA5
 ```
 
 ## Entity Summaries

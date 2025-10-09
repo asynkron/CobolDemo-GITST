@@ -17,6 +17,12 @@ flowchart LR
   OVROBJ --> PRN[Printer Programs]
   MAINT --> SQLX[SQL Procedures / Modernization]
   PRN --> SPOOLED[Spooled Reports]
+  %% Surface run-time responsibilities with targeted background fills.
+  style OVROBJ fill:#2E8B57
+  style MAINT fill:#7B3B7B
+  style PRN fill:#CC7722
+  style SQLX fill:#3A6EA5
+  style SPOOLED fill:#B23A48
 ```
 
 ## Deployment Considerations

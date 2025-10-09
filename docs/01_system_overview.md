@@ -22,6 +22,11 @@ flowchart LR
     COBOL -->|Calls| RPGLE[ILE RPG Services]
     RPGLE -->|Embedded SQL| SQL[(SQL Procedures & Tables)]
     CL -->|Overrides & Scheduling| IBM[i OS Jobs]
+    %% Highlight core processing hubs with the agreed palette.
+    style COBOL fill:#7B3B7B
+    style CL fill:#2E8B57
+    style DDS fill:#2B6777
+    style SQL fill:#3B6B6B
 ```
 
 ## Key Inputs and Outputs
