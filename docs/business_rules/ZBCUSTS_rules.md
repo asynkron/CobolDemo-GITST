@@ -14,8 +14,10 @@ Generated using SSADM Structured Natural Language format.
 **Type:** Validation
 **Applies To:** CUSTS
 **Description:**
-IF the customer code field is blank
+
+>IF the customer code field is blank
 THEN flag an error, show message `OEM0002`, and exit validation
+
 **Rationale:** Prevent creation of customer records without identifiers.
 **Source:** `VALID1-ROUTINE`, `ZBCUSTS.CBL`
 **Affected Processes:** ZBCUSTS
@@ -35,8 +37,10 @@ THEN flag an error, show message `OEM0002`, and exit validation
 **Type:** Constraint
 **Applies To:** CUSTS
 **Description:**
-IF the screen is in addition mode AND the customer code already exists
+
+>IF the screen is in addition mode AND the customer code already exists
 THEN block the add and display message `Y2U0003`
+
 **Rationale:** Maintain unique customer identifiers.
 **Source:** `VALID1-ROUTINE`, `ZBCUSTS.CBL`
 **Affected Processes:** ZBCUSTS
@@ -58,8 +62,10 @@ THEN block the add and display message `Y2U0003`
 **Type:** Validation
 **Applies To:** CUSTS
 **Description:**
-IF the customer name field is blank
+
+>IF the customer name field is blank
 THEN set indicator IN32, raise message `OEM0012`, and reject the transaction
+
 **Rationale:** Guarantee descriptive information for customer service users.
 **Source:** `VALID1-ROUTINE`, `ZBCUSTS.CBL`
 **Affected Processes:** ZBCUSTS
@@ -79,8 +85,10 @@ THEN set indicator IN32, raise message `OEM0012`, and reject the transaction
 **Type:** Validation
 **Applies To:** CUSGRP reference data
 **Description:**
-IF the customer group code cannot be found in `CUSGRP`
+
+>IF the customer group code cannot be found in `CUSGRP`
 THEN set indicator IN33, display message `OES0374`, and clear the group description
+
 **Rationale:** Enforce controlled hierarchy assignments.
 **Source:** `VALID1-ROUTINE`, `ZBCUSTS.CBL`
 **Affected Processes:** ZBCUSTS
@@ -99,8 +107,10 @@ THEN set indicator IN33, display message `OES0374`, and clear the group descript
 **Type:** Validation
 **Applies To:** SLMEN
 **Description:**
-IF the assigned salesperson code is not found in `SLMEN`
+
+>IF the assigned salesperson code is not found in `SLMEN`
 THEN set indicator IN34, display message `OEM0023`, and blank the salesperson name
+
 **Rationale:** Ensure accountability for customer ownership.
 **Source:** `VALID1-ROUTINE`, `ZBCUSTS.CBL`
 **Affected Processes:** ZBCUSTS, ZBCONHDR
@@ -119,8 +129,10 @@ THEN set indicator IN34, display message `OEM0023`, and blank the salesperson na
 **Type:** Validation
 **Applies To:** DISTS
 **Description:**
-IF the distributor code cannot be read from `DISTS`
+
+>IF the distributor code cannot be read from `DISTS`
 THEN set indicator IN35, show message `OEM0018`, and clear the distributor name
+
 **Rationale:** Maintain integrity of distribution assignments.
 **Source:** `VALID1-ROUTINE`, `ZBCUSTS.CBL`
 **Affected Processes:** ZBCUSTS
@@ -139,8 +151,10 @@ THEN set indicator IN35, show message `OEM0018`, and clear the distributor name
 **Type:** Validation
 **Applies To:** CUSFL3, Customer metrics
 **Description:**
-IF the follow-up customer number is zero OR the follow-up record does not exist
+
+>IF the follow-up customer number is zero OR the follow-up record does not exist
 THEN set indicator IN37, display `CNP0008` or `CNP0002`, and reject the update
+
 **Rationale:** Prevent invalid follow-up references and maintain positive identifiers.
 **Source:** `VALID2-ROUTINE`, `ZBCUSTS.CBL`
 **Affected Processes:** ZBCUSTS

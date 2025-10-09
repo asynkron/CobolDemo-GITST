@@ -5,7 +5,8 @@ This directory now stores SSADM-style documentation generated for the CobolDemo 
 ## Key Assets
 - `01_system_overview.md` through `06_physical_design.md` — top-level SSADM documents covering overview, data model, process flows, module specifications, interfaces, and physical design considerations.
 - `business_rules/` — structured English business rule catalogs for major COBOL modules (`ZBCONDET`, `ZBCONHDR`, `ZBCUSTS`). COBOL snippets
-  in these catalogs use seven leading spaces so syntax highlighters treat the statements as column-8 source.
+  in these catalogs use seven leading spaces so syntax highlighters treat the statements as column-8 source. Rule descriptions
+  render their plain-English statements as blockquotes to improve readability when scanning the IF/THEN phrasing.
 - `docs-create.md` — instructions for regenerating the SSADM documentation set.
 - `context-create.md` — meta instructions for creating context files.
 - `diagrams.md` — house style for diagrams referenced in generated documents.

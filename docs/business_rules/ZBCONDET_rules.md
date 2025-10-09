@@ -12,8 +12,10 @@ Generated using SSADM Structured Natural Language format.
 **Type:** Validation
 **Applies To:** CONDET records
 **Description:**
-IF the contract number entered on the detail screen is zero
+
+>IF the contract number entered on the detail screen is zero
 THEN reject the transaction and display message `OEM0010`
+
 **Rationale:** Prevent orphaned contract detail records.
 **Source:** `VALIDT-ROUTINE`, `ZBCONDET.CBL`
 **Affected Processes:** ZBCONDET
@@ -32,8 +34,10 @@ THEN reject the transaction and display message `OEM0010`
 **Type:** Validation
 **Applies To:** CONDET, CONHDR
 **Description:**
-IF the user is adding a detail line AND the contract header does not already exist
+
+>IF the user is adding a detail line AND the contract header does not already exist
 THEN reject the transaction and display message `Y2U0003`
+
 **Rationale:** Maintain referential integrity between contract headers and detail lines.
 **Source:** `VALIDT-ROUTINE`, `ZBCONDET.CBL`
 **Affected Processes:** ZBCONDET, ZBCONHDR
@@ -55,8 +59,10 @@ THEN reject the transaction and display message `Y2U0003`
 **Type:** Validation
 **Applies To:** CUSTS master data
 **Description:**
-IF the associated customer record cannot be read from `CUSTS`
+
+>IF the associated customer record cannot be read from `CUSTS`
 THEN reject the update, display message `OEM0002`, and clear the customer description
+
 **Rationale:** Ensure contract lines reference valid customers with descriptive text.
 **Source:** `VALIDT-ROUTINE`, `ZBCONDET.CBL`
 **Affected Processes:** ZBCONDET, ZBCUSTS
@@ -75,8 +81,10 @@ THEN reject the update, display message `OEM0002`, and clear the customer descri
 **Type:** Validation
 **Applies To:** ORDSTS reference data
 **Description:**
-IF the order status code entered on the detail screen is not found in `ORDSTS`
+
+>IF the order status code entered on the detail screen is not found in `ORDSTS`
 THEN display message `OEM0019` and exit validation without saving
+
 **Rationale:** Enforce standardized order status descriptions.
 **Source:** `VALIDT-ROUTINE`, `ZBCONDET.CBL`
 **Affected Processes:** ZBCONDET, ZBCONHDR
@@ -95,8 +103,10 @@ THEN display message `OEM0019` and exit validation without saving
 **Type:** Validation
 **Applies To:** SLMEN reference data
 **Description:**
-IF the salesperson code on the detail screen cannot be found in `SLMEN`
+
+>IF the salesperson code on the detail screen cannot be found in `SLMEN`
 THEN display message `OEM0023` and reject the change
+
 **Rationale:** Ensure each contract line references a legitimate sales representative.
 **Source:** `VALIDT-ROUTINE`, `ZBCONDET.CBL`
 **Affected Processes:** ZBCONDET, ZBCONHDR, ZBCUSTS

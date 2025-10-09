@@ -12,8 +12,10 @@ Generated using SSADM Structured Natural Language format.
 **Type:** Validation
 **Applies To:** CONHDR
 **Description:**
-IF the contract number entered is zero
+
+>IF the contract number entered is zero
 THEN raise message `OEM0010`, set an error indicator, and stop processing
+
 **Rationale:** Prevent insertion of invalid header keys.
 **Source:** `VALIDT-ROUTINE`, `ZBCONHDR.CBL`
 **Affected Processes:** ZBCONHDR, ZBCONDET
@@ -33,8 +35,10 @@ THEN raise message `OEM0010`, set an error indicator, and stop processing
 **Type:** Constraint
 **Applies To:** CONHDR
 **Description:**
-IF the user is in add mode AND the contract number already exists in `CONHDR`
+
+>IF the user is in add mode AND the contract number already exists in `CONHDR`
 THEN block the add and display message `Y2U0003`
+
 **Rationale:** Preserve uniqueness of contract numbers.
 **Source:** `VALIDT-ROUTINE`, `ZBCONHDR.CBL`
 **Affected Processes:** ZBCONHDR, ZBCONDET
@@ -57,8 +61,10 @@ THEN block the add and display message `Y2U0003`
 **Type:** Validation
 **Applies To:** CONHDR, CUSTS
 **Description:**
-IF the referenced customer code cannot be read from `CUSTS`
+
+>IF the referenced customer code cannot be read from `CUSTS`
 THEN set error indicator IN41, show message `OEM0002`, and blank the customer description
+
 **Rationale:** Ensure contract headers reference valid customer masters.
 **Source:** `VALIDT-ROUTINE`, `ZBCONHDR.CBL`
 **Affected Processes:** ZBCONHDR, ZBCUSTS
@@ -78,8 +84,10 @@ THEN set error indicator IN41, show message `OEM0002`, and blank the customer de
 **Type:** Validation
 **Applies To:** CONHDR, ORDSTS
 **Description:**
-IF the status code entered cannot be found in `ORDSTS`
+
+>IF the status code entered cannot be found in `ORDSTS`
 THEN set IN42, display message `OEM0019`, and blank the status description
+
 **Rationale:** Maintain standardized contract lifecycle statuses.
 **Source:** `VALIDT-ROUTINE`, `ZBCONHDR.CBL`
 **Affected Processes:** ZBCONHDR
@@ -99,8 +107,10 @@ THEN set IN42, display message `OEM0019`, and blank the status description
 **Type:** Validation
 **Applies To:** CONHDR, SLMEN
 **Description:**
-IF the salesperson code cannot be read from `SLMEN`
+
+>IF the salesperson code cannot be read from `SLMEN`
 THEN set IN43, display message `OEM0023`, and blank the salesperson name
+
 **Rationale:** Ensure accountability for each contract.
 **Source:** `VALIDT-ROUTINE`, `ZBCONHDR.CBL`
 **Affected Processes:** ZBCONHDR, ZBCUSTS, ZBCONDET
