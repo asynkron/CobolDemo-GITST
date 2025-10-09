@@ -1,0 +1,46 @@
+# CobolDemo-GITST Repository Overview
+
+This repository contains an IBM i (AS/400) demonstration application that spans COBOL, RPG/RPGLE, CL, SQL, and DDS assets. The code appears to implement a light-weight CRM/order management workflow with customer, contact, order, distribution, and audit capabilities. The structure mirrors traditional IBM i source libraries, where each top-level directory corresponds to a source physical file (e.g., `QCBLSRC` for COBOL, `QDDSSRC` for DDS display/database definitions).
+
+## Directory Overview
+* [`QCBLSRC`](QCBLSRC/context.md) – COBOL programs for contracts, customers, and transaction history maintenance.
+* [`QRPGSRC`](QRPGSRC/context.md) – Fixed-format RPG programs for reporting and legacy batch processing.
+* [`QRPGLESRC`](QRPGLESRC/context.md) – ILE RPG modules for interactive UI, CRUD logic, and SQLRPGLE integration.
+* [`QCLSRC`](QCLSRC/context.md) / [`QCLLESRC`](QCLLESRC/context.md) – Control language programs orchestrating batch jobs, overrides, and emergency utilities.
+* [`QCMDSRC`](QCMDSRC/context.md) – Custom command definitions for launching the RPG/CL drivers.
+* [`QDDSSRC`](QDDSSRC/context.md) – DDS for display, printer, logical, and physical files, defining the UI and database schema.
+* [`CPYBKSRC`](CPYBKSRC/context.md) – COBOL copybooks shared across COBOL components.
+* [`QQMQRYSRC`](QQMQRYSRC/context.md) – Query/400 definitions for quick reports.
+* [`QSQLPRC`](QSQLPRC/context.md) / [`QSQLSRC`](QSQLSRC/context.md) – SQL procedures and DDL artifacts for incremental modernization.
+* [`ASIMPLTEST`](ASIMPLTEST/context.md) – Ad hoc testing sources combining RPG, CL, and DDS snippets.
+* Tooling and configuration lives under [`.idea`](.idea/context.md) and [`.ibmi`](.ibmi/context.md).
+* SSADM documentation resides in [`docs`](docs/context.md), including generated overviews, process models, and business rule catalogs.
+
+## Key Concepts
+* **Data-Centric Design:** DDS physical/logical files (`QDDSSRC`) underpin both COBOL and RPG programs. Many source members expect specific record formats (e.g., `CONDET`, `CUSTS`, `STKMAS`).
+* **Mixed UI Layers:** Display files drive interactive screens, while CL programs manage overrides and job control. RPGLE modules often correspond to display file names (e.g., `WWCUSTS.RPGLE` works with `WCUSTSD.DSPF`).
+* **Copybook-Driven Data Sharing:** COBOL programs rely on copybooks from `CPYBKSRC` to enforce record layouts.
+* **SQL Modernization Hooks:** SQL procedures and SQLRPGLE sources show initial steps toward embedding SQL logic, offering footholds for migration.
+
+## Positive Findings
+* Comprehensive coverage of customer/order lifecycle across multiple languages.
+* SQLRPGLE and stored procedure samples demonstrate modernization awareness.
+* Query/400 definitions provide concise documentation of reporting needs.
+
+## Negative Findings / Risks
+* Heavy coupling to DDS record formats and indicators increases migration complexity.
+* Sparse inline documentation; business rules must be inferred from code.
+* Minimal automated testing—the `ASIMPLTEST` folder is informal and mixed-format.
+
+## Entanglement & Migration Notes
+* **Least entangled:** `QSQLSRC` table definitions and `QSQLPRC` procedures have minimal dependencies and can be migrated to modern SQL services quickly. Query/400 definitions (`QQMQRYSRC`) are also self-contained snapshots of data needs.
+* **Moderately entangled:** COBOL copybooks (`CPYBKSRC`) and standalone CL utilities (e.g., `TESTWIMX.CLLE`) can move independently but interact via job control conventions.
+* **Most entangled:** DDS display files (`QDDSSRC`) and their paired RPGLE programs rely on IBM i subfile indicators and program-to-display contracts; migrating them requires substantial UI rethinking.
+
+### Migration Suggestions
+1. **Expose core data via APIs:** Externalize key tables (`CUSTS`, `CONHDR`, `CONDET`, etc.) using REST services backed by the SQL DDL in [`QSQLSRC`](QSQLSRC/context.md). Legacy RPG/COBOL modules could call new HTTP endpoints via sockets or HTTP APIs instead of direct file I/O.
+2. **Modularize business rules:** Refactor COBOL programs like `ZBCONDET` and RPGLE modules like `WWCONDET` into service routines callable from both legacy and modern environments. Gradually replace file I/O with SQL views or stored procedures from [`QSQLPRC`](QSQLPRC/context.md).
+3. **Wrap CL orchestration:** Re-implement batch CL flows (see [`QCLSRC`](QCLSRC/context.md)) in modern schedulers while keeping IBM i overrides temporarily. Provide HTTP triggers or message queues for the hardest-to-migrate interactive screens.
+
+---
+**Tip for future agents:** consult these `context.md` files first—they summarize dependencies and modernization paths. Update the relevant `context.md` whenever you modify code in a directory to keep this index trustworthy.
