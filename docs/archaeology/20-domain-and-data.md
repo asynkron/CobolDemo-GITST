@@ -6,6 +6,8 @@ This report records the repository state at commit `0126771` on 2026-07-14. It c
 
 The delivery contract is documentation-only: recover the domain model, record shapes, lineage, and business policy without changing production members; keep IBM i mechanics separate from policy; omit record values and secrets; and turn unsupported conclusions into explicit Unknowns with the evidence needed to resolve them. The repository-wide inventory and tooling limitations remain defined by [`00-evidence-map.md`](00-evidence-map.md).
 
+Terminology is normalized as follows: **contract** names the persisted `CONHDR`/`CONDET` model and maintenance flows; **order** is retained for Query/400 `ORDERS`, `ORDAUDIT*`, and other literal source/report labels. Neither term implies a separate table or deployed service. Operational handling of these records is bounded by [`40-operations-and-recovery.md`](40-operations-and-recovery.md).
+
 ### Evidence convention
 
 - **Fact** — directly observable in the cited tracked source member.
@@ -234,3 +236,4 @@ The “policy” column describes the business effect. Indicator/file-operation 
 - **Fact:** aliases in `CONDETNW` and human-readable COBOL names provide naming candidates, but the reconciled DDS/compile contract must decide wire types and precision.
 - **Fact:** report/query behavior is explicit enough to build characterization datasets: contract `quantity*price`, inventory joins/sorts, and customer transaction quantity/value totals. Use synthetic or masked data only.
 - **Unknown:** no migration should encode cascade deletes, state transitions, monetary reconciliation, or project-number allocation until runtime evidence resolves the gaps above.
+- The dependency-ordered implementation path is maintained in [`90-modernization-roadmap.md`](90-modernization-roadmap.md); it requires characterization and stabilization before decoupling.

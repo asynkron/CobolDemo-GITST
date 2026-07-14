@@ -12,6 +12,8 @@ Primary evidence is tracked source, DDS, copybook, configuration, or build metad
 
 No authoritative IBM i compile recipe, deployment manifest, active-member inventory, commitment-control configuration, database sample, or automated assertion harness is tracked. Faktorial semantic and Tree-sitter support is also incomplete for COBOL, RPG, CL, DDS, copybooks, and extensionless SQL members. Consequently, “confirmed” means confirmed in source for any compiled/deployed copy of the cited member; whether that copy is active is unknown. No production source or configuration was changed for this audit.
 
+The later root `Makefile` is a tracked documentation gate only and does not change that IBM i build/runtime ceiling. Operator containment and evidence prerequisites are consolidated in [`40-operations-and-recovery.md`](40-operations-and-recovery.md); the dependency-ordered response is in [`90-modernization-roadmap.md`](90-modernization-roadmap.md).
+
 ## Executive triage
 
 | Priority | Finding | Why it matters |
@@ -129,7 +131,7 @@ No authoritative IBM i compile recipe, deployment manifest, active-member invent
 | Injection, credentials, and privacy | **Confirmed defect/risk** | D-05 covers JSON token injection; D-04/R-04 cover header mismatch, plaintext placeholder configuration, TLS, and masked evidence. The SQL procedures use parameters rather than dynamic SQL, so no SQL-injection claim is made. No personal values or usable secrets are reproduced here. |
 | Dead code and duplicated-rule drift | **Confirmed risk** | R-07 covers two sources with the same program ID and copied defects. Commented defaults and backup/numbered variants were not called dead code because active compile selection is unknown. |
 | Operational failure and recovery | **Confirmed risk** | R-01, R-02, R-03, R-04, and R-06. Job logs, journaling, commitment control, scheduler contracts, and runbooks are not tracked. |
-| Build and configuration | **Confirmed defect/risk** | D-04 and R-08. The tracked solution builds only the .NET spike; the unrelated untracked root `Makefile` is outside the evidence baseline and was not adopted. |
+| Build and configuration | **Confirmed defect/risk** | D-04 and R-08. At this audit revision the solution built only the .NET spike. The later tracked root `Makefile` validates the archaeology documents only; it is not an IBM i compile/deploy manifest. |
 | Tests and verification | **Known ceiling** | R-08. Test-like source is not an automated assertion harness, and missing tests do not itself prove a defect. |
 
 ## Safe checks used and verification ceiling

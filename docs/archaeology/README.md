@@ -1,42 +1,51 @@
 # Repository Archaeology
 
-This directory is the evidence-led audit index for the repository. It complements the narrative system, architecture, business-rule, and migration documents elsewhere under `docs/`; it does not replace source members or claim that documented integrations are deployed.
+## Executive summary
 
-## Start here
+This suite is the evidence-led entry point for understanding and stabilizing the repository. The source shows a DDS-centered IBM i application spanning COBOL, RPG/RPGLE, CL, Query/400, SQL, 5250 screens, spool output, and a later HTTP experiment. It also shows high-consequence defect and recovery risks. It does **not** prove which source variants are compiled, which objects are deployed, how jobs are scheduled, or how production backup and recovery work.
 
-- [`00-evidence-map.md`](00-evidence-map.md) — tracked inventory, source-family map, historical layers, naming conventions, external-interface clues, tooling coverage, glossary, unknowns, and the coverage ledger.
-- [`20-domain-and-data.md`](20-domain-and-data.md) — evidence-backed domain glossary, record dictionary, producer-consumer lineage, business rules, privacy classifications, variant reconciliation, and exact runtime evidence gaps.
-- [`10-architecture-and-flows.md`](10-architecture-and-flows.md) — evidence-classified subsystem map, interaction-edge catalog, representative execution/data flows, Mermaid views, and change-impact hotspots.
-- [`30-defects-and-risks.md`](30-defects-and-risks.md) — evidence-classified correctness defects, integrity/security/recovery risks, supported inferences, unresolved hypotheses, verification procedures, and stabilization order.
-- [`context.md`](context.md) — maintenance responsibilities for this archaeology corpus.
+Use the suite to decide what to inspect and what evidence to acquire. Do not use it as an executable production runbook. A source-visible command proves that a mechanism exists in source; it does not prove authority, deployed configuration, safe parameters, or successful external delivery.
+
+## Newcomer reading order
+
+1. [`00-evidence-map.md`](00-evidence-map.md) — inventory baseline, evidence rules, terminology, coverage, and unresolved questions.
+2. [`10-architecture-and-flows.md`](10-architecture-and-flows.md) — subsystem relationships, execution/data flows, and change-impact hotspots.
+3. [`20-domain-and-data.md`](20-domain-and-data.md) — record dictionary, lineage, business rules, privacy boundaries, and variant reconciliation.
+4. [`30-defects-and-risks.md`](30-defects-and-risks.md) — stable defect, risk, inference, and hypothesis IDs with verification procedures.
+5. [`40-operations-and-recovery.md`](40-operations-and-recovery.md) — evidence-grounded build, run, observation, rerun, backup, and recovery map with operator stop points.
+6. [`90-modernization-roadmap.md`](90-modernization-roadmap.md) — risk- and dependency-ordered rescue path from evidence acquisition through incremental modernization.
+7. [`context.md`](context.md) — maintenance responsibilities for the corpus and its validation helper.
+
+## Decision views
+
+- [Ownership and operational impact](40-operations-and-recovery.md#ownership-and-impact-matrix)
+- [Audit coverage by evidence state](00-evidence-map.md#publication-coverage-matrix)
+- [Open questions and evidence needed](00-evidence-map.md#open-question-register)
+- [Highest-value next investigations](90-modernization-roadmap.md#highest-value-next-investigations)
+- [Operational go/no-go boundary](40-operations-and-recovery.md#operator-gono-go-boundary)
+- [Modernization phases and stop conditions](90-modernization-roadmap.md#roadmap)
 
 ## Evidence conventions
 
-Every substantive archaeology claim should use one of these statuses:
+Every substantive archaeology claim uses one of these statuses:
 
 - **Fact** — directly observable in a tracked source, configuration, generated artifact, or reproducible repository inventory. Cite a repository path and, where useful, a member or symbol.
 - **Inference** — a reasoned interpretation of facts whose chronology, intent, ownership, or runtime use is not explicit. State the supporting facts.
 - **Unknown** — information the repository cannot establish. Record what evidence would resolve it instead of filling the gap with an assumption.
 
-Generated files, per-member Markdown companions, `context.md` summaries, `files.md`, and generated analysis are secondary evidence. They are navigation aids, not substitutes for the tracked primary member or configuration they describe.
+Generated files, per-member Markdown companions, `context.md` summaries, `files.md`, and generated analysis are secondary evidence. They are navigation aids, not substitutes for the tracked primary member or configuration they describe. A confirmed source defect is not a confirmed production incident unless deployment evidence establishes reachability.
 
 ## Maintaining the audit
 
-When a source or operational family changes:
+When source, configuration, behavior, or operational evidence changes:
 
-1. Recount from `git ls-files`, not from the Source Atlas or an IDE view.
-2. Update the matching row in the evidence map's coverage ledger, including the inventory basis and representative primary evidence.
-3. Classify new conclusions as fact, inference, or unknown.
-4. Record semantic/search support separately from text visibility; an indexed filename is not proof that references were resolved.
-5. Add new unresolved dependencies to the unknowns register and remove an unknown only when path-evidenced proof resolves it.
-6. Update this index and the relevant directory `context.md` when the corpus gains another audit artifact.
+1. Recount inventory from `git ls-files`, not an IDE or generated atlas.
+2. Update the matching coverage row and record the revision so historical counts remain explainable.
+3. Update related architecture flows, domain rules, stable D/R/H findings, operational stop conditions, and roadmap gates together.
+4. Preserve the distinction among source member, compiled program/object, DDS file/access path, table/data store, job, and service.
+5. Add unresolved dependencies to the open-question register; remove one only when named evidence resolves it.
+6. Run the documentation gate after changing the suite.
 
-For defect and risk maintenance, preserve the separation between confirmed defects, confirmed risks, supported inferences, and hypotheses. Promote a hypothesis only when primary source plus a credible trigger or runtime/compile evidence closes its named uncertainty; never promote complexity, missing tests, or graph absence by itself.
+The original evidence-map baseline is tied to Git commit `3a05212`. The publication reconciliation records the later `00a6d2d` snapshot separately so provenance is preserved rather than silently replacing historical counts. The architecture, domain, and defect reports retain their own inspection revisions for durable source locators.
 
-The baseline snapshot is tied to Git commit `3a05212` and the worktree inventory observed on 2026-07-14. Later audits should record their own commit and date so count changes are explainable.
-
-The domain/data report has its own baseline and must be refreshed when DDS layouts, generated copybook contracts, data-access operations, Query/400 calculations, or runtime evidence about active variants changes.
-
-The architecture record is tied to its own stated snapshot. When a source
-relationship changes, update its edge catalog, affected flow/diagram, and
-evidence status without silently changing the evidence-map inventory baseline.
+The repository documentation gate checks the seven required documents, local relative links, Mermaid rendering, and bounded Markdown whitespace. Passing it verifies documentation structure only; it does not compile IBM i members or validate deployed behavior.

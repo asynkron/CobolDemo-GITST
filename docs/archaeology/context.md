@@ -9,6 +9,9 @@ This directory holds repository-wide, evidence-led archaeology artifacts. Its pu
 - `20-domain-and-data.md` is the source-reconciled domain model, record/access-path dictionary, producer-consumer matrix, lineage and rule catalog, privacy boundary, and unresolved-runtime-evidence register.
 - `10-architecture-and-flows.md` is the evidence-backed architecture source of truth for subsystem responsibilities, classified interaction edges, representative execution/data flows, diagrams, hidden coupling, and change-impact hotspots.
 - `30-defects-and-risks.md` is the source-level defect and hazard audit. It separates confirmed defects and risks from supported inferences and unresolved hypotheses, records exact triggers and verification methods, masks sensitive values, and orders stabilization evidence.
+- `40-operations-and-recovery.md` is the operator-facing evidence and go/no-go map for build, configuration, execution, scheduling, observation, backup, rerun, and recovery. It is not an executable production runbook.
+- `90-modernization-roadmap.md` orders evidence acquisition, characterization, stabilization, observability/recovery, decoupling, and incremental modernization by risk and dependency.
+- `check_docs.py` validates local relative links and renders every Mermaid block with the pinned Mermaid CLI. Its checks cover documentation structure, not IBM i build or runtime behavior.
 
 ## Dependencies and evidence rules
 
@@ -19,10 +22,11 @@ This directory holds repository-wide, evidence-led archaeology artifacts. Its pu
 - Keep domain and rule claims tied to primary DDS/program/query evidence. Never promote filename age, `BK`/`NW` naming, tracked copybook shape, or shared field names into deployed-variant or referential-integrity claims without compile/object/runtime proof.
 - Keep the architecture edge catalog and diagrams aligned. Every confirmed edge needs a primary path; runtime/deployment claims remain inferred or unknown until external evidence resolves them.
 - Keep defect IDs stable when refreshing the audit. A source defect can be confirmed while its production reachability remains unknown; do not conflate those claims. Promote deployment-dependent hypotheses only with the compile, runtime, data, or operator evidence named in the report.
+- Keep operational instructions at the evidence-acquisition level until active objects, authorities, transaction/journal state, backup/restore policy, and owners are proven. Update the roadmap phase gates when new evidence changes dependency order.
 
 ## Modernization guidance
 
-Use the evidence map to select focused audits, the architecture report to trace cross-family change impact, the domain/data report to define characterization tests and migration contracts, and the defect/risk audit to prioritize stabilization; do not derive migration order from file counts alone. Refresh the relevant ledger row and parent contexts whenever this directory gains a new audit artifact or a previously unknown dependency is resolved.
+Use the evidence map to select focused audits, the architecture report to trace cross-family change impact, the domain/data report to define characterization tests and migration contracts, the defect/risk audit to prioritize stabilization, the operations map to protect state-changing work, and the roadmap to enforce dependency gates; do not derive migration order from file counts alone. Refresh the relevant ledger row and parent contexts whenever this directory gains a new audit artifact or a previously unknown dependency is resolved.
 
 Preserve the domain/data report's sensitivity classifications and replace Unknowns only with named compile metadata, IBM i object evidence, approved masked profiles, or runtime traces. When production behavior changes, revalidate affected defect/risk triggers and citations rather than silently deleting historical evidence.
 
