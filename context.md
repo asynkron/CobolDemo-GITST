@@ -16,7 +16,7 @@ This repository contains an IBM i (AS/400) demonstration application that spans 
 * Tooling and configuration lives under [`.idea`](.idea/context.md) and [`.ibmi`](.ibmi/context.md).
 * SSADM documentation resides in [`docs`](docs/context.md), including generated overviews, process models, business rule catalogs, and the new graph-clustering analysis of module dependencies.
 * [`files.md`](files.md) – Collapsible, link-rich map tying every non-Markdown artifact to its nearest documentation entry.
-* [`docs/archaeology`](docs/archaeology/README.md) – Evidence-led tracked inventory, naming/layering map, tooling coverage record, glossary, unknowns register, and coverage ledger. Use it as the completeness baseline; retain the narrative and generated documents as secondary evidence.
+* [`docs/archaeology`](docs/archaeology/README.md) – Evidence-led tracked inventory, naming/layering map, tooling coverage record, domain/data report, defect and reliability audit, glossary, unknowns register, and coverage ledger. Use it as the completeness and stabilization baseline; retain the narrative and generated documents as secondary evidence.
   The [`domain and data report`](docs/archaeology/20-domain-and-data.md) adds the source-reconciled record dictionary, lineage, business rules, privacy classifications, and variant/runtime evidence gaps used to shape safe migration contracts.
 * [`docs/archaeology/10-architecture-and-flows.md`](docs/archaeology/10-architecture-and-flows.md) – Evidence-classified architecture source of truth for subsystem interactions, representative execution/data flows, diagrams, and change-impact hotspots. Read it with the evidence map; it is not proof of production deployment.
 
@@ -58,3 +58,5 @@ calls, shared-data coupling, DDS-generated linkage, and configured/runtime
 integration. Keep unverified object bindings, active variants, schedules, and
 external services explicitly unknown until IBM i or deployment evidence is
 available.
+
+For stabilization work, use the archaeology defect/risk audit's stable finding IDs and preserve its distinction between source-confirmed behavior and unknown deployment reachability. Revalidate triggers against primary members plus compiler/runtime evidence before changing destructive or cross-file flows.
