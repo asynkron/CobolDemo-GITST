@@ -18,6 +18,7 @@ This repository contains an IBM i (AS/400) demonstration application that spans 
 * [`files.md`](files.md) – Collapsible, link-rich map tying every non-Markdown artifact to its nearest documentation entry.
 * [`docs/archaeology`](docs/archaeology/README.md) – Evidence-led tracked inventory, naming/layering map, tooling coverage record, glossary, unknowns register, and coverage ledger. Use it as the completeness baseline; retain the narrative and generated documents as secondary evidence.
   The [`domain and data report`](docs/archaeology/20-domain-and-data.md) adds the source-reconciled record dictionary, lineage, business rules, privacy classifications, and variant/runtime evidence gaps used to shape safe migration contracts.
+* [`docs/archaeology/10-architecture-and-flows.md`](docs/archaeology/10-architecture-and-flows.md) – Evidence-classified architecture source of truth for subsystem interactions, representative execution/data flows, diagrams, and change-impact hotspots. Read it with the evidence map; it is not proof of production deployment.
 
 ## Key Concepts
 * **Data-Centric Design:** DDS physical/logical files (`QDDSSRC`) underpin both COBOL and RPG programs. Many source members expect specific record formats (e.g., `CONDET`, `CUSTS`, `STKMAS`).
@@ -51,3 +52,9 @@ This repository contains an IBM i (AS/400) demonstration application that spans 
 For repository-wide discovery, start with the archaeology evidence map and refresh its Git-based counts whenever source, configuration, generated, or operational families change. Do not treat Source Atlas, per-member companions, context summaries, or heuristic graph output as proof of complete dependency coverage.
 
 For domain or data migration work, start with the archaeology domain/data report, then validate any chosen contract against generated DDS copybooks, IBM i object metadata, approved masked profiles, and runtime traces before treating inferred relationships or variant precedence as authoritative.
+
+For cross-family changes, use the architecture edge catalog to identify direct
+calls, shared-data coupling, DDS-generated linkage, and configured/runtime
+integration. Keep unverified object bindings, active variants, schedules, and
+external services explicitly unknown until IBM i or deployment evidence is
+available.
