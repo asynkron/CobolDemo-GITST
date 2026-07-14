@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("XacbltstConcatService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+639a4fee9cc4edc48783f58c01913a2b584b0591")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3a05212ea9edff5a237b6377a70cbaf3fde73ca6")]
 [assembly: System.Reflection.AssemblyProductAttribute("XacbltstConcatService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("XacbltstConcatService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
