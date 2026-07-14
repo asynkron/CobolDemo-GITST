@@ -16,6 +16,7 @@ This repository contains an IBM i (AS/400) demonstration application that spans 
 * Tooling and configuration lives under [`.idea`](.idea/context.md) and [`.ibmi`](.ibmi/context.md).
 * SSADM documentation resides in [`docs`](docs/context.md), including generated overviews, process models, business rule catalogs, and the new graph-clustering analysis of module dependencies.
 * [`files.md`](files.md) – Collapsible, link-rich map tying every non-Markdown artifact to its nearest documentation entry.
+* [`docs/archaeology`](docs/archaeology/README.md) – Evidence-led tracked inventory, naming/layering map, tooling coverage record, glossary, unknowns register, and coverage ledger. Use it as the completeness baseline; retain the narrative and generated documents as secondary evidence.
 
 ## Key Concepts
 * **Data-Centric Design:** DDS physical/logical files (`QDDSSRC`) underpin both COBOL and RPG programs. Many source members expect specific record formats (e.g., `CONDET`, `CUSTS`, `STKMAS`).
@@ -45,3 +46,5 @@ This repository contains an IBM i (AS/400) demonstration application that spans 
 
 ---
 **Tip for future agents:** consult these `context.md` files first—they summarize dependencies and modernization paths. Update the relevant `context.md` whenever you modify code in a directory to keep this index trustworthy.
+
+For repository-wide discovery, start with the archaeology evidence map and refresh its Git-based counts whenever source, configuration, generated, or operational families change. Do not treat Source Atlas, per-member companions, context summaries, or heuristic graph output as proof of complete dependency coverage.
