@@ -6,6 +6,12 @@
 
 **Fact.** The worktree also contained an unrelated untracked root `Makefile` and five modified tracked files under `docs/migration/dotnet/XacbltstConcatService/obj/Debug/net8.0/` before this audit was authored. They are excluded from the baseline's build-manifest claims and were not changed or adopted by this work.
 
+### Publication reconciliation
+
+**Fact.** The historical statements above describe commit `3a05212`; they are not current-state claims. Before the final publication change, commit `00a6d2d` contained **892 tracked files**, including **450 Markdown files**, and the root [`Makefile`](../../Makefile) was tracked. That Makefile provides a documentation-only archaeology quality gate. It does not define an IBM i compile, deployment, or runtime-verification process.
+
+The source-family counts below remain the `3a05212` baseline. Later reports retain their own revisions because line references and evidence were inspected at those snapshots. Readers must not combine counts from one revision with build claims from another.
+
 The inventory method was:
 
 1. enumerate tracked paths with `git ls-files`;
@@ -65,7 +71,7 @@ The tracked top-level totals reconcile to 885 files.
 - **Source Atlas — Fact:** `files.md` maps 13 source-directory sections and top-level `.project`/solution links. It omits hidden metadata and several generated/configuration concerns, so it is a launchpad rather than a completeness proof.
 - **IBM tooling configuration — Fact:** `.project` declares IBM RDi/iSeries project builder, validator, and nature. `.ibmi/.properties` sets `NullBuildStyle`; the tracked `.ibmi/context.md` statement that the directory is empty is stale secondary evidence.
 - **IDE configuration — Fact:** `.idea/` has duplicated outer/nested JetBrains metadata for Copilot data migration, encodings, index layout, and VCS mapping. These files affect workspace behavior, not proven application runtime behavior.
-- **Modern build surface — Fact:** `CobolDemo-GITST.sln` contains one .NET project, `docs/migration/dotnet/XacbltstConcatService/XacbltstConcatService.csproj`, targeting .NET 8 with the Web SDK. No tracked root build script or IBM i deployment manifest was found.
+- **Modern build surface — Fact at `3a05212`:** `CobolDemo-GITST.sln` contains one .NET project, `docs/migration/dotnet/XacbltstConcatService/XacbltstConcatService.csproj`, targeting .NET 8 with the Web SDK. No tracked root build script or IBM i deployment manifest existed at that revision. **Current publication fact:** `Makefile` is now tracked and checks archaeology documentation only; there is still no authoritative IBM i compile or deployment manifest.
 - **Generated artifacts — Fact:** 14 tracked files live under the .NET project's `obj/` directory. They include 3 generated `.cs` files plus NuGet/MSBuild JSON, props, targets, caches, editor config, and Rider restore metadata. Together with hand-authored `Program.cs`, the repository contains four tracked `.cs` files. Generated files are outputs/secondary evidence, not hand-authored application logic.
 - **Configuration — Fact:** the .NET spike tracks `appsettings.json` and `Properties/launchSettings.json`. It contains an API-key setting and local HTTP/HTTPS launch URLs. Configuration presence does not prove any deployed instance.
 - **Deployment — Unknown:** no tracked CI workflow, container manifest, package/deploy script, IBM i connection profile, or infrastructure definition proves a deployment process. RDi metadata and migration launch settings are tooling clues only.
@@ -145,10 +151,14 @@ The following are facts about the probes performed during the 2026-07-14 investi
 | library list / override | IBM i name-resolution path / job-scoped redirection such as `OVRDBF` or `OVRPRTF` |
 | spool / out queue | generated print output and its routing destination, including repository references to `PRT02`, `PRT04`, and `FAXSTARPRT` |
 | Query/400 | IBM i query/report definitions stored extensionless in `QQMQRYSRC/` |
+| contract / order | `CONHDR` and `CONDET` are named as contracts in DDS and maintenance programs; Query/400 `ORDERS` presents the same records as orders. This suite uses **contract** for the persisted model and **order** only for source names, report labels, or quoted operational terminology. |
+| source member / program or object | A tracked source file is a member candidate. A compiled IBM i program/object is a deployed artifact whose source provenance and library resolution require external evidence. |
+| file / table / access path | DDS PF source defines a database file/table-like persistence contract; LF defines an access path/view. Repository names do not prove the active physical object or SQL catalog mapping. |
+| job / service | A job is an IBM i execution context or submitted unit; a service is an externally reachable capability. Source calls and configuration clues do not prove either is running. |
 | `WW*`, `ZB*`, `ZAUD*` | inferred work-with, COBOL application, and audit naming families; no formal expansion is tracked |
 | `*D`, `*L<n>`, `BK`/`NW` | common display, logical-file, and apparent backup/new variant suffixes; exceptions and active-version status remain unknown |
 
-## Unknowns register
+## Open-question register
 
 1. Which programs, variants, commands, files, and queries are compiled and active in each IBM i environment?
 2. What are the authoritative build order, compile options, target libraries, source member types, and deployment procedure?
@@ -160,6 +170,23 @@ The following are facts about the probes performed during the 2026-07-14 investi
 8. What character encodings and source CCSIDs apply? Some source text contains non-UTF-8-looking characters, while IDE encoding metadata is secondary evidence.
 9. Are tracked `obj/` outputs intentionally versioned, and what process refreshes them?
 10. What behavior constitutes acceptance for the IBM i flows? Test-like members exist, but no automated harness or runtime traces are tracked.
+
+Each question remains open until the named evidence is captured with an owner and date. The [operations map](40-operations-and-recovery.md) turns questions 1-3 and 7-10 into operator stop conditions; the [roadmap](90-modernization-roadmap.md) orders their resolution.
+
+## Publication coverage matrix
+
+These labels describe the **published audit coverage**, not production assurance:
+
+| Area | State | Repository evidence and ceiling | Highest-value closure evidence |
+| --- | --- | --- | --- |
+| Tracked source and documentation inventory | `inspected` | Every tracked top-level family and observed suffix/extensionless family was enumerated at `3a05212`; publication drift was reconciled at `00a6d2d`. | Refresh counts whenever tracked families change. |
+| Architecture and representative flows | `inspected` | Static calls, shared data, generated linkage, and configured boundaries are mapped in `10`; exhaustive IBM i semantic indexing is unavailable. | DSPPGMREF, compile listings, and representative runtime traces. |
+| Domain records, access paths, and rules | `inspected` | DDS, copybooks, program operations, and Query/400 calculations are reconciled in `20`. | DSPFFD/DSPFD, generated layouts, masked profiles, and owner-approved rules. |
+| Defects D-01 through D-05 and risks R-01 through R-08 | `inspected` | Source mechanisms and triggers are cited in `30`; deployment reachability is not claimed. | Active-object provenance and isolated runtime fixtures. |
+| IBM i build and object provenance | `unknown` | RDi metadata and source families exist; no compile order, options, target libraries, or object manifest is tracked. | Compiler listings, build logs, object descriptions, and signed compile map. |
+| Scheduling, authorities, journaling, backup, and restore | `unknown` | CL contains job/queue/override clues, but no authoritative environment policy or restore test is tracked. | Scheduler export, authority reports, journal configuration, backup policy, and restore exercise evidence. |
+| External fax, mail, and HTTP delivery | `partial` | Source/configuration contracts are inspected; endpoint/product availability and delivery acknowledgement remain unverified. | Synthetic end-to-end traces, configuration ownership, and delivery/fallback telemetry. |
+| Production incidents, data quality, and compliance posture | `unsupported` | No production records, incident history, retention policy, or authority evidence is in the repository. Source sensitivity is documented without row values. | Approved masked profiles, incident records, privacy/security review, and control evidence. |
 
 ## Coverage ledger
 

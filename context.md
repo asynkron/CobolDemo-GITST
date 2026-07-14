@@ -20,6 +20,8 @@ This repository contains an IBM i (AS/400) demonstration application that spans 
 * [`docs/archaeology`](docs/archaeology/README.md) – Evidence-led tracked inventory, naming/layering map, tooling coverage record, domain/data report, defect and reliability audit, glossary, unknowns register, and coverage ledger. Use it as the completeness and stabilization baseline; retain the narrative and generated documents as secondary evidence.
   The [`domain and data report`](docs/archaeology/20-domain-and-data.md) adds the source-reconciled record dictionary, lineage, business rules, privacy classifications, and variant/runtime evidence gaps used to shape safe migration contracts.
 * [`docs/archaeology/10-architecture-and-flows.md`](docs/archaeology/10-architecture-and-flows.md) – Evidence-classified architecture source of truth for subsystem interactions, representative execution/data flows, diagrams, and change-impact hotspots. Read it with the evidence map; it is not proof of production deployment.
+* [`docs/archaeology/40-operations-and-recovery.md`](docs/archaeology/40-operations-and-recovery.md) – Evidence-acquisition and go/no-go map for build, execution, scheduling, observation, backup, rerun, and recovery. It is not a production runbook.
+* [`docs/archaeology/90-modernization-roadmap.md`](docs/archaeology/90-modernization-roadmap.md) – Risk- and dependency-ordered rescue path from ownership and runtime truth through characterization, stabilization, recovery contracts, decoupling, and incremental modernization.
 
 ## Key Concepts
 * **Data-Centric Design:** DDS physical/logical files (`QDDSSRC`) underpin both COBOL and RPG programs. Many source members expect specific record formats (e.g., `CONDET`, `CUSTS`, `STKMAS`).
@@ -61,3 +63,5 @@ external services explicitly unknown until IBM i or deployment evidence is
 available.
 
 For stabilization work, use the archaeology defect/risk audit's stable finding IDs and preserve its distinction between source-confirmed behavior and unknown deployment reachability. Revalidate triggers against primary members plus compiler/runtime evidence before changing destructive or cross-file flows.
+
+For operational or modernization work, apply the operations map's stop conditions and roadmap phase gates. Do not infer compile order, active libraries, schedules, journaling, backup/restore procedures, or external delivery from source-visible commands. Keep personal, financial, credential, and spool evidence synthetic or approved and masked.
