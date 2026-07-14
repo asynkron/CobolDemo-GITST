@@ -16,6 +16,12 @@ This repository contains an IBM i (AS/400) demonstration application that spans 
 * Tooling and configuration lives under [`.idea`](.idea/context.md) and [`.ibmi`](.ibmi/context.md).
 * SSADM documentation resides in [`docs`](docs/context.md), including generated overviews, process models, and business rule catalogs.
 
+## Documentation Quality
+
+After changing the repository documentation or the [archaeology corpus](docs/archaeology/README.md), run `make quality`. The gate checks that the required archaeology documents exist, rejects unintended trailing whitespace in tracked Markdown and the Makefile, validates local archaeology links, and renders the corpus's Mermaid diagrams. A successful run exits with status zero and reports `relative links: OK` and `Mermaid render: OK`.
+
+This gate validates documentation structure only. It does not compile IBM i sources or validate runtime or deployment behavior.
+
 ## Key Concepts
 * **Data-Centric Design:** DDS physical/logical files (`QDDSSRC`) underpin both COBOL and RPG programs. Many source members expect specific record formats (e.g., `CONDET`, `CUSTS`, `STKMAS`).
 * **Mixed UI Layers:** Display files drive interactive screens, while CL programs manage overrides and job control. RPGLE modules often correspond to display file names (e.g., `WWCUSTS.RPGLE` works with `WCUSTSD.DSPF`).
