@@ -1,0 +1,19 @@
+# docs/archaeology Context
+
+This directory holds repository-wide, evidence-led archaeology artifacts. Its purpose is to make source coverage, evidence strength, tooling blind spots, and unresolved dependencies auditable before modernization decisions are made.
+
+## Key assets
+
+- `README.md` defines the corpus boundary, fact/inference/unknown convention, and maintenance workflow.
+- `00-evidence-map.md` is the baseline tracked inventory and coverage ledger for source, data definition, orchestration, command, query, test, generated, documentation, configuration, build, deployment, and external-interface evidence.
+
+## Dependencies and evidence rules
+
+- Reproduce counts from `git ls-files` at the recorded commit.
+- Prefer primary source members and configuration over generated output, per-member Markdown companions, `files.md`, context summaries, or heuristic graph output.
+- Treat semantic-index and Tree-sitter results as tool-coverage observations, not as proof that an unreported dependency does not exist.
+- Keep out-of-repository programs, libraries, queues, job descriptions, mail/fax services, and deployed endpoints classified as unknown until runtime or external evidence is supplied.
+
+## Modernization guidance
+
+Use the evidence map to select later focused audits; do not derive migration order from file counts alone. Refresh the relevant ledger row and parent contexts whenever this directory gains a new audit artifact or a previously unknown dependency is resolved.

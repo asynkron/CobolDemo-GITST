@@ -1,6 +1,6 @@
 # docs Directory Context
 
-This directory now stores SSADM-style documentation generated for the CobolDemo CRM/order management system, plus a holistic architectural overview.
+This directory stores SSADM-style documentation generated for the CobolDemo CRM/order management system, a holistic architectural overview, migration experiments, and an evidence-led repository archaeology corpus.
 
 ## Key Assets
 - `01_system_overview.md` through `06_physical_design.md` — top-level SSADM documents covering overview, data model, process flows, module specifications, interfaces, and physical design considerations.
@@ -14,6 +14,7 @@ This directory now stores SSADM-style documentation generated for the CobolDemo 
 - `migration/` — hands-on playbooks that describe how to peel specific COBOL capabilities into external services (currently the `XACBLTST` concat utility migration to ASP.NET Core).
 - `graph_clustering_analysis.md` — Louvain-based dependency clustering of source members with an accompanying Mermaid summary.
 - `graph_clustering_analysis.py` — helper script that rebuilds the clustering dataset by scanning CALL and COPY statements across the IBM i libraries.
+- `archaeology/` — repository-wide tracked inventory and coverage ledger. It separates facts, inferences, and unknowns; records tooling blind spots; and treats generated/narrative documents as secondary evidence.
 
 ## Maintenance Notes
 - Update the relevant Markdown files and regenerate diagrams whenever program logic or data structures change.
@@ -21,3 +22,4 @@ This directory now stores SSADM-style documentation generated for the CobolDemo 
 - Mermaid diagrams now apply the shared accent palette (see repository instructions) to highlight key components—reuse these
   fills when extending or adding visuals.
 - When adding a migration guide, capture the integration contract (payloads, endpoints) and reference any companion sample code so future teams can replicate the pattern quickly.
+- When source, operational, generated, configuration, or deployment families change, refresh `archaeology/00-evidence-map.md` from `git ls-files` and update its unknowns and tooling-coverage entries.
