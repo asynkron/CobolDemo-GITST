@@ -15,6 +15,7 @@ This directory stores SSADM-style documentation generated for the CobolDemo CRM/
 - `graph_clustering_analysis.md` — Louvain-based dependency clustering of source members with an accompanying Mermaid summary.
 - `graph_clustering_analysis.py` — helper script that rebuilds the clustering dataset by scanning CALL and COPY statements across the IBM i libraries.
 - `archaeology/` — repository-wide tracked inventory and coverage ledger. It separates facts, inferences, and unknowns; records tooling blind spots; and treats generated/narrative documents as secondary evidence.
+  Its `20-domain-and-data.md` report reconciles DDS, copybook, program, CL, and Query/400 evidence into the domain dictionary, lineage, rule catalog, privacy boundary, and runtime unknowns.
 
 ## Maintenance Notes
 - Update the relevant Markdown files and regenerate diagrams whenever program logic or data structures change.
@@ -23,3 +24,4 @@ This directory stores SSADM-style documentation generated for the CobolDemo CRM/
   fills when extending or adding visuals.
 - When adding a migration guide, capture the integration contract (payloads, endpoints) and reference any companion sample code so future teams can replicate the pattern quickly.
 - When source, operational, generated, configuration, or deployment families change, refresh `archaeology/00-evidence-map.md` from `git ls-files` and update its unknowns and tooling-coverage entries.
+- When a record layout, logical access path, data operation, calculation, status/default, or active-variant/runtime fact changes, refresh `archaeology/20-domain-and-data.md` and preserve its Fact/Inference/Unknown and sensitivity annotations.

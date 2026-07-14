@@ -5,6 +5,7 @@ This directory is the evidence-led audit index for the repository. It complement
 ## Start here
 
 - [`00-evidence-map.md`](00-evidence-map.md) — tracked inventory, source-family map, historical layers, naming conventions, external-interface clues, tooling coverage, glossary, unknowns, and the coverage ledger.
+- [`20-domain-and-data.md`](20-domain-and-data.md) — evidence-backed domain glossary, record dictionary, producer-consumer lineage, business rules, privacy classifications, variant reconciliation, and exact runtime evidence gaps.
 - [`context.md`](context.md) — maintenance responsibilities for this archaeology corpus.
 
 ## Evidence conventions
@@ -29,3 +30,5 @@ When a source or operational family changes:
 6. Update this index and the relevant directory `context.md` when the corpus gains another audit artifact.
 
 The baseline snapshot is tied to Git commit `3a05212` and the worktree inventory observed on 2026-07-14. Later audits should record their own commit and date so count changes are explainable.
+
+The domain/data report has its own baseline and must be refreshed when DDS layouts, generated copybook contracts, data-access operations, Query/400 calculations, or runtime evidence about active variants changes.
