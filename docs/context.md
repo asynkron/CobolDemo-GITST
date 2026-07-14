@@ -14,7 +14,7 @@ This directory stores SSADM-style documentation generated for the CobolDemo CRM/
 - `migration/` — hands-on playbooks that describe how to peel specific COBOL capabilities into external services (currently the `XACBLTST` concat utility migration to ASP.NET Core).
 - `graph_clustering_analysis.md` — Louvain-based dependency clustering of source members with an accompanying Mermaid summary.
 - `graph_clustering_analysis.py` — helper script that rebuilds the clustering dataset by scanning CALL and COPY statements across the IBM i libraries.
-- `archaeology/` — repository-wide tracked inventory and coverage ledger. It separates facts, inferences, and unknowns; records tooling blind spots; and treats generated/narrative documents as secondary evidence.
+- `archaeology/` — repository-wide tracked inventory, coverage ledger, domain/data report, and defect/risk audit. It separates facts, confirmed defects and risks, supported inferences, and unknowns; records tooling blind spots and verification ceilings; and treats generated/narrative documents as secondary evidence.
   Its `20-domain-and-data.md` report reconciles DDS, copybook, program, CL, and Query/400 evidence into the domain dictionary, lineage, rule catalog, privacy boundary, and runtime unknowns.
 - `archaeology/10-architecture-and-flows.md` — source-backed subsystem, dependency, execution/data-flow, and change-impact reconstruction, with confirmed relationships kept distinct from inference and runtime unknowns.
 
@@ -29,3 +29,4 @@ This directory stores SSADM-style documentation generated for the CobolDemo CRM/
 - When an interaction or execution path changes, update the architecture edge
   catalog and all affected diagrams/flows in the same change; update the
   evidence-map counts only when the tracked inventory or baseline facts change.
+- When behavior or operational evidence changes, refresh the affected stable finding in `archaeology/30-defects-and-risks.md`; keep primary evidence, trigger, impact, and verification method together, and leave deployment-dependent claims as hypotheses until environment evidence resolves them.
