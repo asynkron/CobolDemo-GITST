@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+import contextlib
+import io
 import json
 import sys
 import tempfile
@@ -13,15 +15,19 @@ import quality_evidence
 
 
 class QualityEvidenceTests(unittest.TestCase):
-    def run_in_temp(self, command: list[str]) -> tuple[int, Path, dict[str, object]]:
+    def run_in_temp(
+        self, command: list[str]
+    ) -> tuple[int, Path, dict[str, object], str]:
         with tempfile.TemporaryDirectory() as raw_directory:
             directory = Path(raw_directory)
-            exit_code = quality_evidence.run_adapter(directory, command=command)
+            standard_error = io.StringIO()
+            with contextlib.redirect_stderr(standard_error):
+                exit_code = quality_evidence.run_adapter(directory, command=command)
             artifacts = list(directory.glob("*.quality-evidence.json"))
             self.assertEqual([directory / quality_evidence.ARTIFACT_NAME], artifacts)
             self.assertEqual([], list(directory.glob("*.tmp")))
             envelope = json.loads(artifacts[0].read_text(encoding="utf-8"))
-            return exit_code, artifacts[0], envelope
+            return exit_code, artifacts[0], envelope, standard_error.getvalue()
 
     def assert_declared_identity(self, envelope: dict[str, object]) -> None:
         self.assertEqual("quality-evidence.v1", envelope["schema_version"])
@@ -30,11 +36,12 @@ class QualityEvidenceTests(unittest.TestCase):
         self.assertEqual("test-results.v1", envelope["payload_schema"])
 
     def test_success_emits_exact_complete_counts(self) -> None:
-        exit_code, _, envelope = self.run_in_temp(
+        exit_code, _, envelope, standard_error = self.run_in_temp(
             [sys.executable, "-c", "raise SystemExit(0)"]
         )
 
         self.assertEqual(0, exit_code)
+        self.assertEqual("", standard_error)
         self.assert_declared_identity(envelope)
         self.assertEqual("complete", envelope["status"])
         self.assertEqual(
@@ -45,11 +52,12 @@ class QualityEvidenceTests(unittest.TestCase):
         self.assertEqual(0, envelope["payload"]["omitted_failures"])
 
     def test_command_failure_emits_stable_failed_test_identity(self) -> None:
-        exit_code, _, envelope = self.run_in_temp(
+        exit_code, _, envelope, standard_error = self.run_in_temp(
             [sys.executable, "-c", "raise SystemExit(7)"]
         )
 
         self.assertEqual(7, exit_code)
+        self.assertEqual("", standard_error)
         self.assert_declared_identity(envelope)
         self.assertEqual("complete", envelope["status"])
         self.assertEqual(
@@ -67,11 +75,12 @@ class QualityEvidenceTests(unittest.TestCase):
         )
 
     def test_unexecutable_command_reports_translation_failure(self) -> None:
-        exit_code, _, envelope = self.run_in_temp(
+        exit_code, _, envelope, standard_error = self.run_in_temp(
             ["definitely-not-a-repository-quality-command"]
         )
 
         self.assertEqual(2, exit_code)
+        self.assertIn("quality-evidence: could not execute make quality", standard_error)
         self.assert_declared_identity(envelope)
         self.assertEqual("translation_failed", envelope["status"])
         self.assertIn("could not execute make quality", envelope["reason"])

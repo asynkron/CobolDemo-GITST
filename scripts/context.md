@@ -13,7 +13,9 @@ documentation-only quality gate does not acquire a project package dependency.
   inability to execute the command is `translation_failed`.
 * [`test_quality_evidence.py`](test_quality_evidence.py) verifies successful and
   failed terminal counts, stable failure identity, explicit translation failure,
-  atomic replacement, and agreement with `.faktorial/main-verify.json`.
+  atomic replacement, and agreement with `.faktorial/main-verify.json`. Expected
+  negative-path diagnostics are captured and asserted so they do not pollute a
+  successful ordinary quality run.
 
 ## Dependencies
 
