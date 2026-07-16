@@ -1,0 +1,262 @@
+{
+  "schema_version": 5,
+  "model_kind": "designed",
+  "source_span_count": 0,
+  "sources": [
+    {
+      "type": "ai",
+      "key": "docs/architecture/trace-component-model.ai.json",
+      "label": "Designed customer-maintenance architecture model",
+      "schema_version": "5"
+    }
+  ],
+  "groups": [
+    {
+      "id": "customer-master-maintenance",
+      "name": "Customer Master Maintenance",
+      "description": "Interactive 5250 maintenance of customer master data and its directly consulted reference stores.",
+      "provenance": [
+        "ai",
+        "codegraph"
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": "cbcusts",
+      "name": "CBCUSTS Customer Master Program",
+      "group_id": "customer-master-maintenance",
+      "kind": "service",
+      "refs": [
+        {
+          "type": "codegraph_file",
+          "key": "QCBLSRC/ZBCUSTS.CBL",
+          "source": "ai",
+          "role": "primary",
+          "path": "QCBLSRC/ZBCUSTS.CBL",
+          "label": "ZBCUSTS.CBL"
+        },
+        {
+          "type": "codegraph_node",
+          "key": "cobol:program:QCBLSRC/ZBCUSTS.CBL:CBCUSTS",
+          "source": "ai",
+          "role": "primary",
+          "path": "QCBLSRC/ZBCUSTS.CBL",
+          "symbol": "CBCUSTS",
+          "label": "CBCUSTS"
+        },
+        {
+          "type": "codegraph_node",
+          "key": "cobol:paragraph:QCBLSRC/ZBCUSTS.CBL:CBCUSTS::MAIN-PROCESSING",
+          "source": "ai",
+          "role": "evidence",
+          "path": "QCBLSRC/ZBCUSTS.CBL",
+          "symbol": "MAIN-PROCESSING",
+          "label": "MAIN-PROCESSING"
+        },
+        {
+          "type": "codegraph_node",
+          "key": "cobol:paragraph:QCBLSRC/ZBCUSTS.CBL:CBCUSTS::PROCESS-ROUTINE",
+          "source": "ai",
+          "role": "evidence",
+          "path": "QCBLSRC/ZBCUSTS.CBL",
+          "symbol": "PROCESS-ROUTINE",
+          "label": "PROCESS-ROUTINE"
+        }
+      ],
+      "provenance": [
+        "ai",
+        "codegraph"
+      ]
+    },
+    {
+      "id": "cbcustsd",
+      "name": "CBCUSTSD 5250 Display",
+      "group_id": "customer-master-maintenance",
+      "kind": "endpoint",
+      "refs": [
+        {
+          "type": "codegraph_file",
+          "key": "QDDSSRC/CBCUSTSD.DSPF",
+          "source": "ai",
+          "role": "primary",
+          "path": "QDDSSRC/CBCUSTSD.DSPF",
+          "label": "CBCUSTSD.DSPF"
+        }
+      ],
+      "provenance": [
+        "ai",
+        "codegraph"
+      ]
+    },
+    {
+      "id": "custs",
+      "name": "CUSTS Customer Master",
+      "group_id": "customer-master-maintenance",
+      "kind": "database",
+      "refs": [
+        {
+          "type": "codegraph_file",
+          "key": "QDDSSRC/CUSTS.PF",
+          "source": "ai",
+          "role": "primary",
+          "path": "QDDSSRC/CUSTS.PF",
+          "label": "CUSTS.PF"
+        }
+      ],
+      "provenance": [
+        "ai",
+        "codegraph"
+      ]
+    },
+    {
+      "id": "slmen",
+      "name": "SLMEN Salesperson Reference",
+      "group_id": "customer-master-maintenance",
+      "kind": "database",
+      "refs": [
+        {
+          "type": "codegraph_file",
+          "key": "QDDSSRC/SLMEN.PF",
+          "source": "ai",
+          "role": "supporting",
+          "path": "QDDSSRC/SLMEN.PF",
+          "label": "SLMEN.PF"
+        }
+      ],
+      "provenance": [
+        "ai",
+        "codegraph"
+      ]
+    },
+    {
+      "id": "dists",
+      "name": "DISTS Distribution Reference",
+      "group_id": "customer-master-maintenance",
+      "kind": "database",
+      "refs": [
+        {
+          "type": "codegraph_file",
+          "key": "QDDSSRC/DISTS.PF",
+          "source": "ai",
+          "role": "supporting",
+          "path": "QDDSSRC/DISTS.PF",
+          "label": "DISTS.PF"
+        }
+      ],
+      "provenance": [
+        "ai",
+        "codegraph"
+      ]
+    },
+    {
+      "id": "cusgrp",
+      "name": "CUSGRP Customer Group Reference",
+      "group_id": "customer-master-maintenance",
+      "kind": "database",
+      "refs": [
+        {
+          "type": "codegraph_file",
+          "key": "QDDSSRC/CUSGRP.PF",
+          "source": "ai",
+          "role": "supporting",
+          "path": "QDDSSRC/CUSGRP.PF",
+          "label": "CUSGRP.PF"
+        }
+      ],
+      "provenance": [
+        "ai",
+        "codegraph"
+      ]
+    },
+    {
+      "id": "cusfl3",
+      "name": "CUSFL3 Customer Follow-up Access Path",
+      "group_id": "customer-master-maintenance",
+      "kind": "database",
+      "refs": [
+        {
+          "type": "codegraph_file",
+          "key": "QDDSSRC/CUSFL3.LF",
+          "source": "ai",
+          "role": "supporting",
+          "path": "QDDSSRC/CUSFL3.LF",
+          "label": "CUSFL3.LF"
+        }
+      ],
+      "provenance": [
+        "ai",
+        "codegraph"
+      ]
+    }
+  ],
+  "calls": [
+    {
+      "id": "cbcusts-to-cbcustsd",
+      "source_id": "cbcusts",
+      "target_id": "cbcustsd",
+      "operation": "read and write 5250 display records",
+      "kind": "sync",
+      "provenance": [
+        "ai",
+        "codegraph"
+      ]
+    },
+    {
+      "id": "cbcusts-to-custs",
+      "source_id": "cbcusts",
+      "target_id": "custs",
+      "operation": "read and write customer master records",
+      "kind": "sync",
+      "provenance": [
+        "ai",
+        "codegraph"
+      ]
+    },
+    {
+      "id": "cbcusts-to-slmen",
+      "source_id": "cbcusts",
+      "target_id": "slmen",
+      "operation": "read salesperson reference",
+      "kind": "sync",
+      "provenance": [
+        "ai",
+        "codegraph"
+      ]
+    },
+    {
+      "id": "cbcusts-to-dists",
+      "source_id": "cbcusts",
+      "target_id": "dists",
+      "operation": "read distribution reference",
+      "kind": "sync",
+      "provenance": [
+        "ai",
+        "codegraph"
+      ]
+    },
+    {
+      "id": "cbcusts-to-cusgrp",
+      "source_id": "cbcusts",
+      "target_id": "cusgrp",
+      "operation": "read customer group reference",
+      "kind": "sync",
+      "provenance": [
+        "ai",
+        "codegraph"
+      ]
+    },
+    {
+      "id": "cbcusts-to-cusfl3",
+      "source_id": "cbcusts",
+      "target_id": "cusfl3",
+      "operation": "read customer follow-up access path",
+      "kind": "sync",
+      "provenance": [
+        "ai",
+        "codegraph"
+      ]
+    }
+  ],
+  "caller_paths": []
+}
