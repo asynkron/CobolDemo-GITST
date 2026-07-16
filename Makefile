@@ -7,7 +7,7 @@ REQUIRED_ARCHAEOLOGY_DOCS := \
 	docs/archaeology/40-operations-and-recovery.md \
 	docs/archaeology/90-modernization-roadmap.md
 
-.PHONY: quality archaeology-links archaeology-mermaid
+.PHONY: quality quality-evidence-contract archaeology-links archaeology-mermaid
 
 # Verify the tracked archaeology documentation without compiling IBM i sources.
 quality:
@@ -31,8 +31,12 @@ quality:
 			printf '%s\n' 'Trailing whitespace found in tracked Markdown or Makefile.' >&2; \
 			exit "$$status"; \
 		}
+	@$(MAKE) --no-print-directory quality-evidence-contract
 	@$(MAKE) --no-print-directory archaeology-links
 	@$(MAKE) --no-print-directory archaeology-mermaid
+
+quality-evidence-contract:
+	@python3 -m unittest discover -s scripts -p 'test_quality_evidence.py'
 
 archaeology-links:
 	@python3 docs/archaeology/check_docs.py links

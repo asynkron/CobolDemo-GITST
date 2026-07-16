@@ -1,0 +1,17 @@
+{
+  "schema_version": "main-verify.v2",
+  "name": "repository quality evidence",
+  "commands": [
+    "python3 ./scripts/quality_evidence.py"
+  ],
+  "timeout": "30m",
+  "evidence": [
+    {
+      "command": "python3 ./scripts/quality_evidence.py",
+      "producer_id": "repository-quality",
+      "kind": "test-results",
+      "payload_schema": "test-results.v1",
+      "required": true
+    }
+  ]
+}
