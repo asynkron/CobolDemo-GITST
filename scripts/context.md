@@ -8,14 +8,17 @@ documentation-only quality gate does not acquire a project package dependency.
 
 * [`quality_evidence.py`](quality_evidence.py) runs `make quality`, treats that
   repository gate as one exact terminal test, and atomically writes the declared
-  `quality-evidence.v1` envelope. A nonzero command exit is a complete failed
-  test with the stable `repository-quality / Makefile / make quality` identity;
-  inability to execute the command is `translation_failed`.
+  native JUnit report plus producer-scope manifest. A nonzero command exit is a
+  complete failed test with the stable
+  `repository-quality / Makefile / make quality` identity; inability to execute
+  the command emits untranslatable native output so Faktorial reports
+  `translation_failed` without guessed counts.
 * [`test_quality_evidence.py`](test_quality_evidence.py) verifies successful and
-  failed terminal counts, stable failure identity, explicit translation failure,
-  atomic replacement, and agreement with `.faktorial/main-verify.json`. Expected
-  negative-path diagnostics are captured and asserted so they do not pollute a
-  successful ordinary quality run.
+  failed terminal counts, stable failure identity, the explicit
+  translation-failure input, atomic replacement of both native files, and
+  agreement with `.faktorial/main-verify.json`. Expected negative-path
+  diagnostics are captured and asserted so they do not pollute a successful
+  ordinary quality run.
 
 ## Dependencies
 

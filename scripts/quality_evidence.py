@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the repository quality gate and emit runner-neutral Faktorial evidence."""
+"""Run the repository quality gate and emit native Faktorial test evidence."""
 
 from __future__ import annotations
 
@@ -8,80 +8,79 @@ import os
 import subprocess
 import sys
 import tempfile
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Sequence
 
 ROOT = Path(__file__).resolve().parents[1]
 PRODUCER_ID = "repository-quality"
-ARTIFACT_NAME = f"{PRODUCER_ID}.quality-evidence.json"
+ARTIFACT_NAME = f"{PRODUCER_ID}.junit.xml"
+MANIFEST_NAME = "producers.json"
 QUALITY_COMMAND = ("make", "quality")
 
 
-def complete_envelope(return_code: int) -> dict[str, object]:
-    """Translate the one quality command into one exact terminal test result."""
-    passed = return_code == 0
-    payload: dict[str, object] = {
-        "counts": {
-            "total": 1,
-            "passed": int(passed),
-            "failed": int(not passed),
-            "skipped": 0,
-        },
-        "failures": [],
-        "omitted_failures": 0,
+def complete_report(return_code: int) -> bytes:
+    """Translate the quality command into one exact terminal JUnit result."""
+    failed = return_code != 0
+    counts = {
+        "tests": "1",
+        "failures": str(int(failed)),
+        "errors": "0",
+        "skipped": "0",
     }
-    if not passed:
+    document = ET.Element("testsuites", counts)
+    suite = ET.SubElement(document, "testsuite", {"name": PRODUCER_ID, **counts})
+    case = ET.SubElement(
+        suite,
+        "testcase",
+        {
+            "classname": PRODUCER_ID,
+            "file": "Makefile",
+            "name": "make quality",
+        },
+    )
+    if failed:
         if return_code < 0:
             outcome = f"terminated by signal {-return_code}"
         else:
             outcome = f"exited with status {return_code}"
-        payload["failures"] = [
-            {
-                "suite": "repository-quality",
-                "file": "Makefile",
-                "test": "make quality",
-                "message": f"make quality {outcome}",
-            }
-        ]
-    return {
-        "schema_version": "quality-evidence.v1",
-        "producer_id": PRODUCER_ID,
-        "kind": "test-results",
-        "payload_schema": "test-results.v1",
-        "status": "complete",
-        "payload": payload,
-    }
+        message = f"make quality {outcome}"
+        failure = ET.SubElement(
+            case,
+            "failure",
+            {"message": message, "type": "quality-command"},
+        )
+        failure.text = message
+    return ET.tostring(document, encoding="utf-8", xml_declaration=True) + b"\n"
 
 
-def translation_failed_envelope(reason: str) -> dict[str, object]:
-    """Return an explicit blocking result when no exact result can be produced."""
-    return {
-        "schema_version": "quality-evidence.v1",
-        "producer_id": PRODUCER_ID,
-        "kind": "test-results",
-        "payload_schema": "test-results.v1",
-        "status": "translation_failed",
-        "reason": reason,
-    }
+def translation_failure_report(reason: str) -> bytes:
+    """Emit deliberately untranslatable native output with a bounded reason."""
+    clean_reason = " ".join(reason.split())[:4000]
+    return f"quality-evidence translation failed: {clean_reason}\n".encode("utf-8")
 
 
-def write_atomic(evidence_dir: Path, envelope: dict[str, object]) -> Path:
-    """Replace the declared artifact atomically inside the executor-owned dir."""
+def producer_manifest() -> bytes:
+    """Mark the sole declared producer as started for strict reconciliation."""
+    manifest = {"started": [PRODUCER_ID], "categories": []}
+    return (json.dumps(manifest, separators=(",", ":")) + "\n").encode("utf-8")
+
+
+def write_atomic(evidence_dir: Path, name: str, content: bytes) -> Path:
+    """Replace one native evidence file atomically inside the executor-owned dir."""
     evidence_dir.mkdir(parents=True, exist_ok=True)
-    target = evidence_dir / ARTIFACT_NAME
+    target = evidence_dir / name
     temporary_path: Path | None = None
     try:
         with tempfile.NamedTemporaryFile(
-            mode="w",
-            encoding="utf-8",
+            mode="wb",
             dir=evidence_dir,
-            prefix=f".{PRODUCER_ID}.",
+            prefix=f".{name}.",
             suffix=".tmp",
             delete=False,
         ) as temporary:
             temporary_path = Path(temporary.name)
-            json.dump(envelope, temporary, ensure_ascii=False, separators=(",", ":"))
-            temporary.write("\n")
+            temporary.write(content)
             temporary.flush()
             os.fsync(temporary.fileno())
         os.replace(temporary_path, target)
@@ -89,6 +88,12 @@ def write_atomic(evidence_dir: Path, envelope: dict[str, object]) -> Path:
         if temporary_path is not None and temporary_path.exists():
             temporary_path.unlink()
     return target
+
+
+def write_evidence(evidence_dir: Path, report: bytes) -> None:
+    """Write the native report and scope manifest without partial files."""
+    write_atomic(evidence_dir, ARTIFACT_NAME, report)
+    write_atomic(evidence_dir, MANIFEST_NAME, producer_manifest())
 
 
 def run_adapter(
@@ -101,11 +106,11 @@ def run_adapter(
         completed = subprocess.run(command, cwd=cwd, check=False)
     except OSError as error:
         reason = f"could not execute make quality: {error}"
-        write_atomic(evidence_dir, translation_failed_envelope(reason))
+        write_evidence(evidence_dir, translation_failure_report(reason))
         print(f"quality-evidence: {reason}", file=sys.stderr)
         return 2
 
-    write_atomic(evidence_dir, complete_envelope(completed.returncode))
+    write_evidence(evidence_dir, complete_report(completed.returncode))
     if completed.returncode < 0:
         return 128 + (-completed.returncode)
     return completed.returncode

@@ -9,6 +9,7 @@ import json
 import sys
 import tempfile
 import unittest
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import quality_evidence
@@ -17,89 +18,117 @@ import quality_evidence
 class QualityEvidenceTests(unittest.TestCase):
     def run_in_temp(
         self, command: list[str]
-    ) -> tuple[int, Path, dict[str, object], str]:
+    ) -> tuple[int, bytes, dict[str, object], str]:
         with tempfile.TemporaryDirectory() as raw_directory:
             directory = Path(raw_directory)
             standard_error = io.StringIO()
             with contextlib.redirect_stderr(standard_error):
                 exit_code = quality_evidence.run_adapter(directory, command=command)
-            artifacts = list(directory.glob("*.quality-evidence.json"))
-            self.assertEqual([directory / quality_evidence.ARTIFACT_NAME], artifacts)
-            self.assertEqual([], list(directory.glob("*.tmp")))
-            envelope = json.loads(artifacts[0].read_text(encoding="utf-8"))
-            return exit_code, artifacts[0], envelope, standard_error.getvalue()
+            self.assertEqual(
+                [
+                    quality_evidence.MANIFEST_NAME,
+                    quality_evidence.ARTIFACT_NAME,
+                ],
+                sorted(path.name for path in directory.iterdir()),
+            )
+            report = (directory / quality_evidence.ARTIFACT_NAME).read_bytes()
+            manifest = json.loads(
+                (directory / quality_evidence.MANIFEST_NAME).read_text(
+                    encoding="utf-8"
+                )
+            )
+            return exit_code, report, manifest, standard_error.getvalue()
 
-    def assert_declared_identity(self, envelope: dict[str, object]) -> None:
-        self.assertEqual("quality-evidence.v1", envelope["schema_version"])
-        self.assertEqual("repository-quality", envelope["producer_id"])
-        self.assertEqual("test-results", envelope["kind"])
-        self.assertEqual("test-results.v1", envelope["payload_schema"])
+    def assert_manifest(self, manifest: dict[str, object]) -> None:
+        self.assertEqual(
+            {"started": ["repository-quality"], "categories": []}, manifest
+        )
+
+    def parse_report(self, report: bytes) -> tuple[ET.Element, ET.Element]:
+        document = ET.fromstring(report)
+        suite = document.find("testsuite")
+        self.assertIsNotNone(suite)
+        return document, suite
 
     def test_success_emits_exact_complete_counts(self) -> None:
-        exit_code, _, envelope, standard_error = self.run_in_temp(
+        exit_code, report, manifest, standard_error = self.run_in_temp(
             [sys.executable, "-c", "raise SystemExit(0)"]
         )
 
         self.assertEqual(0, exit_code)
         self.assertEqual("", standard_error)
-        self.assert_declared_identity(envelope)
-        self.assertEqual("complete", envelope["status"])
+        self.assert_manifest(manifest)
+        document, suite = self.parse_report(report)
+        expected_counts = {
+            "tests": "1",
+            "failures": "0",
+            "errors": "0",
+            "skipped": "0",
+        }
+        self.assertEqual(expected_counts, document.attrib)
         self.assertEqual(
-            {"total": 1, "passed": 1, "failed": 0, "skipped": 0},
-            envelope["payload"]["counts"],
+            {"name": "repository-quality", **expected_counts}, suite.attrib
         )
-        self.assertEqual([], envelope["payload"]["failures"])
-        self.assertEqual(0, envelope["payload"]["omitted_failures"])
+        case = suite.find("testcase")
+        self.assertIsNotNone(case)
+        self.assertEqual("repository-quality", case.attrib["classname"])
+        self.assertEqual("Makefile", case.attrib["file"])
+        self.assertEqual("make quality", case.attrib["name"])
+        self.assertIsNone(case.find("failure"))
 
     def test_command_failure_emits_stable_failed_test_identity(self) -> None:
-        exit_code, _, envelope, standard_error = self.run_in_temp(
+        exit_code, report, manifest, standard_error = self.run_in_temp(
             [sys.executable, "-c", "raise SystemExit(7)"]
         )
 
         self.assertEqual(7, exit_code)
         self.assertEqual("", standard_error)
-        self.assert_declared_identity(envelope)
-        self.assertEqual("complete", envelope["status"])
+        self.assert_manifest(manifest)
+        _, suite = self.parse_report(report)
+        self.assertEqual("1", suite.attrib["tests"])
+        self.assertEqual("1", suite.attrib["failures"])
+        case = suite.find("testcase")
+        self.assertEqual("make quality", case.attrib["name"])
+        self.assertEqual("Makefile", case.attrib["file"])
+        failure = case.find("failure")
+        self.assertEqual("quality-command", failure.attrib["type"])
         self.assertEqual(
-            {"total": 1, "passed": 0, "failed": 1, "skipped": 0},
-            envelope["payload"]["counts"],
+            "make quality exited with status 7", failure.attrib["message"]
         )
-        self.assertEqual(
-            {
-                "suite": "repository-quality",
-                "file": "Makefile",
-                "test": "make quality",
-                "message": "make quality exited with status 7",
-            },
-            envelope["payload"]["failures"][0],
-        )
+        self.assertEqual("make quality exited with status 7", failure.text)
 
     def test_unexecutable_command_reports_translation_failure(self) -> None:
-        exit_code, _, envelope, standard_error = self.run_in_temp(
+        exit_code, report, manifest, standard_error = self.run_in_temp(
             ["definitely-not-a-repository-quality-command"]
         )
 
         self.assertEqual(2, exit_code)
         self.assertIn("quality-evidence: could not execute make quality", standard_error)
-        self.assert_declared_identity(envelope)
-        self.assertEqual("translation_failed", envelope["status"])
-        self.assertIn("could not execute make quality", envelope["reason"])
-        self.assertNotIn("payload", envelope)
+        self.assert_manifest(manifest)
+        self.assertIn(b"could not execute make quality", report)
+        with self.assertRaises(ET.ParseError):
+            ET.fromstring(report)
 
-    def test_atomic_write_replaces_the_single_declared_artifact(self) -> None:
+    def test_atomic_write_replaces_only_the_declared_native_files(self) -> None:
         with tempfile.TemporaryDirectory() as raw_directory:
             directory = Path(raw_directory)
-            target = directory / quality_evidence.ARTIFACT_NAME
-            target.write_text("stale\n", encoding="utf-8")
+            report_path = directory / quality_evidence.ARTIFACT_NAME
+            manifest_path = directory / quality_evidence.MANIFEST_NAME
+            report_path.write_text("stale report\n", encoding="utf-8")
+            manifest_path.write_text("stale manifest\n", encoding="utf-8")
 
-            quality_evidence.write_atomic(
-                directory, quality_evidence.complete_envelope(0)
+            quality_evidence.write_evidence(
+                directory, quality_evidence.complete_report(0)
             )
 
-            self.assertEqual([target], list(directory.iterdir()))
             self.assertEqual(
-                "quality-evidence.v1",
-                json.loads(target.read_text(encoding="utf-8"))["schema_version"],
+                [quality_evidence.MANIFEST_NAME, quality_evidence.ARTIFACT_NAME],
+                sorted(path.name for path in directory.iterdir()),
+            )
+            self.parse_report(report_path.read_bytes())
+            self.assertEqual(
+                {"started": ["repository-quality"], "categories": []},
+                json.loads(manifest_path.read_text(encoding="utf-8")),
             )
 
     def test_main_verify_declares_the_adapter_and_producer(self) -> None:
