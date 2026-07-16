@@ -14,9 +14,12 @@ This repository contains an IBM i (AS/400) demonstration application that spans 
 * [`QSQLPRC`](QSQLPRC/context.md) / [`QSQLSRC`](QSQLSRC/context.md) – SQL procedures and DDL artifacts for incremental modernization.
 * [`ASIMPLTEST`](ASIMPLTEST/context.md) – Ad hoc testing sources combining RPG, CL, and DDS snippets.
 * Tooling and configuration lives under [`.idea`](.idea/context.md) and [`.ibmi`](.ibmi/context.md).
+* Repository verification is declared in [`.faktorial`](.faktorial/context.md),
+  with its repository-owned adapter and focused contract tests under
+  [`scripts`](scripts/context.md).
 * SSADM documentation resides in [`docs`](docs/context.md), including generated overviews, process models, business rule catalogs, and the new graph-clustering analysis of module dependencies.
 * [`files.md`](files.md) – Collapsible, link-rich map tying every non-Markdown artifact to its nearest documentation entry.
-* The root [`Makefile`](Makefile) provides a fast, deterministic `quality` gate for the complete archaeology document set and non-semantic trailing whitespace in tracked Markdown. Exact two-space Markdown hard breaks remain valid content. The gate is documentation-only and does not compile or validate IBM i runtime behavior.
+* The root [`Makefile`](Makefile) provides a deterministic `quality` gate for the complete archaeology document set, non-semantic trailing whitespace in tracked Markdown, and the repository quality-evidence adapter contract. Exact two-space Markdown hard breaks remain valid content. The gate is documentation-only and does not compile or validate IBM i runtime behavior.
 * [`docs/archaeology`](docs/archaeology/README.md) – Evidence-led tracked inventory, naming/layering map, tooling coverage record, domain/data report, defect and reliability audit, glossary, unknowns register, and coverage ledger. Use it as the completeness and stabilization baseline; retain the narrative and generated documents as secondary evidence.
   The [`domain and data report`](docs/archaeology/20-domain-and-data.md) adds the source-reconciled record dictionary, lineage, business rules, privacy classifications, and variant/runtime evidence gaps used to shape safe migration contracts.
 * [`docs/archaeology/10-architecture-and-flows.md`](docs/archaeology/10-architecture-and-flows.md) – Evidence-classified architecture source of truth for subsystem interactions, representative execution/data flows, diagrams, and change-impact hotspots. Read it with the evidence map; it is not proof of production deployment.
